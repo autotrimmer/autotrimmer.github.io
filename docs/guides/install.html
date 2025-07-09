@@ -1,0 +1,512 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Install guide - AutoTrimmer Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AutoTrimmer Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="installation-guide"><a class="header" href="#installation-guide">Installation Guide</a></h1>
+<p>In this guide I'll show you how to set up AutoTrimmer in your own projects.</p>
+<p><strong>Note:</strong> The installation currently requires editing a small XML file in your
+Godot project.
+In my personal opinion
+it's not super difficult, and I try to explain it clearly.
+If you're not completely averse to doing IT tasks with a guide, you can
+probably handle it.
+Otherwise,
+if you've got a team with a programmer, it might be easier to let the
+programmer handle it.</p>
+<h2 id="godot-requirements"><a class="header" href="#godot-requirements">Godot requirements</a></h2>
+<p>AutoTrimmer requires the Mono version of Godot to run because it is written
+in C#.</p>
+<p><em>Author's note: I'm planning to remove the Mono requirement before the end of
+the beta. It should eventually work with just GDScript and GDExtension.</em></p>
+<p>AutoTrimmer is known to work on Godot 4.4 and will most likely run without
+issues on later versions of Godot 4.
+It has not been tested on earlier versions of Godot 4. It seems very
+likely that it will also work for earlier versions,
+since AutoTrimmer only uses parts of
+Godot that haven't really changed since the first release of Godot 4.</p>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<p>Here's how to install AutoTrimmer into a Godot project:</p>
+<ol>
+<li>
+<p>Copy the <code>addons</code> folder from the AutoTrimmer folder into your Godot
+project folder. If you already have an <code>addons</code> folder in your Godot project,
+you should merge the two folders together.</p>
+</li>
+<li>
+<p>If you weren't already using C#, you will need to make a C# solution.
+You can do this by opening up the Godot editor, then, in the top left,
+clicking the menu buttons <code>Project → Tools → C# → Create C# solution</code>.</p>
+</li>
+<li>
+<p>This step is a little tricky: AutoTrimmer uses a C# <code>.dll</code> file for most of its logic.
+You'll need to edit the C# project file to make it work.</p>
+<p><em>Author's note: This step won't be necessary anymore when I remove the Mono
+requirement, which is going to happen before the beta is over.</em></p>
+<p>Here's how you do it:</p>
+<ul>
+<li>On Windows, open up Notepad, which comes preinstalled with your computer.
+On other operating systems (Mac, Linux),
+open up whatever text editor your OS ships with
+that can edit source code files.</li>
+<li>In Notepad, open the file that ends with <code>.csproj</code> in your Godot project
+folder. This file is hidden in the Godot editor, but you should be able to
+see it in Notepad's open file window.</li>
+<li>Before you edit the file, it should look something like this.
+It might look a little different if you have a more recent version of Godot,
+but the same install instructions will apply.
+<pre><code class="language-xml">&lt;Project Sdk="Godot.NET.Sdk/4.4.0"&gt;
+  &lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;net8.0&lt;/TargetFramework&gt;
+    &lt;EnableDynamicLoading&gt;true&lt;/EnableDynamicLoading&gt;
+  &lt;/PropertyGroup&gt;
+&lt;/Project&gt;
+</code></pre>
+</li>
+<li>Create a new line between the last two lines
+(between <code>&lt;/PropertyGroup&gt;</code> and <code>&lt;/Project&gt;</code>). Then paste in this snippet
+over there:
+<pre><code class="language-xml">&lt;ItemGroup&gt;
+  &lt;Reference Include="AutoTrimmer"&gt;
+    &lt;HintPath&gt;addons/autotrimmer/AutoTrimmer.dll&lt;/HintPath&gt;
+  &lt;/Reference&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+(This adds the library <code>AutoTrimmer.dll</code> to the project)</li>
+<li>Your <code>.csproj</code> file should now look something like this:
+<pre><code class="language-xml">&lt;Project Sdk="Godot.NET.Sdk/4.4.0"&gt;
+  &lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;net8.0&lt;/TargetFramework&gt;
+    &lt;EnableDynamicLoading&gt;true&lt;/EnableDynamicLoading&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Reference Include="AutoTrimmer"&gt;
+      &lt;HintPath&gt;addons/autotrimmer/AutoTrimmer.dll&lt;/HintPath&gt;
+    &lt;/Reference&gt;
+  &lt;/ItemGroup&gt;
+&lt;/Project&gt;
+</code></pre>
+Unlike in GDScript, the spaces aren't important here. If the spaces
+are a little bit off in your own version, that's fine.</li>
+<li>If you think it's probably good, save the file.</li>
+</ul>
+</li>
+<li>
+<p>Now we need to build the C# project. In Godot, press the button with the
+hammer icon in the top right corner.</p>
+<ul>
+<li>It should build with no problems and no errors.</li>
+<li>If you get errors saying “namespace name 'AutoTrimmer' could not be found",
+then you made a mistake in the previous step, and it still can't find the
+AutoTrimmer library.</li>
+</ul>
+</li>
+<li>
+<p>Lastly, enable the AutoTrimmer plugin. Here's how:</p>
+<ul>
+<li>Open up the project settings (<code>Project → Project Settings</code> in the top left)</li>
+<li>Switch to the <code>Plugins</code> tab.</li>
+<li>Enable the AutoTrimmer plugin by clicking the <code>Enabled</code> checkbox.</li>
+<li>If you close the project settings and look at the <code>Output</code> window, you
+should see the message <code>[AutoTrimmer] Running AutoTrimmer</code>, as well as the
+version of AutoTrimmer that you're running.</li>
+</ul>
+</li>
+</ol>
+<p>If everything went right, AutoTrimmer is installed and ready to go.
+If you had any issues, don't hesitate to reach out to me for technical support.</p>
+<h3 id="adding-a-rulebook-and-processing-a-3d-model"><a class="header" href="#adding-a-rulebook-and-processing-a-3d-model">Adding a rulebook and processing a 3D model</a></h3>
+<p>Now that AutoTrimmer is installed, we can start using it.</p>
+<ol>
+<li>Create a 3D model and put it in your project folder.
+It doesn't matter which 3D format you pick as long as Godot accepts it.</li>
+<li>Let's create a new rulebook
+<ul>
+<li>In Godot, right-click a folder in the filesystem window, then click
+<code>Create New → Resource...</code></li>
+<li>In the <code>Create New Resource</code> window, search for “RuleBook”.</li>
+<li>Put your new rulebook somewhere in the project. If you can't think of
+a good filename, you can simply call it <code>rulebook.tres</code>.</li>
+</ul>
+</li>
+<li>Let's configure your 3D model to use the rulebook.
+<ul>
+<li>Open up the import settings for your 3D model by double-clicking on it.</li>
+<li>In the window that pops up, you can find “AutoTrimmer” among the settings
+on the right side.</li>
+<li>Under AutoTrimmer, put your rulebook into the rulebook option.
+<em>(Due to a Godot bug, it seems that the quick load window can appear
+underneath the import pop-up. You can drag it out of the way if that
+happens)</em></li>
+</ul>
+</li>
+<li>Now you can start configuring the rulebook. Check the
+<a href="../rulebook.html">rulebook documentation</a>,
+<a href="tutorial2.html">tutorial 2</a> and the
+<a href="../recipes.html">recipes</a> for more information.</li>
+<li>Once you have configured the rulebook, right-click on your 3D model file
+and click “Reimport” to make AutoTrimmer process the mesh.
+If there's anything wrong with your rulebook, you will get an error in the
+“Output” tab that describes what the mistake is and roughly where it is.</li>
+</ol>
+<h3 id="trim-shader"><a class="header" href="#trim-shader">Trim shader</a></h3>
+<p>If you now add a trim to your mesh, it's going to look more or less like this:</p>
+<video autoplay muted loop>
+    <source src="../troubleshooting/zfight.webm" type="video/webm">
+</video>
+<p>Trims generated by AutoTrimmer need a special shader to work.
+Without a special shader, you'll get lots and lots of z-fighting.</p>
+<p>In 3D graphics, z-fighting happens when there are two faces at the exact same
+depth. They end up “fighting” over which face is in front, with one face winning
+for some pixels and the other face winning for other pixels.</p>
+<p>AutoTrimmer will place trims at exactly the same depth as the face that the trim
+is applied to.
+This is honestly begging for z-fighting to happen.</p>
+<p>To fix it, you'll need some special shaders for the trims.
+These shaders give the trims a small depth bonus, which ensures they'll win the
+z-fight.
+I've put a few GDShader scripts below which you can paste into
+your project.
+You will then need to make a new ShaderMaterial for your trims, which uses
+the shader below.</p>
+<p><strong>IMPORTANT:</strong> These shaders don't work in the orthographic view of the Godot
+editor. I think it doesn't work because orthographic view puts the camera
+too far away. In perspective it works quite well.</p>
+<p><strong>Note</strong>: The only difference between these shaders is the fragment shader.
+The vertex shader is the important part and is the same for all of them.
+That's what's being used to apply the
+depth bonus to trims.</p>
+<h4 id="transparent"><a class="header" href="#transparent">Transparent</a></h4>
+<p>This transparent shaders works with all transparent textures.
+The downside of a transparent shader is that it is less efficient than a
+clipped or an opaque shader, for graphics engineering reasons that are a little
+too complex to get into right now.</p>
+<pre><code class="language-gdshader">shader_type spatial;
+render_mode skip_vertex_transform;
+
+const float base_depth_bonus = 0.0001;
+const float layer_depth_bonus = 0.0001;
+uniform sampler2D main_texture: source_color, hint_default_white, filter_nearest;
+
+
+void vertex() {
+	vec4 view = MODELVIEW_MATRIX * vec4(VERTEX, 1);
+	
+	// AutoTrimmer adds a "layer" attribute to the trim surfaces, which
+	// is used to prevent overlapping trims from z-fighting.
+	// The layer attribute is stored in CUSTOM0.x. 
+	float layer = CUSTOM0.x;
+
+	// Put the vertex a little closer to the camera to give it a small benefit
+	// in a z-fight.
+	float final_depth_bonus = base_depth_bonus + layer * layer_depth_bonus;
+	VERTEX = view.xyz * (1.0-final_depth_bonus);
+
+	// Because of "skip_vertex_transform".
+	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
+	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
+}
+
+void fragment() {
+	vec4 sample = texture(main_texture, UV);
+	ALBEDO = sample.rgb;
+	ALPHA = sample.a;
+}
+</code></pre>
+<h4 id="clipped-transparency"><a class="header" href="#clipped-transparency">Clipped transparency</a></h4>
+<p>A clipped shader has binary transparency, meaning that a pixel is either 100%
+opaque or 100% transparent.
+It's more efficient than a normal transparent shader, but less efficient than an
+opaque shader.</p>
+<pre><code class="language-gdshader">shader_type spatial;
+render_mode skip_vertex_transform;
+
+const float base_depth_bonus = 0.0001;
+const float layer_depth_bonus = 0.0001;
+uniform sampler2D main_texture: source_color, hint_default_white, filter_nearest;
+
+
+void vertex() {
+	vec4 view = MODELVIEW_MATRIX * vec4(VERTEX, 1);
+	
+	// AutoTrimmer adds a "layer" attribute to the trim surfaces, which
+	// is used to prevent overlapping trims from z-fighting.
+	// The layer attribute is stored in CUSTOM0.x. 
+	float layer = CUSTOM0.x;
+
+	// Put the vertex a little closer to the camera to give it a small benefit
+	// in a z-fight.
+	float final_depth_bonus = base_depth_bonus + layer * layer_depth_bonus;
+	VERTEX = view.xyz * (1.0-final_depth_bonus);
+
+	// Because of "skip_vertex_transform".
+	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
+	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
+}
+
+void fragment() {
+	vec4 sample = texture(main_texture, UV);
+	if (sample.a &lt; 0.5)
+		discard;
+	ALBEDO = sample.rgb;
+}
+</code></pre>
+<h4 id="opaque"><a class="header" href="#opaque">Opaque</a></h4>
+<p>An opaque shader is a shader that does not support transparency at all.
+Every pixel is 100% opaque.
+This is somewhat more efficient than the other two types of shader above.</p>
+<pre><code class="language-gdshader">shader_type spatial;
+render_mode skip_vertex_transform;
+
+const float base_depth_bonus = 0.0001;
+const float layer_depth_bonus = 0.0001;
+uniform sampler2D main_texture: source_color, hint_default_white, filter_nearest;
+
+
+void vertex() {
+	vec4 view = MODELVIEW_MATRIX * vec4(VERTEX, 1);
+	
+	// AutoTrimmer adds a "layer" attribute to the trim surfaces, which
+	// is used to prevent overlapping trims from z-fighting.
+	// The layer attribute is stored in CUSTOM0.x. 
+	float layer = CUSTOM0.x;
+
+	// Put the vertex a little closer to the camera to give it a small benefit
+	// in a z-fight.
+	float final_depth_bonus = base_depth_bonus + layer * layer_depth_bonus;
+	VERTEX = view.xyz * (1.0-final_depth_bonus);
+
+	// Because of "skip_vertex_transform".
+	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
+	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
+}
+
+void fragment() {
+	ALBEDO = texture(main_texture, UV).rgb;
+}
+</code></pre>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<p>By now, your AutoTrimmer installation is hopefully working as intended!
+If you're having trouble, don't hesitate to send me a message. I'll do what
+I can to help you out.</p>
+<p>If you're ready to get started for real,
+you can move on to the <a href="workflow.html">workflow article</a>,
+where I take you through the steps of making a scene with AutoTrimmer.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../guides/tutorial2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../guides/workflow.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../guides/tutorial2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../guides/workflow.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

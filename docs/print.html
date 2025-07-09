@@ -1,0 +1,2920 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>AutoTrimmer Documentation</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AutoTrimmer Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="the-autotrimmer-documentation"><a class="header" href="#the-autotrimmer-documentation">The AutoTrimmer Documentation</a></h1>
+<p>Welcome to the AutoTrimmer documentation! Here you can learn all there is to
+know about using AutoTrimmer.</p>
+<video muted loop controls>
+    <source src="guides/workflow/church_project.webm" type="video/webm">
+</video>
+<h2 id="tutorials"><a class="header" href="#tutorials">Tutorials</a></h2>
+<ul>
+<li><a href="guides/tutorial1.html">Tutorial 1: Let's try out AutoTrimmer by extending the sample project</a>
+<ul>
+<li>The basics of editing levels with AutoTrimmer</li>
+<li>Some of the basics of using Blender (actually, this tutorial is more about Blender than AutoTrimmer)</li>
+</ul>
+</li>
+<li><a href="guides/tutorial2.html">Tutorial 2: Let's add some grass</a>
+<ul>
+<li>The sample level is pretty dreary, so let's liven it up with some grass.</li>
+<li>Adding a new surface</li>
+<li>Adding your first trim</li>
+<li>Adding your first edge rule</li>
+</ul>
+</li>
+</ul>
+<h2 id="guides"><a class="header" href="#guides">Guides</a></h2>
+<ul>
+<li><a href="guides/install.html">Installation guide</a>
+<ul>
+<li>Installing AutoTrimmer into an existing Godot project</li>
+<li>Creating a new rulebook</li>
+<li>Adding a rulebook to a 3D model</li>
+<li>Adding a special shader for the trims (to remove z-fighting)</li>
+</ul>
+</li>
+<li><a href="guides/workflow.html">Workflow</a>
+<ul>
+<li>This article goes through the steps of making
+AutoTrimmer's church demo project.</li>
+</ul>
+</li>
+</ul>
+<h2 id="more"><a class="header" href="#more">More</a></h2>
+<ul>
+<li><a href="recipes.html">Recipes</a>
+<ul>
+<li>A list of tricks that you can do with AutoTrimmer</li>
+<li>Each recipe comes with detailed steps on how to get the same result</li>
+</ul>
+</li>
+<li><a href="rulebook.html">The rulebook documentation</a>
+<ul>
+<li>Contains an explanation for every single setting in the rulebook.</li>
+</ul>
+</li>
+<li><a href="troubleshooting.html">Troubleshooting</a>
+<ul>
+<li>AutoTrimmer usually just works, but in a few situations it doesn't.
+Here you can find some situations where things can go wrong,
+and how you can work around it.</li>
+</ul>
+</li>
+</ul>
+<p>If you're not sure what to make with AutoTrimmer, consider making a diorama of
+a setting or videogame genre that you like. Making low-poly
+3D platformers or action adventure games should be relatively easy
+with AutoTrimmer:
+Make an environment,
+enable “<a href="rulebook.html#add-static-bodies">add static bodies</a>” in the rulebook and
+add a genre-appropriate character controller,
+and you should already have something that looks and feels like the genre.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h1>
+<p>If you're having issues that aren't mentioned here, please send me a message!</p>
+<h2 id="z-fighting"><a class="header" href="#z-fighting">Z-fighting</a></h2>
+<p>In 3D graphics, z-fighting happens when there are two faces at the exact same
+depth. They end up “fighting” over which face is in front, with one face winning
+for some pixels and the other face winning for other pixels.</p>
+<p>AutoTrimmer will place trims at exactly the same depth as the face that the trim
+is applied to.
+This is honestly begging for z-fighting to happen.</p>
+<p>To remedy these z-fighting issues altogether, you need to use a special
+shader for the trims. This shader will give some faces a depth bonus
+so that they can win the z-fight consistently.
+Check the
+<a href="guides/install.html#trim-shader">trim shader section of the install guide</a>.</p>
+<video autoplay muted loop>
+    <source src="troubleshooting/zfight.webm" type="video/webm">
+</video>
+<h2 id="trims-wider-than-their-face"><a class="header" href="#trims-wider-than-their-face">Trims wider than their face</a></h2>
+<p>When a trim is wider than the face that it's on,
+it often leads to subtle graphics glitches.
+For the time being,
+you should generally avoid having trims wider than the faces that they're on.</p>
+<p><strong>Author's note:</strong> <em>I have a new algorithm in mind that won't have any
+problems with wide trims and thin faces, so this will
+eventually be fixed altogether, if all things go according to plan.
+It's going to take some time,
+however, because there are higher priority things to work on.</em></p>
+<h2 id="missing-trims"><a class="header" href="#missing-trims">Missing trims</a></h2>
+<p>Is a trim not showing up? Here's a number of potential causes:</p>
+<ul>
+<li>
+<p>If the trim is missing everywhere, your rulebook might not be configured
+right:</p>
+<ul>
+<li>Perhaps your trim texture is incorrect?</li>
+<li>Perhaps your edge rule isn't passing for any edges?</li>
+</ul>
+</li>
+<li>
+<p>It's possible that an edge rule does not get applied to a certain edge because
+an earlier edge rule already took that edge. Make sure that neither side
+of the edge has already had an edge rule applied to it.</p>
+</li>
+<li>
+<p>Last but not least, a trim can go missing when a face has a 180° vertex in it.
+In the picture below, the circled vertex on the left is 180°.
+This causes the trim under the window to mysteriously disappear
+as well as the corner of the roof trim.</p>
+<p>This is more or less a Blender problem.
+When Blender exports a mesh into GLB/GLTF, it's supposed to
+split all faces into triangles.
+However, if there's a 180° vertex, it will sometimes give you a bad triangle,
+which is actually a line instead of a proper triangle
+(see the drawing in the bottom-left).
+Normally this goes unnoticed, but not with AutoTrimmer.
+AutoTrimmer only works with proper
+triangles. When it comes across a bad triangle,
+it will skip the trim. That's why it's missing.</p>
+<p>The easiest solution is to get rid of the 180° vertex by using Blender's knife
+tool.</p>
+<p><strong>Author's note:</strong> <em>I have a new algorithm in mind that will keep working
+even when there are bad triangles in the mesh, so this will
+eventually be fixed altogether, if all things go according to plan.
+It's going to take some time,
+however, because there are higher priority things to work on.</em></p>
+<p><img src="troubleshooting/blender_triangulation_issue.png" alt="" /></p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tutorial-1-lets-try-out-autotrimmer-by-extending-the-sample-project"><a class="header" href="#tutorial-1-lets-try-out-autotrimmer-by-extending-the-sample-project">Tutorial 1: Let's Try Out AutoTrimmer by Extending the Sample Project</a></h1>
+<p>This tutorial will show you the basics of editing AutoTrimmer levels with
+Blender.
+We're starting out by editing the sample project.
+It's an unusual way to start, but AutoTrimmer
+can take a bit of work to set it up.
+This way, we can get going right away.</p>
+<p>If you're not experienced with Blender, you're in luck, because it's written
+for Blender beginners.</p>
+<h2 id="blender"><a class="header" href="#blender">Blender</a></h2>
+<p>I wrote this tutorial for Blender and you won't be
+able to follow these instructions without Blender.
+You don't need to have in-depth knowledge on how to use Blender — I'll explain
+the things you need to know as we go along.</p>
+<p>It's worth noting that AutoTrimmer does not depend on Blender. It only relies
+on Godot and is completely independent of the 3D editing software you are using.
+However, Godot has some very nice integration for Blender.
+You can put <code>.blend</code> files directly into the project, which
+is very convenient and saves a lot of hassle exporting 3D files.
+The sample project uses a <code>.blend</code> file for its 3D model,
+so you won't be able to do this
+tutorial without Blender (<code>.blend</code> files can only be opened
+with Blender — no other 3D software supports it).</p>
+<p>If you haven't used Blender with Godot before, you will have to
+change the Godot editor settings so that Godot can find Blender.
+Godot needs Blender because, as I said before, no 3D software can work
+with <code>.blend</code> files except Blender
+(<code>.blend</code> files are too weird to work with).
+In the editor settings, search for “Blender” and set “Blender Path” in
+<code>FileSystem → Import</code> to where Blender is installed.
+On Windows, you need to set it to the <code>.exe</code> file.</p>
+<h2 id="opening-the-sample-scene-in-godot"><a class="header" href="#opening-the-sample-scene-in-godot">Opening the sample scene in Godot</a></h2>
+<ol>
+<li>Make sure that you have the Mono version of Godot 4.4 (or a more recent
+version of Godot 4). AutoTrimmer requires Mono because it is written in C#.
+It will not work without the Mono version.
+<em>(I'm planning to remove the Mono dependency before the beta is over, though)</em></li>
+<li>Make sure that you have downloaded AutoTrimmer,
+and that you put the <code>AutoTrimmer</code> folder in a place where you can find it.</li>
+<li>In Godot, import and open the Godot project file that you find in the
+<code>AutoTrimmer</code> folder.
+4In the Godot editor, open the scene <code>sample.tscn</code> in the <code>sample</code> folder.</li>
+</ol>
+<p>You should now see the same scene as in the screenshot below.
+Press the “run current scene” button in the top right corner to try out the
+sample project.</p>
+<p><img src="guides/tutorial1/opening_the_scene.png" alt="" /></p>
+<h2 id="editing-the-level"><a class="header" href="#editing-the-level">Editing the level</a></h2>
+<p>Now that we have the Godot project running,
+let's try editing the level.</p>
+<h3 id="your-first-edit"><a class="header" href="#your-first-edit">Your first edit</a></h3>
+<ol>
+<li>
+<p>First, open up Blender. The sample project comes with a <code>level.blend</code> file
+which was made in Blender 4.4.0. If you have an older version of Blender it
+may not always work.</p>
+</li>
+<li>
+<p>In Blender, load the <code>.blend</code> file. Here's the detailed instructions:</p>
+<ul>
+<li>In the top left corner, open the “File” menu, then click “Open...”
+to open a file.</li>
+<li>Navigate to the AutoTrimmer folder.</li>
+<li>Open <code>level.blend</code>. You can find it in the folder
+<code>AutoTrimmer/sample/level</code>.
+If you have multiple copies of the AutoTrimmer folder, make sure that
+you open the <code>level.blend</code> from the Godot project that you have open right
+now.</li>
+</ul>
+</li>
+<li>
+<p>You should now have the level open in Blender. It should look like the
+screenshot below.</p>
+<ul>
+<li>Moving the view around in Blender takes some getting used to. By default,
+you can hold down the middle mouse button to rotate the camera, and
+move the camera by holding down shift and the middle mouse button at the
+same time.</li>
+<li>If you ever press the wrong button or click the wrong thing,
+remember that you can hold down the <code>ctrl</code> key and press <code>z</code> to undo
+anything you didn't mean to do. If you went a little too far undoing
+things, you can hold down <code>ctrl</code> and <code>shift</code> and press <code>z</code> to redo the
+last thing you undid.</li>
+<li>In Blender, if you somehow get the camera into a bad position or if the
+view starts moving really slowly, you can center the view on an object
+by clicking on it and then pressing the period <code>.</code> key on the
+number pad. That should put your view back in a good position.</li>
+<li>If you don't have a number pad on your keyboard, you can click on the
+object and then, near the top-left corner of the screen,
+in the second row of menus, open the <code>View</code> menu and click
+<code>Frame selected</code> (it's a little tedious this way)</li>
+</ul>
+<p><img src="guides/tutorial1/open_in_blender.png" alt="" /></p>
+</li>
+<li>
+<p>Let's make our first edit.</p>
+<ul>
+<li>
+<p>When you first open the model, Blender starts in “object mode” (check the
+second row in the top-left to see which mode you're in).
+In object mode you can select objects and move them around in the scene.</p>
+</li>
+<li>
+<p>Click on the main part of the level to select it. It should get an orange
+outline around it.</p>
+</li>
+<li>
+<p>Now open up edit mode.
+To do this, in the top-left corner,
+click on the “object mode” dropdown menu and select “edit mode”.
+In edit mode, you can change the shape of a 3D model.</p>
+</li>
+<li>
+<p>Blender should now look like in the screenshot below.</p>
+<p><img src="guides/tutorial1/blender_edit_mode.png" alt="" /></p>
+</li>
+<li>
+<p>Select a part of the 3D model by clicking on it.</p>
+</li>
+<li>
+<p>Select the move tool in the tools menu on the left.</p>
+</li>
+<li>
+<p>Three arrows will appear around the thing you selected.
+Click and drag the blue arrow to move it up or down.
+There's your first change!</p>
+<p><img src="guides/tutorial1/blender_first_edit.png" alt="" /></p>
+</li>
+<li>
+<p>Now we're going to look at what AutoTrimmer will do with your change
+in Godot. Save the file by opening the <code>File</code> menu in
+the top left and clicking <code>Save</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Back in Godot, let's see what's changed.
+After saving the <code>.blend</code> file and opening the Godot window,
+you can see the results of your change. As you can (hopefully) see,
+your edited part of the level is now decorated just the same way as the
+rest of the level.</p>
+<p><img src="guides/tutorial1/blender_first_result.png" alt="" /></p>
+</li>
+</ol>
+<h3 id="adding-some-platforms"><a class="header" href="#adding-some-platforms">Adding some platforms</a></h3>
+<p>Now, let's add some platforms for the character to jump on.</p>
+<ol>
+<li>
+<p>First we'll make a single platform.</p>
+<ul>
+<li>In Blender and still in edit mode,
+click the <code>Add</code> menu (to the right of <code>Edit Mode</code>)
+and click <code>Cube</code>. You should now see your new cube, but if you don't,
+press <code>.</code> on the number pad to focus on it.
+This cube is going to become our new platform.</li>
+<li>Move the cube wherever you like using the move tool.</li>
+<li>You can use the scale tool to change the cube's shape into something
+that looks a little more like a normal platform in a normal platformer game.
+You can find the scale tool a little bit below the move tool
+(it's the icon with a growing square).</li>
+</ul>
+</li>
+<li>
+<p>If you save it and go back to Godot, you'll see something like the screenshot
+below. It will already work as a platform and you can already make the
+character jump on it. It's just not very nicely decorated yet.</p>
+<p><img src="guides/tutorial1/platform1.png" alt="" /></p>
+</li>
+<li>
+<p>Let's add some brick textures to the sides of the platform.</p>
+<ul>
+<li>
+<p>Back in Blender and still in edit mode, click one of the sides of the
+platform to select
+it. Then select the other sides by holding down <code>shift</code> and clicking on
+them. Also select the bottom, but don't select the top,
+because we want the top to stay as dirt.</p>
+</li>
+<li>
+<p>Now change their material to “brick” by clicking the buttons in the
+screenshot below. The sides should become grey, like all the other brick
+surfaces.</p>
+<p><img src="guides/tutorial1/blender_set_material.png" alt="" /></p>
+</li>
+<li>
+<p>Save the Blender file and let's look at it again in Godot.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Going back to Godot, your platform should now look like the screenshot below.
+Looks a lot better!</p>
+<p><img src="guides/tutorial1/platform2.png" alt="" /></p>
+</li>
+</ol>
+<p>If you want, you can add a couple more platforms, and maybe make some other
+shapes instead of just rectangles.
+Here are some hints on how to do that:</p>
+<ul>
+<li>Remember that you can click to select something and <code>shift + click</code> to add to
+your selection.</li>
+<li>Hovering your mouse over the platform, press <code>L</code> to select the whole platform.</li>
+<li>You can make a copy of your platform with <code>shift + D</code>. Move it around
+with the move tool.</li>
+<li>Next to the “edit mode” dropdown, you can see three buttons.
+These allow you to edit vertices (corners), edges or faces.
+Move around some edges or vertices to make your shape a little less square.</li>
+<li>If you hover the mouse over a tool for a second, Blender will tell you
+that tool's name.</li>
+<li>Try to find the extrude tool — it's a very important tool.
+It's a little difficult to clearly describe what it does in words,
+The extrude tool lets you pull new geometry out of your selection.</li>
+</ul>
+<p>I'm not going to give a full Blender tutorial (as you can probably see yourself,
+it's too much for one tutorial).
+I do give a few tips in the
+<a href="guides/workflow.html">workflow article</a>.</p>
+<p>AutoTrimmer is made to work with any weird shape you can think of,
+so go wild.
+If it somehow doesn't work in AutoTrimmer, that's probably an AutoTrimmer
+problem, not a you problem!</p>
+<p><img src="guides/tutorial1/platform3.png" alt="" /></p>
+<p>That's the end of this tutorial. If you're ready to move on,
+you can go on to
+<a href="guides/tutorial2.html">tutorial 2</a>, where we'll add a new grass
+surface to the sample level.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tutorial-2-lets-add-some-grass"><a class="header" href="#tutorial-2-lets-add-some-grass">Tutorial 2: Let's Add Some Grass</a></h1>
+<p>The sample scene looks a little dreary with just bricks and dirt.
+We can add some grass to make it more lively.</p>
+<p>In this tutorial, I'll teach you all about editing an AutoTrimmer rulebook.
+A rulebook contains all of the settings and rules that AutoTrimmer needs to
+decorate your 3D model.</p>
+<p>You can continue on from the end of the <a href="guides/tutorial1.html">first tutorial</a>.</p>
+<h2 id="adding-a-new-grass-surface"><a class="header" href="#adding-a-new-grass-surface">Adding a new grass surface</a></h2>
+<p>In this section, we'll add a new grass surface without any trims
+(decorative edges) yet.
+It's going to look pretty so-so by the end of this section, but it's going to
+start looking a lot better once we add the trims.</p>
+<ol>
+<li>
+<p>Go to Blender and open up edit mode for the main level mesh.</p>
+</li>
+<li>
+<p>Select a face of the 3D model that you'd like to turn into grass.</p>
+</li>
+<li>
+<p>Create a new Blender material for the grass. This involves a couple of steps,
+use the screenshot below to follow along:</p>
+<ul>
+<li>Go to the material settings (its icon looks like a red beach ball)</li>
+<li>Add a new material slot with the <code>+</code> button.</li>
+<li>Create a new material for the material slot,
+by clicking <code>New</code>.</li>
+<li>Rename the material to “grass”.
+The name of the material is very important when working with AutoTrimmer!
+Pay attention to capital letters and small letters.
+Later on you're going to have to
+type this name into the rulebook,
+and even the capitals will have to match exactly or it won't work.</li>
+<li>Now assign the new grass material to at least one face.</li>
+<li>Give the grass a green color. This helps to make it
+easier to recognize in Blender.</li>
+<li>Save the file and we'll go back to Godot.</li>
+</ul>
+<p><img src="guides/tutorial2/new_material.png" alt="" /></p>
+</li>
+<li>
+<p>Back in Godot, our grass is looking exactly like it did in Blender:
+Very green and not very textured.
+Also notice that there's a warning in the “Output” window: AutoTrimmer is
+telling us that it didn't recognize the grass material.
+We're first going to need a texture for our grass, but then we'll get right
+back to Godot and get rid of the warning.</p>
+<p><img src="guides/tutorial2/green_green_grass.png" alt="" /></p>
+</li>
+<li>
+<p>We'll need a grass texture next. You can make your own if you want.
+I made one which you can find below. It's not a great texture,
+but it will do. You can also swap out the
+textures later if you want.</p>
+<ul>
+<li>
+<p>Here's my texture. Right click on it and select “save as”. Download
+it and move it into the sample project's textures folder (you can find
+the textures in <code>AutoTrimmer/sample/level/materials/textures</code>).</p>
+<p><img src="guides/tutorial2/tiling_grass.png" alt="" /></p>
+</li>
+</ul>
+</li>
+<li>
+<p>To use this texture in Godot, we will also need a Godot material.
+We'll use the same shader that the brick and dirt materials already use.</p>
+<ul>
+<li>In Godot, open up the folder <code>sample/level/materials</code> and duplicate either
+<code>tiling_brick.tres</code> or <code>tiling_dirt.tres</code> (right click on one of the files,
+then click “Duplicate”). Give the new file the name <code>tiling_grass.tres</code>.</li>
+<li>Double-click the new <code>tiling_grass.tres</code>, unfold <code>Shader Parameters</code>
+on the right, and change <code>Main Texture</code> to the grass texture.</li>
+<li>Just now, when you put the texture in the material,
+you probably received a notification from Godot that it changed the
+texture's import settings because it's being used in 3D.
+What it did was configure the texture to use compression.
+The problem is that this compression will often worsen your pixel art
+for not a lot of memory savings.
+To disable texture compression, double click <code>tiling_grass.png</code>,
+and in the import settings
+(on the top left), change “VRAM Compressed” to “VRAM Uncompressed”.</li>
+</ul>
+</li>
+<li>
+<p>Now, let's add the grass surface to AutoTrimmer.</p>
+<ul>
+<li>
+<p>In the folder <code>sample/level</code>, double click on <code>rulebook.tres</code>.
+This file contains all of the settings and rules that AutoTrimmer will use
+to decorate your 3D model. If you want an explanation for the settings
+that you find in the rulebook, check the
+<a href="guides/../rulebook.html">rulebook documentation</a>.
+The documentation is written to be pretty easy to understand.</p>
+</li>
+<li>
+<p>Unfold <code>surfaces</code> and click on the <code>Array</code> button. You'll see the list of
+surfaces that AutoTrimmer knows about right now.
+At the moment, there's three surfaces: Dirt, brick and “trims”.
+The dirt and brick surface are based on the 3D model.
+The “trims” surface does not appear in the original 3D model,
+but will get added by AutoTrimmer when it
+processes the file.
+It has all the trims (edge decorations).</p>
+</li>
+<li>
+<p>Click <code>Add element</code> (below the list of surfaces)
+and add a <code>New SurfaceConfig</code> into the empty slot that
+appears. Click on <code>SurfaceConfig</code> to open up the surface settings.</p>
+</li>
+<li>
+<p>You need to adjust the following settings:</p>
+<ul>
+<li>
+<p>Set “Name” to “grass”.
+This <em>must</em> match the material name in Blender exactly, or AutoTrimmer
+won't recognize it. Capital letters matter!</p>
+</li>
+<li>
+<p>For “Replace with material”, click on the dropdown and select
+<code>Quick Load...</code>. Find and use the material <code>tiling_grass.tres</code>.</p>
+</li>
+<li>
+<p>Set “UV unwrap mode” to “unwrap”. This basically makes the textures
+appear correctly. For more information on what this does,
+check the documentation for
+“<a href="guides/../rulebook/surface_config.html#uv-unwrap-mode">UV unwrap mode</a>”.</p>
+</li>
+<li>
+<p>Lastly set “Texture size source” to the grass texture.</p>
+<p>AutoTrimmer uses
+a surface's texture size to determine how often the texture should tile.
+By setting “texture size source” instead of “texture size pixels”,
+it will automatically derive the texture size from the image that you
+give it.
+That's useful because you'll be able to overwrite the image with one
+that's bigger later, without having to touch the rulebook
+(I use this in the early stages of making a rulebook
+because making big textures takes a while).</p>
+</li>
+</ul>
+<p><img src="guides/tutorial2/surface_config.png" alt="" /></p>
+</li>
+<li>
+<p>Now that we've configured the grass surface, AutoTrimmer should recognize
+it the next time that it processes the 3D model.
+To make AutoTrimmer process the 3D model immediately, right click on
+<code>level.blend</code> in Godot, and click “Reimport”.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>You should see a patch of grass now.
+I have to admit:
+My grass texture isn't that great, but we should always strive do the best
+we can with the art skills we have.
+Even with my limited grass-drawing skills,
+it's going to look a lot nicer when we add the trims.</p>
+<p><img src="guides/tutorial2/grass_surface.png" alt="" /></p>
+<h2 id="adding-a-decorative-edge-around-the-grass"><a class="header" href="#adding-a-decorative-edge-around-the-grass">Adding a decorative edge around the grass</a></h2>
+<p>Alright, time to make it look somewhat good.
+We're adding a new grass trim that's going to droop over walls. It's also
+going to function as a nicer transition between grass and dirt.</p>
+<p>If grass is at the bottom of a wall, this new trim is also going to climb up
+the wall a little bit. That's going to look kind of OK but also a little weird.
+If I was making a bigger project out of this, I'd
+probably make a separate trim for that, but it's a tutorial, so we're keeping
+it simple.</p>
+<ol>
+<li>
+<p>Here's a new trim texture.</p>
+<ul>
+<li>Download it just like before.</li>
+<li>Overwrite the old <code>trims.png</code> in the textures folder with this one.</li>
+<li>You'll notice, after overwriting it, that the trims all look broken when
+opening Godot. That's actually not a problem,
+just reimport the mesh and AutoTrimmer
+will fix it. What happened is that the new texture is bigger than the old
+one, so it needed new texture coordinates.
+AutoTrimmer gave it new texture coordinates while processing the mesh.</li>
+</ul>
+<p><img src="guides/tutorial2/trims.png" alt="" /></p>
+</li>
+<li>
+<p>Add the trim to the rulebook.</p>
+<ul>
+<li>Open up the rulebook as before.</li>
+<li>Unfold the <code>trims</code> section and open up the <code>Trims</code> array.
+We won't be using trim corners or trim groups in this
+tutorial.
+Only trims.
+Check the <a href="guides/../rulebook.html">rulebook documentation</a>
+later if you want to learn more about trim corners and trim groups.</li>
+<li>Add a new trim. Here's the settings you'll need to adjust on the newly
+added TrimConfig:
+<ul>
+<li>Change its name to “grass_trim”.</li>
+<li>Change “pixel y near” to 27 and “pixel y far” to 34.
+These options are pretty important.
+They determine where in the trimsheet (trim texture), we can find this
+trim.
+There's a more in-depth explanation in the
+<a href="guides/../rulebook/trim_config.html#pixel-y-near">documentation</a>.</li>
+</ul>
+</li>
+<li>Save your changes to the rulebook by pressing <code>ctrl + S</code>.</li>
+<li>AutoTrimmer now knows about the trim “grass_trim”, but we haven't told it to
+place the new trim anywhere yet. To tell AutoTrimmer where it needs to add
+the trim, we'll need to add an edge rule.</li>
+</ul>
+<p><img src="guides/tutorial2/trim_config.png" alt="" /></p>
+</li>
+<li>
+<p>Add an edge rule.</p>
+<ul>
+<li>
+<p>Unfold <code>rules</code> and create a new edge rule.</p>
+</li>
+<li>
+<p>In the new edge rule,
+set “add trim at neighbor” to “grass_trim”. This way, when the condition
+is met, AutoTrimmer will add a grass trim to the edge.</p>
+</li>
+<li>
+<p>For “condition”, paste in the following code:</p>
+<pre><code class="language-python">self.surface == GRASS
+and neighbor.surface != GRASS
+</code></pre>
+<p>This is going to add the grass trim to all edges between a grass
+surface and a non-grass surface. In the code, the name of our surface
+“grass” is turned into “GRASS”, in
+<a href="guides/../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE</a>.</p>
+<p>You don't need to understand the code for edge rules well to be able to use
+AutoTrimmer productively. There's a <a href="guides/../recipes.html">recipe book</a>,
+which gives you examples that you can more or less just paste into your
+rulebook.</p>
+</li>
+</ul>
+<p><img src="guides/tutorial2/edge_rule.png" alt="" /></p>
+</li>
+<li>
+<p>Save your changes to the rulebook by pressing <code>ctrl + S</code>, then reimport
+<code>level.blend</code> to see the changes. You should now have some grassy trims.</p>
+<p><img src="guides/tutorial2/theres_grass_now.png" alt="" /></p>
+</li>
+</ol>
+<p>That's the end of this tutorial.
+If you want, you can mess around with the
+level a little and try out the grass surface that you just put together.</p>
+<h2 id="optional-adding-another-trim-for-grass-at-the-bottom-of-a-wall"><a class="header" href="#optional-adding-another-trim-for-grass-at-the-bottom-of-a-wall">Optional: Adding another trim for grass at the bottom of a wall.</a></h2>
+<p>The current trim texture looks OK for grass drooping over a wall, but
+in my opinion it's as good for grass at the bottom of a wall.
+It would look a lot better to use a separate trim for that.</p>
+<p>If you want, you can try creating your own grass trim as practice.</p>
+<p>For the new trim you'll need a new edge rule. Try this one:</p>
+<pre><code class="language-python">self.surface == GRASS
+and neighbor.surface != GRASS
+and angle &lt; -40
+</code></pre>
+<p>This rule will add the new trim to all edges between a grass surface and a
+non-grass surface, but only when the corner is more than 40° concave.
+This makes the grass trim only show up in the corners where it will be at the
+bottom of a wall.</p>
+<p>Now, you can either place the new edge rule before the old grass edge rule
+(which will make the new rule evaluate first, which means it will take up all
+the spots where it can fit),
+or you can replace the old rule with this one:</p>
+<pre><code class="language-python">self.surface == GRASS
+and neighbor.surface != GRASS
+and angle &gt;= -40
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation-guide"><a class="header" href="#installation-guide">Installation Guide</a></h1>
+<p>In this guide I'll show you how to set up AutoTrimmer in your own projects.</p>
+<p><strong>Note:</strong> The installation currently requires editing a small XML file in your
+Godot project.
+In my personal opinion
+it's not super difficult, and I try to explain it clearly.
+If you're not completely averse to doing IT tasks with a guide, you can
+probably handle it.
+Otherwise,
+if you've got a team with a programmer, it might be easier to let the
+programmer handle it.</p>
+<h2 id="godot-requirements"><a class="header" href="#godot-requirements">Godot requirements</a></h2>
+<p>AutoTrimmer requires the Mono version of Godot to run because it is written
+in C#.</p>
+<p><em>Author's note: I'm planning to remove the Mono requirement before the end of
+the beta. It should eventually work with just GDScript and GDExtension.</em></p>
+<p>AutoTrimmer is known to work on Godot 4.4 and will most likely run without
+issues on later versions of Godot 4.
+It has not been tested on earlier versions of Godot 4. It seems very
+likely that it will also work for earlier versions,
+since AutoTrimmer only uses parts of
+Godot that haven't really changed since the first release of Godot 4.</p>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<p>Here's how to install AutoTrimmer into a Godot project:</p>
+<ol>
+<li>
+<p>Copy the <code>addons</code> folder from the AutoTrimmer folder into your Godot
+project folder. If you already have an <code>addons</code> folder in your Godot project,
+you should merge the two folders together.</p>
+</li>
+<li>
+<p>If you weren't already using C#, you will need to make a C# solution.
+You can do this by opening up the Godot editor, then, in the top left,
+clicking the menu buttons <code>Project → Tools → C# → Create C# solution</code>.</p>
+</li>
+<li>
+<p>This step is a little tricky: AutoTrimmer uses a C# <code>.dll</code> file for most of its logic.
+You'll need to edit the C# project file to make it work.</p>
+<p><em>Author's note: This step won't be necessary anymore when I remove the Mono
+requirement, which is going to happen before the beta is over.</em></p>
+<p>Here's how you do it:</p>
+<ul>
+<li>On Windows, open up Notepad, which comes preinstalled with your computer.
+On other operating systems (Mac, Linux),
+open up whatever text editor your OS ships with
+that can edit source code files.</li>
+<li>In Notepad, open the file that ends with <code>.csproj</code> in your Godot project
+folder. This file is hidden in the Godot editor, but you should be able to
+see it in Notepad's open file window.</li>
+<li>Before you edit the file, it should look something like this.
+It might look a little different if you have a more recent version of Godot,
+but the same install instructions will apply.
+<pre><code class="language-xml">&lt;Project Sdk="Godot.NET.Sdk/4.4.0"&gt;
+  &lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;net8.0&lt;/TargetFramework&gt;
+    &lt;EnableDynamicLoading&gt;true&lt;/EnableDynamicLoading&gt;
+  &lt;/PropertyGroup&gt;
+&lt;/Project&gt;
+</code></pre>
+</li>
+<li>Create a new line between the last two lines
+(between <code>&lt;/PropertyGroup&gt;</code> and <code>&lt;/Project&gt;</code>). Then paste in this snippet
+over there:
+<pre><code class="language-xml">&lt;ItemGroup&gt;
+  &lt;Reference Include="AutoTrimmer"&gt;
+    &lt;HintPath&gt;addons/autotrimmer/AutoTrimmer.dll&lt;/HintPath&gt;
+  &lt;/Reference&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+(This adds the library <code>AutoTrimmer.dll</code> to the project)</li>
+<li>Your <code>.csproj</code> file should now look something like this:
+<pre><code class="language-xml">&lt;Project Sdk="Godot.NET.Sdk/4.4.0"&gt;
+  &lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;net8.0&lt;/TargetFramework&gt;
+    &lt;EnableDynamicLoading&gt;true&lt;/EnableDynamicLoading&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Reference Include="AutoTrimmer"&gt;
+      &lt;HintPath&gt;addons/autotrimmer/AutoTrimmer.dll&lt;/HintPath&gt;
+    &lt;/Reference&gt;
+  &lt;/ItemGroup&gt;
+&lt;/Project&gt;
+</code></pre>
+Unlike in GDScript, the spaces aren't important here. If the spaces
+are a little bit off in your own version, that's fine.</li>
+<li>If you think it's probably good, save the file.</li>
+</ul>
+</li>
+<li>
+<p>Now we need to build the C# project. In Godot, press the button with the
+hammer icon in the top right corner.</p>
+<ul>
+<li>It should build with no problems and no errors.</li>
+<li>If you get errors saying “namespace name 'AutoTrimmer' could not be found",
+then you made a mistake in the previous step, and it still can't find the
+AutoTrimmer library.</li>
+</ul>
+</li>
+<li>
+<p>Lastly, enable the AutoTrimmer plugin. Here's how:</p>
+<ul>
+<li>Open up the project settings (<code>Project → Project Settings</code> in the top left)</li>
+<li>Switch to the <code>Plugins</code> tab.</li>
+<li>Enable the AutoTrimmer plugin by clicking the <code>Enabled</code> checkbox.</li>
+<li>If you close the project settings and look at the <code>Output</code> window, you
+should see the message <code>[AutoTrimmer] Running AutoTrimmer</code>, as well as the
+version of AutoTrimmer that you're running.</li>
+</ul>
+</li>
+</ol>
+<p>If everything went right, AutoTrimmer is installed and ready to go.
+If you had any issues, don't hesitate to reach out to me for technical support.</p>
+<h3 id="adding-a-rulebook-and-processing-a-3d-model"><a class="header" href="#adding-a-rulebook-and-processing-a-3d-model">Adding a rulebook and processing a 3D model</a></h3>
+<p>Now that AutoTrimmer is installed, we can start using it.</p>
+<ol>
+<li>Create a 3D model and put it in your project folder.
+It doesn't matter which 3D format you pick as long as Godot accepts it.</li>
+<li>Let's create a new rulebook
+<ul>
+<li>In Godot, right-click a folder in the filesystem window, then click
+<code>Create New → Resource...</code></li>
+<li>In the <code>Create New Resource</code> window, search for “RuleBook”.</li>
+<li>Put your new rulebook somewhere in the project. If you can't think of
+a good filename, you can simply call it <code>rulebook.tres</code>.</li>
+</ul>
+</li>
+<li>Let's configure your 3D model to use the rulebook.
+<ul>
+<li>Open up the import settings for your 3D model by double-clicking on it.</li>
+<li>In the window that pops up, you can find “AutoTrimmer” among the settings
+on the right side.</li>
+<li>Under AutoTrimmer, put your rulebook into the rulebook option.
+<em>(Due to a Godot bug, it seems that the quick load window can appear
+underneath the import pop-up. You can drag it out of the way if that
+happens)</em></li>
+</ul>
+</li>
+<li>Now you can start configuring the rulebook. Check the
+<a href="guides/../rulebook.html">rulebook documentation</a>,
+<a href="guides/tutorial2.html">tutorial 2</a> and the
+<a href="guides/../recipes.html">recipes</a> for more information.</li>
+<li>Once you have configured the rulebook, right-click on your 3D model file
+and click “Reimport” to make AutoTrimmer process the mesh.
+If there's anything wrong with your rulebook, you will get an error in the
+“Output” tab that describes what the mistake is and roughly where it is.</li>
+</ol>
+<h3 id="trim-shader"><a class="header" href="#trim-shader">Trim shader</a></h3>
+<p>If you now add a trim to your mesh, it's going to look more or less like this:</p>
+<video autoplay muted loop>
+    <source src="../troubleshooting/zfight.webm" type="video/webm">
+</video>
+<p>Trims generated by AutoTrimmer need a special shader to work.
+Without a special shader, you'll get lots and lots of z-fighting.</p>
+<p>In 3D graphics, z-fighting happens when there are two faces at the exact same
+depth. They end up “fighting” over which face is in front, with one face winning
+for some pixels and the other face winning for other pixels.</p>
+<p>AutoTrimmer will place trims at exactly the same depth as the face that the trim
+is applied to.
+This is honestly begging for z-fighting to happen.</p>
+<p>To fix it, you'll need some special shaders for the trims.
+These shaders give the trims a small depth bonus, which ensures they'll win the
+z-fight.
+I've put a few GDShader scripts below which you can paste into
+your project.
+You will then need to make a new ShaderMaterial for your trims, which uses
+the shader below.</p>
+<p><strong>IMPORTANT:</strong> These shaders don't work in the orthographic view of the Godot
+editor. I think it doesn't work because orthographic view puts the camera
+too far away. In perspective it works quite well.</p>
+<p><strong>Note</strong>: The only difference between these shaders is the fragment shader.
+The vertex shader is the important part and is the same for all of them.
+That's what's being used to apply the
+depth bonus to trims.</p>
+<h4 id="transparent"><a class="header" href="#transparent">Transparent</a></h4>
+<p>This transparent shaders works with all transparent textures.
+The downside of a transparent shader is that it is less efficient than a
+clipped or an opaque shader, for graphics engineering reasons that are a little
+too complex to get into right now.</p>
+<pre><code class="language-gdshader">shader_type spatial;
+render_mode skip_vertex_transform;
+
+const float base_depth_bonus = 0.0001;
+const float layer_depth_bonus = 0.0001;
+uniform sampler2D main_texture: source_color, hint_default_white, filter_nearest;
+
+
+void vertex() {
+	vec4 view = MODELVIEW_MATRIX * vec4(VERTEX, 1);
+	
+	// AutoTrimmer adds a "layer" attribute to the trim surfaces, which
+	// is used to prevent overlapping trims from z-fighting.
+	// The layer attribute is stored in CUSTOM0.x. 
+	float layer = CUSTOM0.x;
+
+	// Put the vertex a little closer to the camera to give it a small benefit
+	// in a z-fight.
+	float final_depth_bonus = base_depth_bonus + layer * layer_depth_bonus;
+	VERTEX = view.xyz * (1.0-final_depth_bonus);
+
+	// Because of "skip_vertex_transform".
+	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
+	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
+}
+
+void fragment() {
+	vec4 sample = texture(main_texture, UV);
+	ALBEDO = sample.rgb;
+	ALPHA = sample.a;
+}
+</code></pre>
+<h4 id="clipped-transparency"><a class="header" href="#clipped-transparency">Clipped transparency</a></h4>
+<p>A clipped shader has binary transparency, meaning that a pixel is either 100%
+opaque or 100% transparent.
+It's more efficient than a normal transparent shader, but less efficient than an
+opaque shader.</p>
+<pre><code class="language-gdshader">shader_type spatial;
+render_mode skip_vertex_transform;
+
+const float base_depth_bonus = 0.0001;
+const float layer_depth_bonus = 0.0001;
+uniform sampler2D main_texture: source_color, hint_default_white, filter_nearest;
+
+
+void vertex() {
+	vec4 view = MODELVIEW_MATRIX * vec4(VERTEX, 1);
+	
+	// AutoTrimmer adds a "layer" attribute to the trim surfaces, which
+	// is used to prevent overlapping trims from z-fighting.
+	// The layer attribute is stored in CUSTOM0.x. 
+	float layer = CUSTOM0.x;
+
+	// Put the vertex a little closer to the camera to give it a small benefit
+	// in a z-fight.
+	float final_depth_bonus = base_depth_bonus + layer * layer_depth_bonus;
+	VERTEX = view.xyz * (1.0-final_depth_bonus);
+
+	// Because of "skip_vertex_transform".
+	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
+	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
+}
+
+void fragment() {
+	vec4 sample = texture(main_texture, UV);
+	if (sample.a &lt; 0.5)
+		discard;
+	ALBEDO = sample.rgb;
+}
+</code></pre>
+<h4 id="opaque"><a class="header" href="#opaque">Opaque</a></h4>
+<p>An opaque shader is a shader that does not support transparency at all.
+Every pixel is 100% opaque.
+This is somewhat more efficient than the other two types of shader above.</p>
+<pre><code class="language-gdshader">shader_type spatial;
+render_mode skip_vertex_transform;
+
+const float base_depth_bonus = 0.0001;
+const float layer_depth_bonus = 0.0001;
+uniform sampler2D main_texture: source_color, hint_default_white, filter_nearest;
+
+
+void vertex() {
+	vec4 view = MODELVIEW_MATRIX * vec4(VERTEX, 1);
+	
+	// AutoTrimmer adds a "layer" attribute to the trim surfaces, which
+	// is used to prevent overlapping trims from z-fighting.
+	// The layer attribute is stored in CUSTOM0.x. 
+	float layer = CUSTOM0.x;
+
+	// Put the vertex a little closer to the camera to give it a small benefit
+	// in a z-fight.
+	float final_depth_bonus = base_depth_bonus + layer * layer_depth_bonus;
+	VERTEX = view.xyz * (1.0-final_depth_bonus);
+
+	// Because of "skip_vertex_transform".
+	NORMAL = normalize((MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	BINORMAL = normalize((MODELVIEW_MATRIX * vec4(BINORMAL, 0.0)).xyz);
+	TANGENT = normalize((MODELVIEW_MATRIX * vec4(TANGENT, 0.0)).xyz);
+}
+
+void fragment() {
+	ALBEDO = texture(main_texture, UV).rgb;
+}
+</code></pre>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<p>By now, your AutoTrimmer installation is hopefully working as intended!
+If you're having trouble, don't hesitate to send me a message. I'll do what
+I can to help you out.</p>
+<p>If you're ready to get started for real,
+you can move on to the <a href="guides/workflow.html">workflow article</a>,
+where I take you through the steps of making a scene with AutoTrimmer.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="workflow"><a class="header" href="#workflow">Workflow</a></h1>
+<p>At the time of writing, AutoTrimmer is still very new.
+I don't have a huge amount of experience with it myself yet.
+However, since I've got more experience than anyone else,
+I figure it's best to write down my thoughts on how to make environments
+with it.</p>
+<p>Below, you can see my main creative project with AutoTrimmer so far.
+What you see took around three or four days of work.
+I am not a very fast artist and textures take me a long time, so
+a more experienced artist could probably do more in less time.</p>
+<video autoplay muted loop>
+    <source src="workflow/church_project.webm" type="video/webm">
+</video>
+<h2 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h2>
+<p>To get started, you're going to need some textures for your surfaces and trims.
+For my church project, I used a mockup drawing to
+both establish the initial idea and get my first textures.</p>
+<h3 id="mock-up-drawing"><a class="header" href="#mock-up-drawing">Mock-up drawing</a></h3>
+<p>Below is the original mockup drawing that I made for the project. It isn't
+much (just a house), and I ended up taking things in another direction,
+but it was enough to help me get started.
+I drew this from a videogamey perspective where everything is seen from the
+front and everything takes up a full
+square. This let me copy-paste a lot of the textures from the mockup.
+This way of working saved me from doing a lot of work twice: I could establish
+the idea and draw textures at the same time.</p>
+<p><img src="guides/workflow/mockup.png" alt="" /></p>
+<h3 id="extracting-the-textures"><a class="header" href="#extracting-the-textures">Extracting the textures</a></h3>
+<p>Figuring out the textures for surfaces is not that difficult.
+It's pretty obvious what the surface texture should be.
+On the other hand, for the trims,
+you need to pay special attention to all the changes
+that you make to the mockup to make the edges look nice.</p>
+<p>In the drawing above, these are the trims that made it into the final project:</p>
+<ul>
+<li><a href="guides/../recipes/molding.html">Molding</a> around the windows and doors. In the final
+project, the dark edges of the molding are on the inside, instead of on the
+outside.</li>
+<li>A roof ridge that's subtly different from the other rooftiles.</li>
+<li>The roof's eave, with a shadow casting onto the wall below it.</li>
+<li>A bit of grime at the bottoms of the walls.</li>
+</ul>
+<p>There's also a couple of things that didn't make it in:</p>
+<ul>
+<li>
+<p>The stone lower half of the wall didn't make it in
+because I wasn't quite happy with
+the texture. If I had liked the texture better, I would have turned it into
+a surface that I could apply on the bottom parts of walls.</p>
+</li>
+<li>
+<p>The wooden shed didn't get all the way to the final project.
+If you look very closely, you might be able to see that the lines inbetween
+the planks are darkened a little at the top and the bottom.
+Replicating that coloring was a little too complex.
+A simple trim with a dark line every so often would only work for the bottom
+edge of the shed, because the top edge beneath the roof is slanted.</p>
+<p>With some shader work (vertex color tricks)
+this could be possible, but it felt like too much effort.</p>
+</li>
+</ul>
+<h3 id="tiling-textures"><a class="header" href="#tiling-textures">Tiling textures</a></h3>
+<p>Tiling textures should usually be about four or five meters large in the
+world. If the texture is meant to have a regular pattern (like floorboards
+or tiles) you might be able to get away with a smaller texture.
+On the other hand, if you have a huge 20 by 20 meter brick wall with nothing
+to break up the texture, you might want a larger texture so that you can
+make it less obvious that the texture is repeating.</p>
+<p>There's also a tech art trick to make repeating textures less
+obvious. It's called “stochastic texture sampling”. However, the typical
+implementations of this trick won't work with pixel art, so unless you're
+an expert at shaders you may have a hard time getting it to work well.</p>
+<h3 id="trimsheet"><a class="header" href="#trimsheet">Trimsheet</a></h3>
+<p>For your trimsheet, you need to take all of your trims, rotate them to be
+horizontal, and put them in an image.
+Below is an example. I made the background green so you can see it better —
+it used to be transparent.</p>
+<p><img src="guides/workflow/trim.png" alt="" /></p>
+<p>Here's the trims from top to bottom:</p>
+<ul>
+<li>Four roof trims: The two up top are for the eave (which is the bottom end of
+the roof)
+The first one is for the wall side
+of the eave edge, the other is for the roof side of the eave edge.
+Then two different variants of roof ridges.</li>
+<li>Three trims for the <a href="guides/../recipes/molding.html">molding</a>: Side, top and bottom. The
+top trim is upside-down here. That's why it's shadow edge is up top.</li>
+<li>One trim for the <a href="guides/../recipes/coping.html">coping</a>.</li>
+<li>Another trim for the roof: This one is used for the rake, which is the slanted
+side of the roof.</li>
+</ul>
+<p>There's also two <a href="guides/../rulebook/trim_corner_config.html">corner textures</a> in the
+bottom-left. Those are both used in the molding.
+The one on the left connects the top molding trim to the side trim, and the
+other one connects the bottom trim to the side trim.</p>
+<h4 id="sidenote-weird-resolution"><a class="header" href="#sidenote-weird-resolution">Sidenote: weird resolution</a></h4>
+<p>This trimsheet is 48 by 64 pixels, which is a rather weird size
+for a texture. The width and height of a texture are
+usually a power of two, like 32, 64, 128 or 256.</p>
+<p>I made the texture this wide because for the church project
+I made world units 24 pixels
+wide. I did that because the number
+24 has some nice properties (you can divide it by a lot of numbers,
+such as 3).</p>
+<p>In theory you should always make sure that your texture sizes are
+a power of two, or you'll have graphics engineers frowning at you.
+Fortunately there weren't any graphics engineers involved in the project,
+so there was nobody to frown at me,
+and I haven't had any problems with the unusual texture size.
+Weird texture sizes are probably kind-of fine for pixelart,
+because low-poly pixelart environments don't demand
+the utmost performance from the computer.</p>
+<h2 id="making-a-rulebook"><a class="header" href="#making-a-rulebook">Making a rulebook</a></h2>
+<p>Once you have your textures, it's time to start making a
+<a href="guides/../rulebook.html">rulebook</a>.</p>
+<p>Check <a href="guides/tutorial2.html">tutorial 2</a>
+if you need an overview of the steps involved in making a rulebook.
+I do it in roughly this order:</p>
+<ol>
+<li>Add the <a href="guides/../rulebook/surface_config.html">surfaces</a>.</li>
+<li>Add the <a href="guides/../rulebook/trim_config.html">trims</a>
+(and <a href="guides/../rulebook/trim_group_config.html">trim groups</a> when necessary).</li>
+<li>Add the <a href="guides/../rulebook/trim_corner_config.html">trim corners</a> if you have any.</li>
+<li>Add the <a href="guides/../rulebook/edge_rules.html">edge rules</a>.</li>
+</ol>
+<p>I made a 3D model with a few houses to test my rulebook
+while I was working on it.</p>
+<p><img src="guides/workflow/test_model.png" alt="" /></p>
+<p>Some things to note about these houses above:</p>
+<ul>
+<li>
+<p>The topology is pretty messy, with a bunch of n-gons on the building on the
+left.
+Fortunately, N-gons are usually fine in AutoTrimmer.
+It all gets turned into triangles by
+the game engine anyways.</p>
+<p>However, with quads and n-gons, you can get
+<a href="guides/../troubleshooting.html#missing-trims">missing trims</a>
+if one of the corners of the face is a 180° corner.
+This is more of a Blender export issue than an AutoTrimmer issue.
+See “<a href="guides/../troubleshooting.html#missing-trims">missing trims</a>”
+for more information.</p>
+<p>I personally leave the n-gons in, and only split them up if I can see that
+it leads to an issue.</p>
+</li>
+<li>
+<p>The rooftiles are unwrapped better in the test project than in the final
+project.
+That's because I was editing object origins to try to
+reduce the amount of UV seams for the test.
+For the final project I didn't think it was worthwhile. A few weird
+texture coordinates don't
+ruin an environment as long as the big picture is good.</p>
+<p>In the future, I want to make a much fancier version of the UV unwrapping
+code (although it's still
+uncertain, because it's quite a research project).
+For now, I'm just living with it.
+You can manually unwrap it fairly easily if you need to — although you can't
+use both manual unwrapping and automatic unwrapping for the same surface.
+What you can do, is make another surface that ends up getting turned into
+the same Godot material.</p>
+</li>
+</ul>
+<h2 id="modelling"><a class="header" href="#modelling">Modelling</a></h2>
+<p>Once you have a couple of surfaces and trims, you can start 3D modelling.</p>
+<p>Working with AutoTrimmer is a pretty short process compared to a normal
+3D modelling workflow, so this is also the last step of the process.
+You basically only need to make a block-in of the 3D model,
+perhaps UV unwrap some of the faces,
+and you can let AutoTrimmer handle the rest.</p>
+<h3 id="the-church-project"><a class="header" href="#the-church-project">The church project</a></h3>
+<p>Here's a screenshot of the church project in Blender:</p>
+<p><img src="guides/workflow/wireframe.png" alt="" /></p>
+<p>There's a couple of things I want you to notice here:</p>
+<h4 id="both-automatic-and-manual-uv-unwrapping"><a class="header" href="#both-automatic-and-manual-uv-unwrapping">Both automatic and manual UV unwrapping</a></h4>
+<p>Although the walls and floors are unwrapped by AutoTrimmer,
+the windows and doors are manually UV unwrapped.
+I made a few windows and doors and copy-pasted them
+onto most of the buildings.
+AutoTrimmer can automatically unwrap tiling textures like bricks and tiles,
+but it's no good with windows and doors. You have to UV unwrap those manually.</p>
+<p>Another thing to note here: When you're using AutoTrimmer, you can use
+AutoTrimmer's functionality as much or as little as you like.
+AutoTrimmer won't mess with UVs or add trims when you don't ask it to, so you
+can use it for only the parts where it's helpful.</p>
+<h4 id="unrefined-topology"><a class="header" href="#unrefined-topology">Unrefined topology</a></h4>
+<p>Frankly, the topology is rather messy.
+I basically made a block-in with the right
+shape and then tossed that into AutoTrimmer.</p>
+<p>When you're doing a full 3D workflow, with UV unwrapping involved, I think
+there's a good reason to go for a clean topology:
+A clean topology makes UV unwrapping a lot easier.</p>
+<p>With AutoTrimmer you can afford to be a lot lazier.
+You don't necessarily gain anything from a clean topology here,
+because the computer doesn't care — it's just drawing triangles
+— and AutoTrimmer doesn't care unless the triangles are ill-defined.
+The concept of a clean topology is something that mostly exists among 3D
+artists.</p>
+<p>Now, triangles are usually not ill-defined, but there's a circumstance
+where Blender can output triangles that have zero surface area —
+meaning that the three corners form a line or a point instead of a proper
+triangle.
+This can only happen with quads and n-gons
+where one of the corners of the face is a 180° corner.
+For more information on when this happens and how to fix it, check the section
+on <a href="guides/../troubleshooting.html#missing-trims">missing trims</a>
+in troubleshooting &amp; workarounds.</p>
+<p>There's one last thing to note: Blender's loop cut tool only works well
+with quadrilaterals. Not triangles or n-gons.
+That's a valid reason to prefer quads over n-gons.</p>
+<h3 id="blender-advice"><a class="header" href="#blender-advice">Blender advice</a></h3>
+<p>AutoTrimmer works with any 3D editing software, but I personally use Blender.
+Here's some advice for fellow Blender users.</p>
+<h4 id="hotkeys"><a class="header" href="#hotkeys">Hotkeys</a></h4>
+<p>In <a href="guides/tutorial1.html">tutorial 1</a>,
+I taught you to use Blender with gizmos (the arrows that
+you can click and drag to move things).
+I actually never use gizmos myself and instead use hotkeys for all of the common
+operations.
+Hotkeys let you edit things <em>super fast</em>. You will be <em>a man of speed</em>
+(or <em>woman of speed</em>).</p>
+<p>It takes a lot of getting used to, though.</p>
+<p>Here's the hotkeys you should know:</p>
+<ul>
+<li>Undoing your screw-ups
+<ul>
+<li><code>ctrl + z</code> to undo your latest screw-up. Whenever you screw up, press this.</li>
+<li><code>ctrl + shift + z</code> to redo</li>
+</ul>
+</li>
+<li>Basics
+<ul>
+<li><code>g</code> is used to move the selection (“g” stands for “grab”).
+By default it probably doesn't do what you
+want it to do. While moving, press <code>x</code>, <code>y</code> or <code>z</code> to restrict it
+to just one axis. Then it should be a lot more useful.
+Also hold down <code>ctrl</code> to make it snap.</li>
+<li><code>s</code> to scale. You can once again use <code>x</code>, <code>y</code> and <code>z</code> to restrict the axis.</li>
+<li><code>r</code> to rotate. This time <code>x</code>, <code>y</code> and <code>z</code> determine the rotation axis.</li>
+<li><code>e</code> to extrude.</li>
+<li><code>ctrl + r</code> to loop cut. Useful when you need to split a face.</li>
+<li><code>k</code> for the knife tool. This lets you cut new edges into a mesh.
+If you want to make the new edges more exact, the “snap to grid” option
+in the <code>shift + s</code> menu can be useful (along with my later advice on
+changing the grid size).</li>
+<li><code>x</code> to delete.</li>
+<li><code>a</code> to select everything, or twice to deselect everything.</li>
+<li><code>tab</code> to switch between edit mode and (usually) object mode.</li>
+</ul>
+</li>
+<li>Hiding
+<ul>
+<li><code>h</code> to hide the selection.</li>
+<li><code>shift + h</code> to hide everything except the selection.</li>
+<li><code>alt + h</code> to unhide everything.</li>
+</ul>
+</li>
+<li>Fixing a mesh
+<ul>
+<li><code>x</code> to delete. “Faces” is usually the most useful option
+and will delete only what you had selected. The “vertices” option
+is the nuclear option that deletes everything connected to the selection.
+The other options are rarely useful.</li>
+<li><code>f</code> can be used to make new faces.
+Select the edges of the new face and tap <code>f</code>.</li>
+<li><code>m</code> to merge vertices together.
+Especially “merge by distance” is very useful for when you have two vertices
+that look like they're in the exact same position, but
+which don't count as the same vertex.</li>
+<li><code>shift + x</code> to remove an unnecessary vertex or edge.</li>
+</ul>
+</li>
+<li>Sometimes useful
+<ul>
+<li><code>l</code> to select everything that's connected to a face
+(useful for more complex meshes where some parts are disconnected)</li>
+<li>Tap <code>g</code> twice to glide a vertex along an edge that it's connected to.
+Press <code>c</code> once it's on the right edge if you want to go the other way.</li>
+</ul>
+</li>
+</ul>
+<h4 id="advice-for-making-buildings"><a class="header" href="#advice-for-making-buildings">Advice for making buildings</a></h4>
+<p>Here's some general advice for making buildings in Blender:</p>
+<ul>
+<li>
+<p><em><strong>Vertex snapping</strong></em> is super useful.
+It lets you move the selection to the
+exact x, y, or z-coordinate of another vertex.
+If you want to snap (for example) the y and z coordinates at the same time,
+you can use <code>shift + x</code>.</p>
+<p>You can find the snapping settings in the menu with the magnet icon at the
+top of the 3D viewport. While moving some vertices, you can enable snapping
+by holding down <code>ctrl</code>. I also recommend turning on snapping for rotation
+(in the same menu).</p>
+<p>If you want to use increment snapping and vertex snapping at the same time,
+you can <code>shift + click</code> on snapping modes to enable multiple snapping modes.
+I almost always have both increment snapping and vertex snapping enabled.</p>
+<p>Edge and face snapping are also sometimes useful, but I usually keep them off
+unless I need them.</p>
+</li>
+<li>
+<p>If you're working with faces that aren't aligned with the grid,
+you should know about the “<em><strong>transform orientations</strong></em>” menu.
+This one is only useful in certain situations, so you can skip this if you
+feel like you've already learned enough for today.</p>
+<p><em>Short description for mathematics people:
+The transform orientations menu lets you pick a
+custom set of basis vectors. Very useful for axis constraints.</em></p>
+<p>In Blender, you'll probably very often use the <code>x</code>, <code>y</code> and <code>z</code> keys
+to restrict in which directions you can move the selection.
+By default, these keys restrict you to moving things on
+the scene's right, forward and up directions.</p>
+<p>If you want to restrict movement to different directions, you can use
+the “transformation orientation” menu to pick out which directions you want to
+restrict it to.
+The “transformation orientations” menu is to the left of the snapping menu.
+It has an icon of three arrows and says “Global” by default.</p>
+<p>Sometimes you're working with faces that are rotated so that they aren't
+aligned to the grid anymore.
+For those situations, a very useful feature is the ability to add
+a custom set of directions with the “transformation orientations” menu's
+plus button.
+Select a face and press the button, and you'll get a set of directions based
+upon the face you had selected, with the x-axis and y-axis being
+parallel to the face and the z-axis being perpendicular to the
+face.</p>
+<p>It's difficult to explain in words, but it will likely be much more clear if
+you try it out!</p>
+</li>
+</ul>
+<h4 id="advice-for-working-with-pixel-art-in-blender"><a class="header" href="#advice-for-working-with-pixel-art-in-blender">Advice for working with pixel art in Blender</a></h4>
+<p>Here are some tips for working with pixel art in Blender:</p>
+<ul>
+<li>
+<p>In Blender, you can <em><strong>change the size of the grid</strong></em> to match the pixel size
+that you're using. It's useful for increment snapping,
+and you can also use <code>snap to grid</code> in the <code>shift + S</code> menu to align all
+your vertices to the pixel grid.</p>
+<p>To change the size of the grid, search “unit” in the properties panel and
+set “Unit System” to “none” instead of “metric”.
+After you've done that, you can go to the “viewport overlays” menu
+(in the top-right of the 3D viewport, icon has two circles),
+and it will now let you change “scale” and “subdivisions”.</p>
+<p>If you're using 16 pixels per world unit, type in “1/16” for scale
+and “16” for subdivisions. Otherwise, substitute “16” with the right amount of
+pixels per world unit. Now the grid should be the size of a pixel.
+You can change it back to normal by using “1” for scale and “10” for
+subdivisions.</p>
+</li>
+<li>
+<p>When you're unwrapping UVs for pixel art textures, it's nice if the <em><strong>UVs
+snap to pixels</strong></em>.
+In Blender's UV editor, open the <code>UV</code> menu, then the submenu <code>Round to Pixels</code>
+and then set it to <code>Corners</code>.
+The next time you edit UVs, it will snap your selection to the texture's
+pixels.</p>
+</li>
+<li>
+<p>This add-on can help to make <em><strong>UV unwrapping pixel art</strong></em> a lot less work:
+<a href="https://github.com/noio/Pixel-Unwrapper">Noio's Pixel Unwrapper</a>.</p>
+</li>
+</ul>
+<p>That's all the advice I've got</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="recipes"><a class="header" href="#recipes">Recipes</a></h1>
+<p>AutoTrimmer is all about decorating edges.
+Just decorating edges might not sound so powerful at first,
+but in truth a large part of the work in an environment art
+project can be boiled down to decorating edges.
+With a bit of creativity, you'll find plenty of things that you can do with
+“just” decorating edges.</p>
+<p>On this page you can find a number of useful examples to help get you started.
+Creating a rulebook can be tricky at first,
+but just keep in mind that you only have to make the rules once.
+Once you've got a rulebook, you can reuse it and
+make as many environments with it as you like.</p>
+<p>I'm assuming you already have AutoTrimmer set up and ready to go.
+If not, check out the <a href="guides.html">tutorials</a> first.</p>
+<ul>
+<li><a href="recipes/convex.html">Convex corners</a>: decorating the pointy edges</li>
+<li><a href="recipes/concave.html">Concave corners</a>: decorating the inwards corners</li>
+<li><a href="recipes/coping.html">Coping</a>: decorative stone edges</li>
+<li><a href="recipes/molding.html">Molding</a>: decorations around windows and doors</li>
+<li><a href="recipes/roofs.html">Roofs</a>: rooftiles, ridges and eaves</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="convex-corners-decorating-the-pointy-edges"><a class="header" href="#convex-corners-decorating-the-pointy-edges">Convex corners: decorating the pointy edges</a></h2>
+<p>This is one of the most basic tricks but also likely the most useful.
+Here's just a few examples of what this can do:</p>
+<ul>
+<li>Showing a row of bricks at the top of a brick wall.</li>
+<li>Adding a transition between grass and the top of a cliff.</li>
+<li>Adding edges to the platforms in a platformer game.</li>
+</ul>
+<p><img src="recipes/images/convex_corners.png" alt="" /></p>
+<p>Here's how to do it:</p>
+<ol>
+<li>Draw one or two trims onto your trimsheet. If you look at the picture above,
+one of these trims is going to replace the green trim and another one can
+replace the blue trim. They can be however wide you want them to be
+(although when a trim is wider than the face that it's on, it can lead
+to subtle graphics glitches).</li>
+<li>Let's add the trims to your rulebook. For each of your trims, do the following:
+<ul>
+<li>In your rulebook, create a new trim.</li>
+<li>Give them a name.
+Try to give them a name that makes sense, like “brick_top” if you're adding
+a row of bricks to the top of a brick wall.
+Good names will make it easier to work with your rulebook as it gets bigger.</li>
+<li>Give the trim the right texture using the settings
+“<a href="recipes/../rulebook/trim_config.html#pixel-y-near">pixel y near</a>”
+and “<a href="recipes/../rulebook/trim_config.html#pixel-y-far">pixel y far</a>”.
+Check the documentation of
+“<a href="recipes/../rulebook/trim_config.html#pixel-y-near">pixel y near</a>” to
+see how you can find the right numbers for these settings in Aseprite.</li>
+<li>Optionally, you can specify a whitelist.
+Oftentimes this isn't really necessary.</li>
+</ul>
+</li>
+<li>Now let's make an edge rule, which will add our trim to the 3D model:
+<ul>
+<li>Create a new edge rule.</li>
+<li>Fill in the names of your trims into the options
+“<a href="recipes/../rulebook/edge_rules.html#add-trim-here-optional">add trim here</a>” and
+“<a href="recipes/../rulebook/edge_rules.html#add-trim-at-neighbor-optional">add trim at neighbor</a>”,
+depending on where you want them to go.</li>
+<li>Paste the following code into “condition”,
+replacing “DIRT” and “BRICK” with the
+<a href="recipes/../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE</a> names of
+your surfaces.
+<pre><code class="language-python">self.surface == DIRT
+and neighbor.surface == BRICK
+and angle &gt; 40
+</code></pre>
+(This will add trims to all edges between <code>DIRT</code>
+and <code>BRICK</code>, where the corner is convex (pointy) and at least 40°.
+Try adjusting it to your liking!)</li>
+</ul>
+</li>
+<li>Reimport your 3D model. You should now see your trims appear.</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="concave-corners-decorating-the-inwards-corners"><a class="header" href="#concave-corners-decorating-the-inwards-corners">Concave corners: decorating the inwards corners</a></h2>
+<p>This trick is almost entirely the same as the <a href="recipes/convex">convex corners recipe</a>,
+with one big difference:
+This time, we want to get specifically the corners that aren't pointy.</p>
+<p>Here's a few examples of what you can do with this:</p>
+<ul>
+<li>Add a grassy edge at the bottom of an outdoors wall.</li>
+<li>Add skirting to an indoor wall.</li>
+<li>Add grime or discoloration to the bottoms of walls.</li>
+</ul>
+<p><img src="recipes/images/concave_corners.png" alt="" /></p>
+<p>What you need to do is pretty much identical to
+the <a href="recipes/convex.html">convex corners</a> recipe:</p>
+<ol>
+<li>Start by following all the steps from the <a href="recipes/convex.html">convex corners</a> recipe
+up until you have to paste in the code for the edge rule.
+Use the following code instead,
+replacing “DIRT” and “BRICK” with the
+<a href="recipes/../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE</a> names of
+your surfaces.
+<pre><code class="language-python">self.surface == DIRT
+and neighbor.surface == BRICK
+and angle &lt; -40
+</code></pre>
+The only difference is the line of code involving <code>angle</code>.
+Now, <code>angle</code> has to be smaller than -40, which means that this rule will
+only apply to edges that are concave with an angle of at least 40°.</li>
+<li>Reimport your 3D model. You should now see your new trims appear.</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="coping-decorative-stone-edges"><a class="header" href="#coping-decorative-stone-edges">Coping: decorative stone edges</a></h1>
+<p>In architecture, decorative stone edges are called “coping”.
+They're easy to add and surprisingly versatile.
+You can use these to easily add tops to fences and facades.
+The church demo also uses coping for most of
+the stone decorations on the church.</p>
+<p><img src="recipes/images/coping.png" alt="" /></p>
+<p>We'll be making one surface and one trim:
+The surface will be the top of the coping, and the trim will be its sides.</p>
+<p>Here's how you do it:</p>
+<ol>
+<li>Start by adding a 3D model:
+<ul>
+<li>Block in something that will use the coping, like a brick fence.</li>
+<li>Create a new material for the coping. I simply called it “coping”.</li>
+<li>Use the material in the model, for example adding it to the top of the
+brick fence.</li>
+<li>Reimport your 3D model in Godot. You should see your changes already,
+although you'll get a warning about AutoTrimmer not recognizing your
+“coping” material (yet!)</li>
+</ul>
+</li>
+<li>We'll need a tiling texture for the top of the coping.
+If you want the coping to have lines like in the screenshot, create a
+texture with a vertical line every so many pixels (in the screenshot it's
+every 24 pixels, although that can only really work if your texture is a
+multiple of 24 pixels wide).</li>
+<li>Create a Godot material that uses your new texture.</li>
+<li>Let's add the coping surface.
+<ul>
+<li>In your rulebook, create a new surface for the coping.</li>
+<li>Set its name to the same name as you used for the material in the 3D model.
+If you don't give it exactly the same name, AutoTrimmer won't recognize it!
+Capitalization also has to match.</li>
+<li>Set “replace with material” to the Godot material you made in the previous
+step.</li>
+<li>Set “<a href="recipes/../rulebook/surface_config.html#uv-unwrap-mode">UV unwrap mode</a>”
+to “unwrap along length”.
+This will align the texture to the sides of the surface, which is exactly
+what we want for the coping.</li>
+<li>Put the texture you made into “texture size source”.</li>
+<li>Check the option
+“<a href="recipes/../rulebook/surface_config.html#may-mirror-texture-to-line-up">may mirror texture to line up</a>”.
+This will help align the surface with its trims.</li>
+<li>Reimport the model and see if the top of your coping is looking good.</li>
+</ul>
+</li>
+<li>Draw a trim for the side of the coping on your trimsheet.
+If you gave the coping
+a line, don't forget to add lines to the trim at the same distance.</li>
+<li>Now let's configure the trim.
+<ul>
+<li>Create a new trim.</li>
+<li>Give it a name. I called it “coping_side”.</li>
+<li>Give it the right texture.</li>
+<li>Enable the option
+“<a href="recipes/../rulebook/trim_config.html#may-mirror-texture-to-line-up">may mirror texture to line up</a>”.</li>
+<li>Optionally, configure the trim's <a href="recipes/../rulebook/trim_config.html#end-and-corner-surface-whitelist-optional">whitelist</a>.
+I don't think it's really necessary.</li>
+</ul>
+</li>
+<li>Lastly we'll add the edge rule.
+<ul>
+<li>Create a new edge rule.</li>
+<li>Set “<a href="recipes/../rulebook/edge_rules.html#add-trim-at-neighbor-optional">add trim at neighbor</a>”
+to the name of your “coping_side” trim.</li>
+<li>Paste in the condition below. In the code, replace the word “COPING” with
+the <a href="recipes/../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE name</a>
+of your coping surface.
+<pre><code class="language-python">self.surface == COPING
+and neighbor.surface != COPING
+and angle &gt; 10
+</code></pre>
+</li>
+<li>Now reimport your model and see how it looks!</li>
+</ul>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="molding-decorations-around-windows-and-doors"><a class="header" href="#molding-decorations-around-windows-and-doors">Molding: decorations around windows and doors</a></h1>
+<p>The architectural term for decorations around the holes of windows and doors
+is “molding”.
+This molding recipe will make it super easy to add windows and doors to your
+buildings.
+It doesn't just work for square holes:
+In the church demo, this molding
+recipe is also used for all of the arched windows and doors.
+To make the church doors look more richly decorated,
+I added two moldings instead of just one.</p>
+<p><img src="recipes/images/molding.png" alt="" /></p>
+<p>This recipe is pretty much the advanced version of the
+<a href="recipes/coping.html">coping</a> recipe.
+Instead of using just a single trim, we'll use three different trims.
+Which trim we will use depends on the direction that the side is facing.
+In the church demo,
+I've added a windowsill to the bottom trim and add a little hint of shadow to
+the top trim.</p>
+<p>Here's how you do it:</p>
+<ol>
+<li>Let's start in your 3D model:
+<ul>
+<li>Create a hole for a window.</li>
+<li>Create a new material for the molding and assign it to the
+sides of the window's hole. I called the material “molding”.</li>
+</ul>
+</li>
+<li>Create a surface for the molding. This surface is going to be used for the
+sides of the hole that the door or window sits in.
+<ul>
+<li>Give the surface the same name as the name of the molding material in your
+3D model.
+If you don't give it exactly the same name, AutoTrimmer won't recognize it!
+Capitalization also has to match.</li>
+<li>Give the molding surface a texture. If you want to give it lines
+(like for the coping recipe),
+follow the same steps for the surface as in the coping recipe.</li>
+<li>Set the “<a href="recipes/../rulebook/surface_config.html#uv-unwrap-mode">UV unwrap mode</a>”
+to either “Unwrap” or “Unwrap along length”.</li>
+<li>Set the texture size by putting an image into “texture size source”
+(if you don't have an image, you can type the size into
+“texture size pixels”)</li>
+<li>Now reimport the 3D model and see if your molding surface looks right.</li>
+</ul>
+</li>
+<li>Now you'll need to add three different trims to your trimsheet.
+One trim for the top side, one for the bottom side,
+and a last trim for the left and right side.</li>
+<li>Add the three trims to the rulebook.
+<ul>
+<li>Give them names, for example “molding_top”, “molding_side”
+and “molding_bottom”.</li>
+<li>Set their textures to the ones you made in the previous step.</li>
+<li>Optionally, configure their whitelists.</li>
+</ul>
+</li>
+<li>Because we want our three trims to get corners between each other,
+we'll need to put them in the same trim group.
+Otherwise they would ignore each other!
+<ul>
+<li>Create a new trim group, and add the three trims you just made.</li>
+</ul>
+</li>
+<li>Depending on how your trims look, it may make things look a lot better if we
+add some special textures for the trim corners.
+<ul>
+<li>In the trimsheet, add a corner texture that connects
+the top side to the left/right side</li>
+<li>Add another corner texture
+connecting the bottom side to the left/right side.</li>
+<li>Note: We won't need any sawn-off corner textures,
+because you'd need to have some really crazy window shapes for
+sawn-off corners to show up.</li>
+</ul>
+</li>
+<li>Now that we have our surface, trims, and trim corners, we can add the edge
+rules. We'll add three edge rules. For the first edge rule, we'll
+add the “molding_top” trim.
+<ul>
+<li>Create a new edge rule.</li>
+<li>Set “add trim at neighbor” to your “molding_top” trim.</li>
+<li>Paste the following code into the condition, adjusting “MOLDING” to the
+appropriate <a href="recipes/../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE</a>
+name for your surface.
+<pre><code class="language-python">self.surface == MOLDING
+and neighbor.surface != MOLDING
+and neighbor.dir.y &gt; 0.8
+and angle &gt; 10
+</code></pre>
+</li>
+</ul>
+</li>
+<li>Now let's add the “molding_bottom” trim.
+<ul>
+<li>Create a new edge rule.</li>
+<li>Set “add trim at neighbor” to your “molding_bottom” trim.</li>
+<li>Paste the following code into the condition,
+once again adjusting “MOLDING” as necessary.
+<pre><code class="language-python">self.surface == MOLDING
+and neighbor.surface != MOLDING
+and neighbor.dir.y &lt; -0.8
+and angle &gt; 10
+</code></pre>
+</li>
+</ul>
+</li>
+<li>Lastly, we'll add the edge rule for the “molding_side” trim.
+<ul>
+<li>Create a new edge rule.</li>
+<li>Ensure that the new edge rule appears behind the other two edge rules in
+the list! It's very important that this edge rule runs last, because it
+has the fewest restrictions of the three edge rules.
+If this edge rule were to run before the other two, it would take up all
+the edges where the other two trims should be added, and you wouldn't see
+the other two trims in the end result.</li>
+<li>Set “add trim at neighbor” to your “molding_side” trim.</li>
+<li>Paste in the following condition, adjusting “MOLDING”.
+<pre><code class="language-python">self.surface == MOLDING
+and neighbor.surface != MOLDING
+and angle &gt; 10
+</code></pre>
+</li>
+</ul>
+</li>
+<li>With the rules in place, reimport your 3D model and see if it works!</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="roofs-rooftiles-ridges-and-eaves"><a class="header" href="#roofs-rooftiles-ridges-and-eaves">Roofs: rooftiles, ridges and eaves</a></h1>
+<p>Every building needs a roof of some kind. In this recipe, we'll be
+creating a roof surface that we'll decorate with two trims:
+One for the ridges (the sharp edges at the top of the roof) and one for the
+eaves (the outer sides of the roof).</p>
+<p>This roof recipe lets you make normal straight roofs as well as roofs that
+are curved, like at the ends of the big roof in the screenshot below.</p>
+<p><img src="recipes/images/basic_roof.png" alt="" /></p>
+<p>Here's how you can make a roof like this:</p>
+<ol>
+<li>Start by blocking in a house in your 3D model. For the roof, create a new
+material. I will simply be calling this material “roof”, but you can use
+whatever name suits you.</li>
+<li>Reimport the 3D model in Godot. You should see your changes appear.
+You should also see a warning in the “output” window
+about AutoTrimmer not recognizing your roof material. Let's fix that.</li>
+<li>First we'll need a rooftile texture. Because rooftiles are supposed to tile,
+it won't look unnatural if you make a small texture of just a single
+rooftile. That said, a big texture gives you the opportunity to add some
+color variation to your rooftiles, if that's what you're looking for,
+although it's also more work.
+(Note that AutoTrimmer lets you overwrite small images with bigger images
+as long as you use the “texture size source” option for your surface
+instead of the “texture size pixels” option. That means that you can start
+with a small texture and replace it with a bigger texture later)</li>
+<li>Turn the rooftile texture into a Godot material.
+How you do this is up to you. You can either use a StandardMaterial3D or
+a ShaderMaterial.</li>
+<li>Now, let's add the roof surface to your rulebook.
+<ul>
+<li>Add a new surface to your rulebook.</li>
+<li>Change its name to match the name of the material in
+your 3D model exactly. Capitalization also has to match!</li>
+<li>Put your Godot material into the “replace with material” option.</li>
+<li>Set “UV unwrap mode” to “unwrap”.</li>
+<li>Put your rooftile texture into “texture size source”.</li>
+<li>Enable the option “may mirror texture to line up”
+(otherwise it won't line up with the roof on the other side of the ridge)</li>
+<li>Reimport your 3D model.
+If the rooftiles are looking like they should, we can move on to the trims.</li>
+</ul>
+</li>
+<li>Let's start on the trims! We're going to make two trims:
+One trim is going to be the ridge (the sharp top edge of the roof),
+the other two trim is going to be used for the eave
+(the lower edge of the roof).
+<ul>
+<li>Add a texture for the ridge trim to your trimsheet.</li>
+<li>Add a texture for the eave trim to your trimsheet.
+I will be using a very simple two pixel wide black line for this.
+A nice idea is to add some half-transparent black lines
+underneath for fake shadows. I did that for the church demo.</li>
+</ul>
+</li>
+<li>We'll need to add the trims to the rulebook next.
+<ul>
+<li>Create two new trims. I will be calling them “ridge” and “eave”.</li>
+<li>Configure both trims to use the right texture.</li>
+<li>For the ridge trim, add the roof surface to the whitelist. This prevents
+the ends of its trim from extending a little bit onto walls when
+the angle difference is very shallow.</li>
+<li>For the ridge trim, enable the option “may mirror texture to line up”
+(otherwise it won't line up with the ridge on the other side of the
+edge)</li>
+</ul>
+</li>
+<li>We'll need to add some edge rules so that the trims will show up on
+the 3D model.
+We'll start with an edge rule for the ridges.
+<ul>
+<li>Create a new edge rule.</li>
+<li>Set both “add trim here” and “add trim at neighbor” to your ridge trim.</li>
+<li>Paste the following code into the condition, replacing “ROOF” with the
+<a href="recipes/../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE</a>
+name of your roof surface.
+<pre><code class="language-python">self.surface == ROOF
+and neighbor.surface == ROOF
+and self.uv_dir !~= -neighbor.uv_dir
+and angle &gt; 10 
+</code></pre>
+(This condition uses changes in texture direction to see where we need to
+add ridges. Check the documentation on
+<a href="recipes/../rulebook/edge_rules.html#uv_dir">uv_dir</a> if you'd like to
+know more.
+Furthermore, the <code>!~=</code> operator is the
+“<a href="recipes/../rulebook/edge_rules.html#approximately-equals">not approximately equal</a>”
+operator)</li>
+<li>Reimport the mesh. Your ridges should show up now!</li>
+</ul>
+</li>
+<li>Lastly we'll add the eaves.
+<ul>
+<li>Create a new edge rule.</li>
+<li>Set “add trim at neighbor” to your eave trim.</li>
+<li>Paste the following code into the condition, again replacing “ROOF” with
+the right name for your roof surface.
+<pre><code class="language-python">self.surface == ROOF
+and neighbor.surface != ROOF
+and angle &gt; 10
+</code></pre>
+</li>
+<li>Reimport your 3D model. You should now have a pretty decent looking roof!</li>
+</ul>
+</li>
+</ol>
+<p>I've made a roof of black rooftiles here, but you can use the same steps for
+lots of different types of roofs.
+You can also add multiple variations of roofs to your project for some
+extra variety.</p>
+<h2 id="optional-a-trim-for-the-concave-corners"><a class="header" href="#optional-a-trim-for-the-concave-corners">Optional: A trim for the concave corners</a></h2>
+<p>For me, the roof is already looking pretty good as it is,
+but in the screenshot up top you can see a UV seam where the small roof
+on the side meets the bigger roof.
+It doesn't really bother me, but if you want,
+we can cover it up with a thin line.</p>
+<p>Notice the little black line in the concave corner of the roof.</p>
+<p><img src="recipes/images/basic_roof_concave.png" alt="" /></p>
+<p>It's a small difference, but if you think it's worth your time,
+here's how you do it:</p>
+<ol>
+<li>Add a black line to your trim sheet (if you also did the eave as a black
+line, you can also reuse a one-pixel-tall part of that texture instead of
+making a new one).</li>
+<li>Add a trim for your black line.
+<ul>
+<li>Give it a name. I called mine “roof_concave”.</li>
+<li>Configure the texture.</li>
+<li>Optionally give it a whitelist. I personally didn't find this necessary.</li>
+</ul>
+</li>
+<li>Now let's add the edge rule.
+<ul>
+<li>Set “add trim here” to your new trim.</li>
+<li>Paste in the following condition, again adjusting “ROOF” as needed:
+<pre><code class="language-python">self.surface == ROOF
+and neighbor.surface == ROOF
+and self.uv_dir !~= -neighbor.uv_dir
+and angle &lt; -10
+</code></pre>
+</li>
+<li>Reimport your 3D model. You should now see a little trim on the concave
+corners of the roof.</li>
+</ul>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rulebook"><a class="header" href="#rulebook">Rulebook</a></h1>
+<p>In AutoTrimmer, all of the rules and settings are
+stored in (what I call) a “rulebook”.
+A rulebook contains absolutely everything that AutoTrimmer needs to know:</p>
+<ul>
+<li><a href="rulebook/surface_config.html">Surfaces</a></li>
+<li><a href="rulebook/trim_config.html">Trims</a></li>
+<li><a href="rulebook/trim_corner_config.html">Trim corners</a></li>
+<li><a href="rulebook/trim_group_config.html">Trim groups</a></li>
+<li><a href="rulebook/edge_rules.html">Edge rules</a></li>
+</ul>
+<p>Besides those things, which each have their own separate pages in the
+documentation,
+a rulebook also has some general settings.
+Those general settings are explained on this page.</p>
+<p><img src="rulebook/screenshots/rulebook.png" alt="" /></p>
+<h2 id="defaults"><a class="header" href="#defaults">Defaults</a></h2>
+<h3 id="pixels-per-world-unit-optional-but-highly-recommended"><a class="header" href="#pixels-per-world-unit-optional-but-highly-recommended">Pixels per world unit <em>(optional but highly recommended)</em></a></h3>
+<p><em>For the textures, how many pixels wide is a world unit? In Godot, this is essentially pixels per meter.</em></p>
+<p>Pixels per world unit is used to calculate how big your textures and trims
+are in the world.
+For example, if you have a trim that's 8 pixels tall on the texture, and
+"pixels per world unit" is set to 16,
+the generated trim will be 0.5 world units tall
+(so half the width of a grid square).*</p>
+<p><strong>World unit explained:</strong> <em>The term “world unit” refers to the width of one
+square in the world's coordinate grid.
+In Godot and most other 3D software, a world unit is a meter
+by convention.
+The exception is Unreal Engine,
+where a world unit is a centimeter by convention.
+That being said, a world unit doesn't have to correspond to a real-world size.
+It can be as big or as small as you want it to be.</em></p>
+<p>Below, you can see 16 pixels per world unit on the left,
+and 8 pixels per world unit on the right.</p>
+<p><img src="rulebook/screenshots/rulebook_pixels_per_world_unit.png" alt="" /></p>
+<h3 id="default-trim-surface-optional-but-highly-recommended"><a class="header" href="#default-trim-surface-optional-but-highly-recommended">Default trim surface <em>(optional but highly recommended)</em></a></h3>
+<p><em>The surface that will be used for all trims, unless the trim config specifies
+a surface override.</em></p>
+<p>When using AutoTrimmer you'll probably find yourself
+using one trim sheet for almost all of your trims.
+Once you've set up your surfaces, you can fill in the name of the default trim
+surface here.
+All of your trims will use this surface unless you explicitly set them to use
+another one.
+This helps to make things a little more convenient.</p>
+<p>The name in “default trim surface” must exactly match the
+<a href="rulebook/surface_config#name">Name</a> of the
+surface.</p>
+<p><em>Surface names are sensitive to capitals and spaces. For example,
+if your surface is called “brick” and you fill in “Brick” for this option, you'll
+get an error, because of the mismatch in the capital letter B.</em></p>
+<hr />
+<h2 id="physics"><a class="header" href="#physics">Physics</a></h2>
+<h3 id="add-static-bodies"><a class="header" href="#add-static-bodies">Add static bodies</a></h3>
+<p><em>Automatically add physics nodes upon importing the 3D model.</em></p>
+<p>In a game engine, a 3D model is just for looks.
+It's not a real landscape, just a fake, paperthin facimile of a landscape
+that doesn't do anything by itself.
+By default characters and objects will fall straight through it.</p>
+<p>If you want characters to be able to walk on your models
+instead of falling straight through it,
+you don't just need the 3D model, you also need physics bodies.
+Physics bodies are used by the physics engine to simulate things like gravity
+and collisions.</p>
+<p>For Godot, AutoTrimmer can automatically generate StaticBody3D nodes for you.
+A StaticBody3D is a physics body that never moves.
+It's the best choice for fixed (not moving) level geometry.</p>
+<p>However, it's not a good choice for things like doors, which are supposed to
+move.
+If you're making levels with AutoTrimmer and you want to add doors
+and other interactive objects, it's better to add those
+in the game engine rather than trying to do it with AutoTrimmer.</p>
+<p>AutoTrimmer will generate StaticBody3D nodes with a ConcavePolygonShape3D.
+This is the least efficient physics shape, but it can handle the greatest variety
+of shapes.
+As long as your 3D models are low poly,
+physics performance should stay pretty good.</p>
+<h3 id="collider-suffix"><a class="header" href="#collider-suffix">Collider suffix</a></h3>
+<p><em>This suffix signifies that a mesh is a custom collision shape.</em></p>
+<p>If you've made a staircase, it can happen that your character gets stuck on
+every step. One way to handle this is to make a more complex character
+controller that's built to handle things like stair steps properly.
+A much easier solution is to make the stairs act as if they're a ramp.
+Of course, we still want them to look like a staircase, but for physics, they
+should act like a ramp. We can do this by using one mesh for the graphics and
+another mesh for the physics.</p>
+<p>By default, if “add static bodies” is enabled, you can add a mesh whose name
+ends with “_Collider” to the scene in Blender.
+Parent it to the mesh whose physics mesh you want it to replace.
+AutoTrimmer will then use the “_Collider” mesh for
+the physics body of the parent node.
+The “_Collider” mesh itself won't be visible.</p>
+<p>You can use this option to change “_Collider” to something else if you want.
+If “add static bodies” is disabled, all “_Collider” meshes are ignored
+(they still won't be added to the graphics).</p>
+<hr />
+<h2 id="warnings"><a class="header" href="#warnings">Warnings</a></h2>
+<h3 id="warn-for-unknown-surfaces"><a class="header" href="#warn-for-unknown-surfaces">Warn for unknown surfaces</a></h3>
+<p><em>Disables warnings for unrecognized materials in the 3D model.</em></p>
+<p>When AutoTrimmer comes across a material in your 3D models that it doesn't
+recognize (it isn't mentioned in the surface list), you'll get a warning.
+This is because an unrecognized material might be a mistake. Maybe you gave
+it the wrong name in the 3D model?</p>
+<p>However, AutoTrimmer can actually deal with unrecognized materials
+just fine. You only get a warning to make sure you didn't make a mistake.
+When a material is unrecognized,
+it will just leave those parts of the mesh exactly as they were,
+maybe adding trims onto it if any rules apply.</p>
+<p>If you're getting warnings for unrecognized materials
+and you know it's harmless,
+there's two things you can do to get rid of the warnings:</p>
+<ul>
+<li>Add the material names to your list of surfaces. AutoTrimmer
+doesn't do anything to a surface unless you tell it to, so even
+if you want to leave a material's surface unchanged, you can still add
+it to the list.</li>
+<li>Disable this option. That way you won't have to add the surfaces to the list,
+and you won't get spammed with warnings.
+You also won't get a warning when you make a mistake, however.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="surface-configuration"><a class="header" href="#surface-configuration">Surface configuration</a></h1>
+<p>A mesh is split into multiple <em><strong>surfaces</strong></em> based on its materials.
+Each surface of the mesh has exactly one material.
+For example, for a 3D model of a house, one surface would probably be its walls,
+another its roofs, and yet another the windows.</p>
+<p>Below you can see a 3D model with two surfaces:
+A grey brick surface and a dirt surface.</p>
+<p><img src="rulebook/screenshots/surface_intro.png" alt="" /></p>
+<p><img src="rulebook/screenshots/surface.png" alt="" /></p>
+<hr />
+<h2 id="general-settings"><a class="header" href="#general-settings">General settings</a></h2>
+<h3 id="name"><a class="header" href="#name">Name</a></h3>
+<p><em>The name is used to refer to the surface in the rulebook
+and must match the name of the material in the 3D model.</em></p>
+<p>The name of a surface is very important.
+It must match the name of the material in the input 3D model exactly,
+or else AutoTrimmer won't recognize the surface and things won't work at all.</p>
+<p>A surface does not need to appear in the input 3D model.
+For example, trim surfaces usually do not appear in the input at all
+and are only added while AutoTrimmer processes the model.</p>
+<p>You cannot have two surfaces with the same name.
+You also can't
+have two surfaces that have the same name in <code>UPPERCASE_SNAKE_CASE</code>.
+More details about <code>UPPER_SNAKE_CASE</code> are in the
+<a href="rulebook/edge_rules.html">edge rules</a> documentation.</p>
+<p><em>Surface names are sensitive to capitals and spaces. If the surface name in the
+configuration is "brick" and your material is called "Brick" in Blender,
+it won't be matched together because of the capital letter B.</em></p>
+<h3 id="replace-with-material-optional"><a class="header" href="#replace-with-material-optional">Replace with material <em>(optional)</em></a></h3>
+<p><em>Which material your surface should use after AutoTrimmer is done with it.</em></p>
+<p>If you leave this option blank, this surface will use whichever material Godot
+would use by default.
+I generally recommend filling in this option,
+because it makes it easy to reuse a rulebook for multiple 3D model files.</p>
+<p><strong>Materials explained</strong>: <em>In 3D models, a material primarily determines the
+color of a surface (if we get into fancy technical art, materials can also
+affect other things, but it's usually mainly about colors). For example, a
+material might make a surface red, or give it an image texture, or give it an
+animated image texture (like maybe for water). Materials also determine how a
+surface is affected by light,
+but that's actually also a color thing (how dark or bright the
+color is).</em></p>
+<h3 id="remove-from-result"><a class="header" href="#remove-from-result">Remove from result</a></h3>
+<p><em>When enabled, this surface won't appear in the processed 3D model.</em></p>
+<p>You probably won't need this option very often,
+but it's useful for a couple of tricks.
+<em>(Author's note: I might add some recipes that use this to the recipes book
+in the future, but right now you're going to have to use your own creativity)</em></p>
+<p>In the image below, the dirt surface has been removed from the end result.
+Notice how the trims are still there, though!</p>
+<p><img src="rulebook/screenshots/surface_remove_from_result.png" alt="" /></p>
+<hr />
+<h2 id="automatic-uv-unwrapping"><a class="header" href="#automatic-uv-unwrapping">Automatic UV unwrapping</a></h2>
+<h3 id="uv-unwrap-mode"><a class="header" href="#uv-unwrap-mode">UV Unwrap Mode</a></h3>
+<p><em>Whether AutoTrimmer should automatically give texture coordinates to this
+surface, and how it should do it.</em></p>
+<p>AutoTrimmer can automatically unwrap the UVs of a surface for you.</p>
+<p><strong>UV unwrapping explained</strong>: <em>To draw textures onto your 3D model, the computer
+needs to know which parts of the texture go where.
+This is determined by UV coordinates.
+Each corner of a face is given a coordinate on the texture, and the computer
+will then fill in the face with the part of the texture that's between those
+coordinates. <strong>UV unwrapping</strong> is the process of giving each corner a coordinate
+on the texture. It's called “unwrapping” because when you're doing it by hand,
+it's kind of like you're unfolding the 3D model to lay it flat.</em></p>
+<p>These are the possible UV unwrap modes:</p>
+<ul>
+<li><strong>Do not change UVs</strong>: Keeps the UVs as they were in your 3D modelling app.</li>
+<li><strong>Unwrap</strong>: This is a fairly basic UV unwrap that's good for most tiling
+textures. This doesn't stretch the texture at all and tries to align the
+texture so that the texture's Y axis matches Godot's Y axis (so up stays up).
+You might get ugly texture seams between faces that face different directions.</li>
+<li><strong>Unwrap along length</strong>: This unwrap mode is useful for surfaces that are
+usually thin, and which need to have the texture going along its length.
+It rotates the texture for each face so that the texture's X axis is aligned
+with the longest side of the face (at least that's the gist of it).
+This works quite well for thin surfaces. For other shapes you may get a lot of
+texture seams, but it can sometimes still give a nice result.</li>
+</ul>
+<h3 id="texture-size-source-technically-optional-but-highly-recommended"><a class="header" href="#texture-size-source-technically-optional-but-highly-recommended">Texture size source <em>(technically optional but highly recommended)</em></a></h3>
+<p><em>Set the texture size of a surface based on the size of an image.</em></p>
+<p>AutoTrimmer uses the texture size to determine how big the UV coordinates
+should be in the world. For example, if you have a texture that's
+64 by 64 pixels and
+the setting “<a href="rulebook/../rulebook.html#pixels-per-world-unit-optional-but-highly-recommended">pixels per world unit</a>” is 16,
+the texture will be four world units large.</p>
+<p>If your surface's material uses an image, you should put that image in here.
+The size of that image will be used as the texture size.
+It's more convenient than filling out
+“<a href="rulebook/surface_config.html#texture-size-pixels-optional">texture size pixels</a>”, and it comes
+with the advantage that you can overwrite the image later with an image of a
+different size without needing to adjust the configuration.</p>
+<p>I generally recommend that you fill this in whenever the surface's material uses
+a texture.</p>
+<h3 id="texture-size-pixels-optional"><a class="header" href="#texture-size-pixels-optional">Texture size pixels (optional)</a></h3>
+<p><em>Set the texture size of a surface manually, for if you don't have an image.</em></p>
+<p>AutoTrimmer uses the texture size to determine how big the UV coordinates
+should be in the world. For example, if you have a texture that's
+64 by 64 pixels and
+the setting “<a href="rulebook/../rulebook.html#pixels-per-world-unit-optional-but-highly-recommended">pixels per world unit</a>” is 16,
+the texture will be four world units large.</p>
+<p>The setting “texture size pixels” is an alternative to
+the setting “texture size source”.
+If you don't have an image that you can use for “texture size source”, you can
+type the size of the texture into here.</p>
+<p><em>By default, this is 0 by 0 pixels, which is a special value and is treated
+like leaving it blank.</em></p>
+<h3 id="may-mirror-texture-to-line-up"><a class="header" href="#may-mirror-texture-to-line-up">May mirror texture to line up</a></h3>
+<p><em>When enabled, the texture will be mirrored approximately half the time so that
+the surface texture is aligned with the same
+surface going in the opposite direction.</em></p>
+<p>For textures like rooftiles, you generally want the grooves and lines
+of the texture to line up exactly, even when the surfaces are facing the
+opposite direction. By enabling this setting, the texture will
+basically be mirrored when that helps it line up the grooves and lines.</p>
+<p>There's no picture here, but the trim option
+“<a href="rulebook/trim_config.html#may-mirror-texture-to-line-up">may mirror texture to line up</a>”
+does have an image that may help explain the concept more clearly.</p>
+<h3 id="pixels-per-world-unit-override-optional"><a class="header" href="#pixels-per-world-unit-override-optional">Pixels per world unit override (optional)</a></h3>
+<p><em>If you want a separate
+“<a href="rulebook/../rulebook.html#pixels-per-world-unit-optional-but-highly-recommended">pixels per world unit</a>” value for this
+specific surface, you can fill it in here.</em></p>
+<p>However, I don't recommend using different pixel densities in
+the same project, because it looks nicer when it's consistent.
+It can be good for background elements like far-away skyscrapers, though.</p>
+<p><em>By default, this is 0 by 0 pixels, which is a special value and is treated
+like leaving it blank.</em></p>
+<h3 id="uv-island-max-angle-tolerance"><a class="header" href="#uv-island-max-angle-tolerance">UV island max angle tolerance</a></h3>
+<p><em>Group together faces with similar directions so that they do not have
+UV seams between them.</em></p>
+<p>AutoTrimmer will group together faces with a very similar orientation into
+texture islands.
+This is necessary because the quads that 3D artists make are often not quite
+flat, and so they would likely get an ugly texture seam in the middle if we
+didn't group them into one texture island.</p>
+<p>This setting configures how much the angles of a texture island are
+allowed to differ. A higher tolerance leads to more faces getting grouped
+together.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="trim-configuration"><a class="header" href="#trim-configuration">Trim configuration</a></h1>
+<p>A trim is an edge decoration. It's what AutoTrimmer is named after, and the
+most important part of a rulebook.
+In the trim configuration, you specify how the trim looks, and in the
+<a href="rulebook/edge_rules.html">edge rules</a>, you specify on which edges
+trims should be placed.</p>
+<p>The most important part of this configuration is the part where you define
+the texture of the trim.
+Besides those,
+there are also a lot of settings about how the trim is generated
+(like at which angle the ends of a trim should be) — you
+only sometimes need to touch these settings.</p>
+<p><em>To help you find the settings that are actually important,
+settings that you usually do not need to touch are hidden away in
+groups marked with “usually OK”.</em></p>
+<p>In the image below you can see edges with no trims,
+a trim on only one side, and a trim on both sides of the edge.</p>
+<p><img src="rulebook/screenshots/trim_intro.png" alt="" /></p>
+<p><img src="rulebook/screenshots/trim.png" alt="" /></p>
+<hr />
+<h3 id="name-1"><a class="header" href="#name-1">Name</a></h3>
+<p><em>The name of a trim is used in the configuration of
+trim corners, trim groups and edge rules.</em></p>
+<p>You can't have two trims with the same name.</p>
+<h3 id="end-and-corner-surface-whitelist-optional"><a class="header" href="#end-and-corner-surface-whitelist-optional">End and corner surface whitelist <em>(optional)</em></a></h3>
+<p><em>Prevents ends and corners from showing up on unintended surfaces.</em></p>
+<p>You probably don't want the ridge of a roof to extend slightly onto the walls.
+However, if you don't forbid it and the angle between the roof and the wall
+is small, AutoTrimmer <em>will</em> extend the ridge trim onto the wall.</p>
+<p>The surface whitelist determines on which surfaces this
+trim's ends and corners may be placed.
+When this list is not empty, corners and ends of this
+trim will only appear on the mentioned surfaces.</p>
+<p>By default this is empty, which means that corners and ends will be placed
+on any surface.</p>
+<p><em>Surface names are sensitive to capitals and spaces. For example,
+if your surface is called “brick” and you fill in “Brick” for this option, you'll
+get an error, because of the mismatch in the capital letter B.</em></p>
+<p>In the image below, on the left side the green trim uses no whitelist,
+and on the right side
+it has a whitelist that only allows corners on dirt surfaces.</p>
+<p><img src="rulebook/screenshots/trim_whitelist.png" alt="" /></p>
+<hr />
+<h2 id="trim-texture"><a class="header" href="#trim-texture">Trim texture</a></h2>
+<h3 id="surface-override-optional"><a class="header" href="#surface-override-optional">Surface override (optional)</a></h3>
+<p>If you don't want to use the
+<a href="rulebook/../rulebook.html#default-trim-surface-optional-but-highly-recommended">default trim surface</a>
+for this trim, you can write the name of the surface that you want to use here.</p>
+<h3 id="pixel-y-near"><a class="header" href="#pixel-y-near">Pixel Y Near</a></h3>
+<p>A trim has a top and a bottom end. The setting “y near” is the y-coordinate of the end
+that's closest to the edge that's being decorated.</p>
+<p><em>Trims must be laid out horizontally on the trim sheet.
+Vertical trim sheets are not supported.</em></p>
+<p><img src="rulebook/screenshots/trim_y_near.png" alt="" /></p>
+<p>In Aseprite, you can find the coordinate of the pixel that your cursor is hovering
+over in the bottom-left corner.
+The y-coordinate is the second of these two numbers.
+Other art software may or may not have similar functionality — often
+they don't, but it doesn't hurt to look it up.</p>
+<p><img src="rulebook/screenshots/y_coordinate.png" alt="" /></p>
+<h3 id="pixel-y-far"><a class="header" href="#pixel-y-far">Pixel Y Far</a></h3>
+<p>A trim has a top and a bottom end. This is the y-coordinate of the end
+that's furthest from the edge that's being decorated.</p>
+<p>More documentation at “<a href="rulebook/trim_config.html#pixel-y-near">pixel y near</a>”</p>
+<h3 id="may-mirror-texture-to-line-up-1"><a class="header" href="#may-mirror-texture-to-line-up-1">May mirror texture to line up</a></h3>
+<p><em>When enabled, this trim will line up with itself when it appears on both sides
+of the edge.</em></p>
+<p>This is exactly like
+“<a href="rulebook/surface_config.html#may-mirror-texture-to-line-up">may mirror texture to line up</a>”
+in the surface configuration.</p>
+<p>Here's a more technical explanation:
+This setting makes the U-axis (horizontal axis) of the UV coordinates
+point in a more consistent direction in world space.</p>
+<p>On the left, this setting is enabled. On the right it's disabled.
+Notice how none of the lines on the roof's ridge are aligned in the picture
+on the right. They're all one pixel off.</p>
+<p><img src="rulebook/screenshots/trims_line_up.png" alt="" /></p>
+<h3 id="texture-size-override-optional"><a class="header" href="#texture-size-override-optional">Texture size override (optional)</a></h3>
+<p>By default, a trim will derive its texture size from its surface.
+This “just works” in almost all situations, but if this somehow doesn't work for
+you, you can specify a different texture size here.</p>
+<h3 id="pixels-per-world-unit-override-optional-1"><a class="header" href="#pixels-per-world-unit-override-optional-1">Pixels per world unit override (optional)</a></h3>
+<p><em>When you want a separate
+“<a href="rulebook/../rulebook.html#pixels-per-world-unit-optional-but-highly-recommended">pixels per world unit</a>” value for this
+specific trim, you can fill it in here.</em></p>
+<p>However, I don't recommend using different pixel densities in
+the same project, because it looks nicer when it's consistent.
+It can be good for background elements like far-away skyscrapers, though.</p>
+<p><em>By default, this is 0 by 0 pixels, which is a special value and is treated
+like leaving it blank.</em></p>
+<hr />
+<h2 id="trim-end"><a class="header" href="#trim-end">Trim end</a></h2>
+<h3 id="default-end-angle"><a class="header" href="#default-end-angle">Default end angle</a></h3>
+<p>By default, AutoTrimmer tries to make trims end
+that are at a 90° angle if it can.
+You can adjust that to a different angle here, although 90° is
+almost always the best choice.</p>
+<h3 id="maximum-end-angle"><a class="header" href="#maximum-end-angle">Maximum end angle</a></h3>
+<p>The end of a trim may be extended beyond the default angle (90°) for a
+number of reasons (see the “extend” settings below).
+Here you can configure the maximum angle that a trim end can be extended to.
+I generally recommend leaving this setting at its default.</p>
+<h3 id="extend-end-up-to-hole"><a class="header" href="#extend-end-up-to-hole">Extend end up to hole</a></h3>
+<p>When enabled, the trim end will be extended when there's a face with no neighbor
+ahead. Basically, this setting makes trim ends go up to
+the outermost edges of the mesh.</p>
+<h3 id="extend-end-up-to-disallowed-surface"><a class="header" href="#extend-end-up-to-disallowed-surface">Extend end up to disallowed surface</a></h3>
+<p>If this trim has a whitelist, any face that's not on the whitelist is considered
+a disallowed surface. This setting makes the ends of trims connect all the way
+up to the disallowed surface, which generally looks better.</p>
+<h3 id="extend-end-up-to-steep-slope"><a class="header" href="#extend-end-up-to-steep-slope">Extend end up to steep slope</a></h3>
+<p>If there's a steep slope that's further away than the
+<a href="rulebook/trim_config.html#default-end-angle">default angle</a>,
+this setting makes the trim end extend all the way up to the steep slope.</p>
+<p><em>A steep slope is a face that's pretty steep relative to the face of the trim.
+Any angle greater than the “<a href="rulebook/trim_config.html#end-too-steep-angle">end too steep angle</a>” is
+considered “pretty steep”.</em></p>
+<h3 id="shorten-end-for-steep-slope"><a class="header" href="#shorten-end-for-steep-slope">Shorten end for steep slope</a></h3>
+<p>If there's a steep slope that's closer than the
+<a href="rulebook/trim_config.html#default-end-angle">default angle</a>,
+this setting makes the trim end shorter so that it doesn't go past the
+steep slope.</p>
+<p><em>A steep slope is a face that's pretty steep relative to the trim's face.
+Any angle greater than the “<a href="rulebook/trim_config.html#end-too-steep-angle">end too steep angle</a>” is
+considered “pretty steep”.</em></p>
+<h3 id="end-too-steep-angle"><a class="header" href="#end-too-steep-angle">End too steep angle</a></h3>
+<p>This determines when a slope is “too steep” for a trim end,
+which affects the settings
+“<a href="rulebook/trim_config.html#extend-end-up-to-steep-slope">extend end up to steep slope</a>” and
+“<a href="rulebook/trim_config.html#shorten-end-for-steep-slope">shorten end for steep slope</a>”.</p>
+<hr />
+<h2 id="trim-corner-defaults"><a class="header" href="#trim-corner-defaults">Trim corner defaults</a></h2>
+<h3 id="corner-saw-off-distance"><a class="header" href="#corner-saw-off-distance">Corner saw-off distance</a></h3>
+<p><em>Set a maximum length for this trim corner.</em></p>
+<p>When a trim corner is very sharp, it can get <em>very</em> long.
+As a matter of fact, it can basically get infinitely long.
+Infinitely long corners do not look very good, and because of that,
+we may have to saw off the tip of a corner.</p>
+<p>This setting determines the distance at which the tip of the corner is sawn off.
+This should generally be approximately two or three times the width of the trim.</p>
+<p><img src="rulebook/screenshots/trim_saw_off.png" alt="" /></p>
+<h3 id="allow-corner-between-two-edges-of-the-same-trim"><a class="header" href="#allow-corner-between-two-edges-of-the-same-trim">Allow corner between two edges of the same trim</a></h3>
+<p>By default, AutoTrimmer won't generate corners between two trims that are both
+connected to the same edge.
+Sometimes, you might want this.
+For example, if the trims represent a wooden beam
+on an outer edge of a building,
+it can be nice to have a cap at the ends of the beam.</p>
+<h3 id="do-not-insert-corner-if-too-steep"><a class="header" href="#do-not-insert-corner-if-too-steep">Do not insert corner if too steep</a></h3>
+<p>A corner connects two trims and both of those trims have one main face.
+If this option is enabled and the two main faces of the trims
+are too steep relative to each other, no corner will be inserted.
+See “<a href="rulebook/trim_config.html#corner-too-steep-angle">corner too steep angle</a>”.</p>
+<p>This also doesn't insert a corner if any face that the corner would go on top of
+is too steep.</p>
+<h3 id="corner-too-steep-angle"><a class="header" href="#corner-too-steep-angle">Corner too steep angle</a></h3>
+<p>This determines when a slope is “too steep” for a trim corner,
+which affects the setting
+“<a href="rulebook/trim_config.html#do-not-insert-corner-if-too-steep">do not insert corner if too steep</a>”.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="trim-corner-configuration"><a class="header" href="#trim-corner-configuration">Trim corner configuration</a></h1>
+<p>Sometimes the trim corners that are generated by default
+just aren't good enough.
+If you want to use a custom texture for a trim corner,
+you'll need to add a trim corner configuration.</p>
+<p>In my experience, special image corners aren't really necessary for most trims.
+Sometimes, though, they're absolutely crucial for good-looking corners.</p>
+<p>Below you can see the default corners between trims in the top half,
+and in the bottom half you can see an example of trim corner images.</p>
+<p>Here's a couple of things I'd like you to observe in the image:</p>
+<ul>
+<li>Notice how the sawn-off corners on the right use a different image than the
+normal corners on the left.</li>
+<li>Notice how only the convex corners (sort-of sharp corners) get an image.
+Adding images onto concave corners is not supported.</li>
+<li>Notice how the textures get warped for some of the corners: The texture gets
+stretched and squished to make it fit the geometry.</li>
+</ul>
+<p><img src="rulebook/screenshots/trim_corner.png" alt="" /></p>
+<p>Trims only interact with trims that are in the same
+<a href="rulebook/trim_group_config.html">trim group</a> and
+ignore all trims that aren't in their trim group.
+Before creating a trim corner configuration, make sure that its trims
+are in the same trim group.</p>
+<p><em>To help you find the settings that are actually important,
+settings that you usually do not need to touch are hidden away in
+groups marked with “usually OK”.</em></p>
+<p>Sawn-off sharp corners can be given an image texture, but they're
+usually pretty rare. I would generally say that it's not worth your time.</p>
+<p><img src="rulebook/screenshots/trim_corner_config.png" alt="" /></p>
+<hr />
+<h2 id="general-settings-1"><a class="header" href="#general-settings-1">General settings</a></h2>
+<h3 id="trim-1"><a class="header" href="#trim-1">Trim 1</a></h3>
+<p><em>The corner's first trim.</em></p>
+<p>This is the first trim of the corner. In the corner image, the first trim
+generally goes towards the left side of the image.</p>
+<p><em>Trim names are sensitive to capitals and spaces. For example,
+if your trim is called “brick_trim” and you fill in “Brick_trim” for this option,
+you'll get an error, because of the mismatch in the capital letter B.</em></p>
+<h3 id="trim-2"><a class="header" href="#trim-2">Trim 2</a></h3>
+<p><em>The corner's second trim.</em></p>
+<p>This is the second trim of the corner. In the corner image, the second trim
+generally goes upwards.</p>
+<p>It's worth noting that this is allowed to be the same trim as trim 1.</p>
+<p><em>Trim names are sensitive to capitals and spaces. For example,
+if your trim is called “brick_trim” and you fill in “Brick_trim” for this option,
+you'll get an error, because of the mismatch in the capital letter B.</em></p>
+<h3 id="allow-corner-between-two-sides-of-the-same-edge"><a class="header" href="#allow-corner-between-two-sides-of-the-same-edge">Allow corner between two sides of the same edge</a></h3>
+<p>By default, AutoTrimmer won't generate corners between two trims that are both
+connected to the same edge.
+Sometimes, you might want this.
+For example, if the trims represent a wooden beam
+on an outer edge of a building,
+it can be nice to have a cap at the ends of the beam.</p>
+<h3 id="surface-whitelist-optional"><a class="header" href="#surface-whitelist-optional">Surface whitelist (optional)</a></h3>
+<p><em>This prevents the corner from crossing through surfaces that you don't want it
+to go through.</em></p>
+<p>You only rarely need this.</p>
+<p><em>Surface names are sensitive to capitals and spaces. For example,
+if your surface is called “brick” and you fill in “Brick” for this option,
+you'll get an error, because of the mismatch in the capital letter B.</em></p>
+<hr />
+<h2 id="corner-image"><a class="header" href="#corner-image">Corner image</a></h2>
+<h3 id="use-image"><a class="header" href="#use-image">Use image</a></h3>
+<p><em>When enabled, convex corners (sharp corners) will be decorated with a corner
+image.</em></p>
+<h3 id="image-nearest-pixel-required-for-corner-image"><a class="header" href="#image-nearest-pixel-required-for-corner-image">Image nearest pixel <em>(required for corner image)</em></a></h3>
+<p><em>The texture coordinate closest to the corner vertex.</em></p>
+<p>This is the pixel coordinate of the image's corner that's closest to the
+vertex of the corner.</p>
+<p><img src="rulebook/screenshots/trim_corner_image.png" alt="" /></p>
+<p>In Aseprite, you can find the coordinate of the pixel your cursor is hovering
+over in the bottom-left corner.</p>
+<p><img src="rulebook/screenshots/coordinate.png" alt="" /></p>
+<h3 id="image-furthest-pixel-required-for-corner-image"><a class="header" href="#image-furthest-pixel-required-for-corner-image">Image furthest pixel <em>(required for corner image)</em></a></h3>
+<p><em>The texture coordinate furthest away from the corner vertex.</em></p>
+<p>This is the pixel coordinate of the image's corner that's furthest away from
+the vertex of the corner.</p>
+<h3 id="is-trim-1-horizontal-in-image"><a class="header" href="#is-trim-1-horizontal-in-image">Is trim 1 horizontal in image</a></h3>
+<p><em>Whether the first trim is horizontal or vertical.</em></p>
+<p>If enabled, trim 1 is either on the left or on the right side of the image.
+Otherwise, it's either above or below the image.
+When enabled, whether it's on the left or on the right is determined by the
+nearest and furthest coordinate.</p>
+<h3 id="image-surface-override-optional"><a class="header" href="#image-surface-override-optional">Image surface override <em>(optional)</em></a></h3>
+<p>If you don't want to use the
+<a href="rulebook/../rulebook.html#default-trim-surface-optional-but-highly-recommended">default trim surface</a>
+for this corner image,
+you can fill in the name of the surface you want to use here.</p>
+<p><em>Surface names are sensitive to capitals and spaces. For example,
+if your surface is called “brick” and you fill in “Brick” for this option,
+you'll get an error, because of the mismatch in the capital letter B.</em></p>
+<h3 id="image-size-override-optional"><a class="header" href="#image-size-override-optional">Image size override <em>(optional)</em></a></h3>
+<p>By default, a corner image will derive its texture size from its surface.
+This “just works” in almost all situations, but if this somehow doesn't work for
+you, you can specify a different texture size here.</p>
+<hr />
+<h2 id="sawn-off-sharp-corners"><a class="header" href="#sawn-off-sharp-corners">Sawn-off sharp corners</a></h2>
+<h3 id="saw-off-distance"><a class="header" href="#saw-off-distance">Saw-off distance</a></h3>
+<p><em>Set a maximum length for this trim corner.</em></p>
+<p>When a trim corner is very sharp, it can get <em>very</em> long.
+As a matter of fact, it can basically get infinitely long.
+Infinitely long corners do not look very good, and because of that,
+we may have to saw off the tip of a corner.</p>
+<p>This setting determines the distance at which the tip of the corner is sawn off.
+This should generally be approximately two or three times the width of the trim.</p>
+<h3 id="use-sawn-off-image"><a class="header" href="#use-sawn-off-image">Use sawn-off image</a></h3>
+<p><em>When enabled, sawn-off corners will be decorated with an image.</em></p>
+<p>This is only rarely worth your while, because sawn of corners are usually not
+very common.</p>
+<h3 id="sawn-off-image-surface-override-optional"><a class="header" href="#sawn-off-image-surface-override-optional">Sawn-off image surface override <em>(optional)</em></a></h3>
+<p>If you don't want to use the
+<a href="rulebook/../rulebook.html#default-trim-surface-optional-but-highly-recommended">default trim surface</a>
+for this
+sawn-off corner, you can fill in the name of the surface you want to use here.</p>
+<p><em>Surface names are sensitive to capitals and spaces. For example,
+if your surface is called “brick” and you fill in “Brick” for this option,
+you'll get an error, because of the mismatch in the capital letter B.</em></p>
+<h3 id="sawn-off-image-size-override-optional"><a class="header" href="#sawn-off-image-size-override-optional">Sawn-off image size override <em>(optional)</em></a></h3>
+<p>By default, a sawn-off corner image will derive its texture size from its
+surface.
+This “just works” in almost all situations, but if this somehow doesn't work for
+you, you can specify a different texture size here.</p>
+<h3 id="sawn-off-image-nearest-pixel-required-for-sawn-off-corner-image"><a class="header" href="#sawn-off-image-nearest-pixel-required-for-sawn-off-corner-image">Sawn-off image nearest pixel <em>(required for sawn-off corner image)</em></a></h3>
+<p>The coordinate of the pixel that's closest to the original vertex of the
+sawn-off corner. Specifically, we need the pixel for which the
+top-left
+corner of the pixel is at the original vertex.</p>
+<h3 id="sawn-off-image-height-pixels-required-for-sawn-off-corner-image"><a class="header" href="#sawn-off-image-height-pixels-required-for-sawn-off-corner-image">Sawn-off image height pixels <em>(required for sawn-off corner image)</em></a></h3>
+<p>This specifies the height of the sawn-off corner image (in pixels).</p>
+<h3 id="sawn-off-image-trim-1-width-pixels-required-for-sawn-off-corner-image"><a class="header" href="#sawn-off-image-trim-1-width-pixels-required-for-sawn-off-corner-image">Sawn-off image trim 1 width pixels <em>(required for sawn-off corner image)</em></a></h3>
+<p>In the sawn-off image,
+how many pixels to the left of the nearest pixel is the top of trim 1?</p>
+<h3 id="sawn-off-image-trim-2-width-pixels-required-for-sawn-off-corner-image"><a class="header" href="#sawn-off-image-trim-2-width-pixels-required-for-sawn-off-corner-image">Sawn-off image trim 2 width pixels <em>(required for sawn-off corner image)</em></a></h3>
+<p>In the sawn-off image,
+how many pixels to the right of the nearest pixel is the top of trim 1?</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="trim-group-configuration"><a class="header" href="#trim-group-configuration">Trim group configuration</a></h1>
+<p>A trim group is a list of trims which can get corners between each other.
+If two trims aren't in the same trim group, they will ignore
+each other and simply overlap if they end at the same vertex.</p>
+<p>A trim can be in one or zero trim groups.
+When a trim is not in a trim group it will ignore all other trims.
+The trim will still get corners with itself, even if it is not in a trim group.</p>
+<p>The order of trim groups matters:
+If two trims from different trim groups overlap,
+trim groups that appear later in the list are drawn on top of
+groups that appear earlier.</p>
+<p><em>Trim names are sensitive to capitals and spaces. For example,
+if your trim is called “brick_trim” and you fill in “Brick_trim” instead, you'll
+get an error, because of the mismatch in the capital letter B.</em></p>
+<p><img src="rulebook/screenshots/group.png" alt="" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="edge-rules"><a class="header" href="#edge-rules">Edge rules</a></h1>
+<p>Edge rules determine where trims are added onto a 3D model.
+Without edge rules, your model will not get any trims added onto it.</p>
+<p>An edge rule specifies when trims get added and which trims get added.
+The complicated part of this is specifying <em>when</em> trims get added,
+the “condition”.
+The condition consists of a bit of code that says exactly when
+trims should get added.</p>
+<p>Despite needing some code,
+you generally don't need to be a computer whiz to create edge rules.
+You can just paste in some code from the <a href="rulebook/../recipes.html">recipes</a> and
+<a href="rulebook/edge_rules.html#surface-constants">adjust the surface names</a>
+to your situation, and that should be good enough for a lot of
+situations.</p>
+<p>An in-depth understanding of the code for edge rule conditions
+is not necessary. They're pretty short, and you can make do with a shallow
+understanding.</p>
+<p>An edge rule is evaluated once for every edge of every face.
+Edge rules are evaluated in-order, with the ones appearing first on the list
+being evaluated first.</p>
+<p><img src="rulebook/screenshots/edge_rule.png" alt="" /></p>
+<hr />
+<h2 id="general-settings-2"><a class="header" href="#general-settings-2">General settings</a></h2>
+<h3 id="condition"><a class="header" href="#condition">Condition</a></h3>
+<p><em>Code that determines when the trims should be added to an edge.</em></p>
+<p>This snippet of code determines when the trims should be added.
+It's too much to explain here, so there's a whole section for it.
+Take a look at the <a href="rulebook/edge_rules.html#condition-code">condition section</a>.</p>
+<h3 id="add-trim-here-optional"><a class="header" href="#add-trim-here-optional">Add trim here <em>(optional)</em></a></h3>
+<p><em>Which trim to add to the first side of the edge.</em></p>
+<p>This determines which trim gets added to the current face
+if the <a href="rulebook/edge_rules.html#condition">condition</a> passes
+(the “self” face in the condition).</p>
+<p><em>Trim names are sensitive to capitals and spaces. For example,
+if your trim is called “brick_trim” and you fill in “Brick_trim” instead, you'll
+get an error, because of the mismatch in the capital letter B.</em></p>
+<h3 id="add-trim-at-neighbor-optional"><a class="header" href="#add-trim-at-neighbor-optional">Add trim at neighbor <em>(optional)</em></a></h3>
+<p><em>Which trim to add to the second side of the edge.</em></p>
+<p>This determines which trim gets added to the neighboring face
+if the <a href="rulebook/edge_rules.html#condition">condition</a> passes
+(the “neighbor” face in the condition).
+If the current face does not have a neighbor, this is ignored.</p>
+<p><em>Trim names are sensitive to capitals and spaces. For example,
+if your trim is called “brick_trim” and you fill in “Brick_trim” instead, you'll
+get an error, because of the mismatch in the capital letter B.</em></p>
+<h3 id="no-more-trims-here"><a class="header" href="#no-more-trims-here">No more trims here</a></h3>
+<p><em>Whether anymore trims should be added to the first side of the edge.</em></p>
+<p>When the <a href="rulebook/edge_rules.html#condition">condition</a> passes and this setting is enabled,
+no more edge rules will be evaluated for this edge from the current face.
+By that I mean: For the edge that passed the condition,
+the current face will never appear as <code>self</code> anymore.
+It can still appear as <code>neighbor</code> unless
+“<a href="rulebook/edge_rules.html#no-more-trims-at-neighbor">no more trims at neighbor</a>” is also checked.</p>
+<p>Because edge rules are evaluated in-order, this option only affects edge rules
+that come after the current edge rule in the list.</p>
+<p>Unless you're specifically in a situation where you want to have multiple trims
+that attach to this edge, you should leave this enabled.</p>
+<h3 id="no-more-trims-at-neighbor"><a class="header" href="#no-more-trims-at-neighbor">No more trims at neighbor</a></h3>
+<p><em>Whether anymore trims should be added to the second side of the edge.</em></p>
+<p>This is mostly the same as “<a href="rulebook/edge_rules.html#no-more-trims-here">no more trims here</a>”,
+except that it prevents the neighboring face from appearing as <code>self</code>
+(instead of the current face).</p>
+<p>If this is enabled and “<a href="rulebook/edge_rules.html#no-more-trims-here">no more trims here</a>” is disabled,
+the neighboring face can still appear as <code>neighbor</code>, but never as <code>self</code>.</p>
+<p>If an edge rule can apply to both a face and its neighbor,
+then I really can't tell you which of the two faces will have the edge
+rule evaluated first and which
+one would be blocked by “no more trims at neighbor”. It depends on the 3D model
+and in what order the model's internal data is stored.
+In practice that means it's basically random.</p>
+<hr />
+<h2 id="condition-code"><a class="header" href="#condition-code">Condition code</a></h2>
+<p>An edge rule uses a snippet of code to check when its trims should
+be applied.</p>
+<p>For its conditions,
+AutoTrimmer uses a tiny scripting language that resembles Python and GDScript.
+It only supports expressions
+(the kind of code that you can put in an if-statement) —
+you can't create new variables or functions.</p>
+<p>Below is an example. The <code>self</code> trim is green and the <code>neighbor</code> trim is blue.
+Notice how only the sort-of-sharp edges are given a trim by this edge rule.
+That's because concave corners (like the corners at the bottom of the walls)
+have a negative angle in AutoTrimmer.
+This rule only applies to edges with an angle greater
+than 40° — which excludes all negative angles.</p>
+<pre><code class="language-python">self.surface == BRICK  # The current face is brick...
+and neighbor.surface != BRICK  # And the neighboring face is not brick...
+and angle &gt; 40  # And the angle between the two faces is greater than 40 degrees
+</code></pre>
+<p><img src="rulebook/screenshots/conditions_example_1.png" alt="" /></p>
+<h3 id="approximately-equals"><a class="header" href="#approximately-equals">Approximately equals</a></h3>
+<p>Although the scripting language strongly resembles Python &amp; GDScript,
+there is one feature that those languages don't have:
+AutoTrimmer has the operator <code>~=</code>, which means “approximately equals”.
+This operator is useful because software like Blender is not completely exact,
+so checking whether two coordinates or two directions are <em>exactly</em> equal will
+often not work the way you would like it to.</p>
+<p>The <code>~=</code> operator is <code>True</code> if its two operands are <strong>almost</strong> exactly the same.
+The amount of error that it tolerates is really very small.
+It's a substitute for the <code>==</code> operator for situations where the operands can
+be very slightly wrong, due to precision problems.</p>
+<p>There's also the “not approximately equal” operator <code>!~=</code>.
+It gives the opposite of what <code>~=</code> would give.</p>
+<h3 id="surface-constants"><a class="header" href="#surface-constants">Surface constants</a></h3>
+<p>In code, each surface is referred to by a constant number.
+That constant number is given a name
+that you can use to refer to the surface in code.
+For example, here's a rule that finds all edges between a brick surface
+and a dirt surface:</p>
+<pre><code class="language-python">self.surface == BRICK and neighbor.surface == DIRT
+</code></pre>
+<p><img src="rulebook/screenshots/conditions_example_2.png" alt="" /></p>
+<p>In code, the name of the surface is the same as its normal name,
+but in UPPER_SNAKE_CASE.
+If you keep the capitalization of your surface names somewhat normal,
+the upper snake case name will probably match your intuition.</p>
+<p>Here's some examples of how names are turned into
+upper snake case:</p>
+<div class="table-wrapper"><table><thead><tr><th>Surface name</th><th>UPPER_SNAKE_CASE_NAME</th></tr></thead><tbody>
+<tr><td>brick</td><td>BRICK</td></tr>
+<tr><td>Brick</td><td>BRICK</td></tr>
+<tr><td>BRICK</td><td>BRICK</td></tr>
+<tr><td>grey brick</td><td>GREY_BRICK</td></tr>
+<tr><td>GreyBrick</td><td>GREY_BRICK</td></tr>
+<tr><td>grey_brick</td><td>GREY_BRICK</td></tr>
+<tr><td>Grey_Brick</td><td>GREY_BRICK</td></tr>
+<tr><td>GREY_BRICK</td><td>GREY_BRICK</td></tr>
+<tr><td>greybrick</td><td>GREYBRICK</td></tr>
+<tr><td>dvd player grey</td><td>DVD_PLAYER_GREY</td></tr>
+<tr><td>DVD_PLAYER_GREY</td><td>DVD_PLAYER_GREY</td></tr>
+</tbody></table>
+</div>
+<p>However! If you use mix different types of capitalization it
+doesn't work so well:</p>
+<div class="table-wrapper"><table><thead><tr><th>Surface name</th><th>UPPER_SNAKE_CASE_NAME</th></tr></thead><tbody>
+<tr><td>DVD player grey</td><td>D_V_D_PLAYER_GREY</td></tr>
+<tr><td>DVDPlayerGrey</td><td>D_V_D_PLAYER_GREY</td></tr>
+<tr><td>DVDplayergrey</td><td>D_V_DPLAYERGREY</td></tr>
+<tr><td>grey_BRICK</td><td>GREY_B_R_I_C_K</td></tr>
+<tr><td>GREy_BRICK</td><td>G_R_EY_B_R_I_C_K</td></tr>
+<tr><td>GrEyBrIcK</td><td>GR_EY_BR_IC_K</td></tr>
+</tbody></table>
+</div>
+<p>Try to stick to one type of capitalization (and don't capitalize it in a
+weird way).</p>
+<h3 id="overview-of-variables"><a class="header" href="#overview-of-variables">Overview of variables</a></h3>
+<p>This is the list of variables that you can directly use in an edge rule.
+The variables <code>self</code> and <code>neighbor</code> have useful properties inside, which are
+documented in the <a href="rulebook/edge_rules.html#overview-of-face">Face</a> section.</p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Short description</th></tr></thead><tbody>
+<tr><td><a href="rulebook/edge_rules.html#self">self</a></td><td><a href="rulebook/edge_rules.html#overview-of-face">Face</a></td><td>The current face.</td></tr>
+<tr><td><a href="rulebook/edge_rules.html#neighbor">neighbor</a></td><td><a href="rulebook/edge_rules.html#overview-of-face">Face</a>?</td><td>The neighboring face, if it exists.</td></tr>
+<tr><td><a href="rulebook/edge_rules.html#angle">angle</a></td><td>number?</td><td>The angle between the current face and its neighbor, if there is a neighbor.</td></tr>
+<tr><td>has_neighbor</td><td>boolean</td><td><code>True</code> when <code>self</code> has a neighboring face.</td></tr>
+</tbody></table>
+</div>
+<h3 id="self"><a class="header" href="#self">self</a></h3>
+<p>The global variable <code>self</code> gives you the current <a href="rulebook/edge_rules.html#overview-of-face">Face</a>.</p>
+<h3 id="neighbor"><a class="header" href="#neighbor">neighbor</a></h3>
+<p>The global variable <code>neighbor</code> gives you the neighboring <a href="rulebook/edge_rules.html#overview-of-face">Face</a>.
+If there is no <code>neighbor</code>, but <code>neighbor</code> is necessary to compute
+your condition, then that counts as the condition not passing.</p>
+<h4 id="examples"><a class="header" href="#examples">Examples</a></h4>
+<p>This condition will pass for the edges that are between a brick face and a
+dirt face. This condition will not pass for faces with no neighbor, because
+<code>neighbor</code> is necessary to compute the rule.</p>
+<pre><code class="language-python">self.surface == BRICK and neighbor.surface == DIRT
+</code></pre>
+<hr />
+<p>This condition will pass for the edges that are inbetween a brick face and any
+face that isn't brick. This condition will not pass for faces with no
+neighbor, because <code>neighbor</code> is necessary to compute the rule.</p>
+<pre><code class="language-python">self.surface == BRICK and neighbor.surface != BRICK
+</code></pre>
+<hr />
+<p>This condition will pass for the edges where there either is no neighbor,
+or where the neighboring face isn't a brick surface.</p>
+<pre><code class="language-python">self.surface == BRICK and (not has_neighbor or neighbor.surface != BRICK)
+</code></pre>
+<p>It's a little complicated, but here's why this works when there's no
+neighbor, even though it uses the variable "neighbor":</p>
+<p>In the expression "A or B", the part "B" is not looked at when "A" is True.
+It isn't necessary to look at "B", because "True or ???" is always going to be
+"True" in the end. After all, the result of "True or True" is "True",
+and the result of "True or False" is also "True".</p>
+<p>This edge rule still works if there is no neighbor, because the part that uses
+"neighbor" is only looked at if there is a neighbor. The rule first checks if
+a neighbor exists before using the variable "neighbor".</p>
+<p>Something similar applies to "A and B": An expression like "False and ???" is
+always going to give the result "False", so in the case of "A and B", it won't
+look at "B" if "A" is "False".</p>
+<p>The example on the right is using the code from this last example.
+Notice how the bottom
+edge of the slope also gets decorated, even though the face does not have a
+neighbor there.</p>
+<p><img src="rulebook/screenshots/conditions_example_3.png" alt="" /></p>
+<h3 id="angle"><a class="header" href="#angle">angle</a></h3>
+<p>The global variable <code>angle</code> gives you the angle between <code>self</code> and <code>neighbor</code>
+in degrees. The variable <code>angle</code> is always between -180° and 180°</p>
+<div class="table-wrapper"><table><thead><tr><th>Angle</th><th>Short description</th></tr></thead><tbody>
+<tr><td>0</td><td><code>self</code> and <code>neighbor</code> are completely flat. They face the exact same direction.</td></tr>
+<tr><td>90</td><td>This is a convex right angle, like an edge of a cube. It's kind of pointy.</td></tr>
+<tr><td>-90</td><td>This is a concave right angle, like a corner of a room. It's the kind of corner where dust builds up if you don't clean your stuff properly.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Because 3D editing software is not perfectly exact,
+you should not use exact equality.</strong>
+You should be pretty approximate when checking angles.
+For example instead of <code>angle == 45</code> (to see if the angle is 45°),
+you might want to use <code>40 &lt; angle and angle &lt; 50</code>, which adds 5° of leeway in
+both directions.</p>
+<p>If there is no <code>neighbor</code> and <code>angle</code> is necessary to compute
+your condition, then the edge rule fails.
+Please note that this happens <em>only</em> if <code>angle</code> is
+necessary in the calculation.
+This is discussed in more detail in the last example of</p>
+<h4 id="examples-1"><a class="header" href="#examples-1">Examples:</a></h4>
+<p>This edge rule will only succeed for faces that…</p>
+<ul>
+<li>… have a neighbor (implicit, because it uses "angle"), and…</li>
+<li>… have an angle to their neighbor that is greater than 30 degrees.</li>
+</ul>
+<pre><code class="language-python">self.surface == DIRT and angle &gt; 30
+</code></pre>
+<p>Notice how this rule adds a trim at the top of the ramp, but not at the bottom
+of the ramp:
+This is because the angle at the top of the ramp is 35°,
+and the angle at the bottom of the ramp is -35° (note the minus!)</p>
+<p><img src="rulebook/screenshots/conditions_example_4.png" alt="" /></p>
+<hr />
+<p>In the next code snippet, the second line of code is <code>True</code> if either…</p>
+<ul>
+<li>… this face has no neighbor, or…</li>
+<li>… the angle is not very steep (between 40 and -40 degrees).</li>
+</ul>
+<pre><code class="language-python">self.surface == BRICK
+and (not has_neighbor or (-40 &lt; angle and angle &lt; 40)) 
+</code></pre>
+<p>Notice how only the flat edges get a trim added between them,
+and the sides of the diagonal brick wall do not get trims.
+For this example it's important to understand
+that Godot turns all faces into triangles before they get to
+AutoTrimmer. That's why all of the faces are triangles.</p>
+<p><img src="rulebook/screenshots/conditions_example_5.png" alt="" /></p>
+<h3 id="overview-of-global-functions"><a class="header" href="#overview-of-global-functions">Overview of global functions</a></h3>
+<p>These functions are available for use in edge rules.</p>
+<p><strong>Author's note</strong>: Only <code>abs(number)</code> has been useful to me so far.
+The rest of these functions haven't been useful at all,
+but they're there if you need them.</p>
+<div class="table-wrapper"><table><thead><tr><th>Function</th><th style="text-align: center">Result</th><th>Short description</th></tr></thead><tbody>
+<tr><td>abs(number)</td><td style="text-align: center">number</td><td>In mathematics, the absolute turns negative numbers into positive numbers. Positive numbers stay the same.</td></tr>
+<tr><td>abs(vector)</td><td style="text-align: center"><a href="rulebook/edge_rules.html#overview-of-vector2-and-vector3">vector</a></td><td>This applies <code>abs(number)</code> to each element of the vector.</td></tr>
+<tr><td>normalize(vector)</td><td style="text-align: center"><a href="rulebook/edge_rules.html#overview-of-vector2-and-vector3">vector</a></td><td>In mathematics, normalizing a vector changes its length to 1. As a special case, if you pass in a zero vector, you get a zero vector out.</td></tr>
+<tr><td>vec2(number, number)</td><td style="text-align: center"><a href="rulebook/edge_rules.html#overview-of-vector2-and-vector3">Vector2</a></td><td>Creates a new <a href="rulebook/edge_rules.html#overview-of-vector2-and-vector3">Vector2</a>.</td></tr>
+<tr><td>vec3(number, number, number)</td><td style="text-align: center"><a href="rulebook/edge_rules.html#overview-of-vector2-and-vector3">Vector3</a></td><td>Creates a new <a href="rulebook/edge_rules.html#overview-of-vector2-and-vector3">Vector3</a>.</td></tr>
+<tr><td>sin(number)</td><td style="text-align: center">number</td><td>Computes the sine.</td></tr>
+<tr><td>cos(number)</td><td style="text-align: center">number</td><td>Computes the cosine.</td></tr>
+<tr><td>tan(number)</td><td style="text-align: center">number</td><td>Computes the tangent.</td></tr>
+<tr><td>asin(number)</td><td style="text-align: center">number</td><td>Essentially the opposite of <code>sin</code>.</td></tr>
+<tr><td>acos(number)</td><td style="text-align: center">number</td><td>Essentially the opposite of <code>cos</code>.</td></tr>
+<tr><td>atan(number)</td><td style="text-align: center">number</td><td>Essentially the opposite of <code>tan</code>.</td></tr>
+</tbody></table>
+</div>
+<h3 id="overview-of-face"><a class="header" href="#overview-of-face">Overview of Face</a></h3>
+<p>The type Face gives you information about one of the faces next to the current
+edge.</p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th style="text-align: center">Type</th><th>Short description</th></tr></thead><tbody>
+<tr><td><a href="rulebook/edge_rules.html#surface">surface</a></td><td style="text-align: center">number</td><td>Which surface the face belongs to. Useful for comparing against <a href="rulebook/edge_rules.html#surface-constants">surface constants</a>.</td></tr>
+<tr><td><a href="rulebook/edge_rules.html#dir">dir</a></td><td style="text-align: center"><a href="rulebook/edge_rules.html#overview-of-vector2-and-vector3">Vector3</a></td><td>The direction of the face.</td></tr>
+<tr><td><a href="rulebook/edge_rules.html#uv_dir">uv_dir</a></td><td style="text-align: center"><a href="rulebook/edge_rules.html#overview-of-vector2-and-vector3">Vector2</a></td><td>The direction of the texture.</td></tr>
+</tbody></table>
+</div>
+<h3 id="surface"><a class="header" href="#surface">surface</a></h3>
+<p>Each surface is associated with a constant number.
+The <code>surface</code> property of a Face gives you the surface number of that
+face.
+It's very useful for comparing against <a href="rulebook/edge_rules.html#surface-constants">surface constants</a>.
+Most likely all of your edge rules will make use of this property.</p>
+<h4 id="examples-2"><a class="header" href="#examples-2">Examples</a></h4>
+<pre><code class="language-python">self.surface == DIRT
+</code></pre>
+<p><img src="rulebook/screenshots/conditions_example_face_surface.png" alt="" /></p>
+<h3 id="dir"><a class="header" href="#dir">dir</a></h3>
+<p>The face property <code>dir</code> gives the direction of the face.
+Specifically, it's the direction that's perpendicular to the current edge
+and which points inwards, towards this face.
+The direction <code>dir</code> is in the 3D model's local space (not world space — it ignores the rotation of the 3D model instance).</p>
+<h4 id="examples-3"><a class="header" href="#examples-3">Examples</a></h4>
+<pre><code class="language-python">self.dir.y &gt; 0.8
+</code></pre>
+<p>Notice how the green trims all have a perpendicular that points mostly upwards.
+<img src="rulebook/screenshots/conditions_example_face_dir.png" alt="" /></p>
+<h3 id="uv_dir"><a class="header" href="#uv_dir">uv_dir</a></h3>
+<p>This gives you the direction of the texture.
+It's like <a href="rulebook/edge_rules.html#dir">dir</a>, but in texture space instead of world space.</p>
+<p>Basically,
+you can use this to check whether an edge is aligned with the texture.
+I use this in the <a href="rulebook/">roof trick</a> to differentiate between top ridges and
+side ridges.</p>
+<p>Here's a more precise explanation:
+The property <code>uv_dir</code> is the direction <em>in texture space</em>
+that's perpendicular to the current edge <em>(in texture space)</em>
+and which points inwards, towards this face <em>(in texture space)</em>.</p>
+<p><strong>UVs explained</strong>: <em>To draw textures onto your 3D model, the computer
+needs to know which parts of the texture go where.
+This is determined by UV coordinates.
+Each corner of a face is given a coordinate on the texture, and the computer
+will then fill in the face with the part of the texture that's between those
+coordinates.</em></p>
+<p><em><strong>It's very important to know</strong></em> that in Godot,
+the y-axis goes <em>downwards</em> in texture space instead of upwards.
+That means that positive values of y are downwards, and negative values of y are
+upwards.</p>
+<h4 id="examples-4"><a class="header" href="#examples-4">Examples</a></h4>
+<pre><code class="language-python">self.surface == BRICK and self.uv_dir.y ~= 1
+</code></pre>
+<p>This example uses the <a href="rulebook/edge_rules.html#approximately-equals">approximately equals</a> operator
+<code>~=</code>.</p>
+<p>For this example I replaced the brick texture with a test texture.
+Notice how all the green trims are pointing exactly downwards in texture space.
+<img src="rulebook/screenshots/conditions_example_face_uv_dir.png" alt="" /></p>
+<h3 id="overview-of-vector2-and-vector3"><a class="header" href="#overview-of-vector2-and-vector3">Overview of Vector2 and Vector3</a></h3>
+<p>In mathematics, a vector is a couple of numbers slapped together into one "thing".
+Here's an example of a 3D vector: (1.1, 0, -2.2).
+Now, I realize that
+that's a pretty boring example, but that's what vectors look like.
+It's just a couple of numbers put together.</p>
+<p>Vectors can be used for all sorts of purposes,
+but here are the three most common uses in geometry:</p>
+<ul>
+<li>A <strong>position</strong>. For example, if we have three numbers, we can use those
+numbers as a
+3D coordinate. You've probably had Cartesian coordinates in school, so I won't
+go into detail about how that works, but in short:
+One of the three numbers is the distance right/left, another one is up/down,
+and the last one is backward &amp; forward (the order of the numbers
+differs per game engine). Put those three coordinate numbers
+into a vector, and you have yourself a “position vector”.</li>
+<li>A <strong>difference in positions</strong>. Basically it's saying,
+if we are at point A, how many steps do we need to take to get to point B?
+In 3D, we measure the amount of steps in each of the three dimensions
+separately, and those three numbers make up your 3D difference vector.</li>
+<li>A <strong>direction</strong>. If we have a difference in positions, we can say that we
+don't really care about the length of that difference, only the direction of
+it. If we throw out the length (by changing the length to 1),
+what you get is called a “direction vector”.</li>
+</ul>
+<p>I'm not going to go into detail about vectors and linear algebra here, because
+this is not exactly the right place to start writing a mathematics book.
+That said, while writing edge rules, we only really use direction vectors.</p>
+<p>The direction vectors that you get from <a href="rulebook/edge_rules.html#overview-of-face">Face</a>
+always have a length of 1.
+So, if you want to check if a direction goes upwards, you can use a tiny code
+snippet like <code>dir.y &gt; 0.9</code>, which will be <code>True</code> whenever the direction is
+strongly upwards.
+Since the total length of <code>dir</code> is always 1,
+whenever the y-coordinate of <code>dir</code> is greater than 0.9,
+the x and z-coordinate must be pretty small.
+So a direction for which <code>dir.y &gt; 0.9</code> is definitely an
+upwards direction.
+You can replace "0.9" with a smaller number if you don't need the direction
+to be so steeply upwards.</p>
+<p>If, instead of checking if a direction just goes up, you want to see if it's
+vertical (up <em>or</em> down), you can use <code>dir.y &gt; 0.9 or dir.y &lt; -0.9</code>.
+It's a lot shorter if you use the
+<a href="rulebook/edge_rules.html#overview-of-global-functions">abs function</a> (which turns negative numbers
+into positive numbers): <code>abs(dir.y) &gt; 0.9</code>.</p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Short description</th></tr></thead><tbody>
+<tr><td>x</td><td>number</td><td>The x-coordinate. By Godot conventions, the x-axis goes to the right (or to the East)</td></tr>
+<tr><td>y</td><td>number</td><td>The y-coordinate. By Godot conventions, the y-axis goes up in 3D and down in 2D.</td></tr>
+<tr><td>z</td><td>number</td><td>The z-coordinate. Only for Vector3. By Godot conventions, the z-axis goes backward (or to the South)</td></tr>
+<tr><td>length</td><td>number</td><td>The length of the vector.</td></tr>
+<tr><td>dot(vector)</td><td>number</td><td>The dot product. If you don't know it, you won't need it.</td></tr>
+<tr><td>cross(Vector3)</td><td>Vector3</td><td>Only for Vector3. The cross product. If you don't know it, you won't need it.</td></tr>
+</tbody></table>
+</div>
+<p>Also relevant is the global function
+“<a href="rulebook/edge_rules.html#overview-of-global-functions">normalize(vector)</a>”,
+which changes a vector's length to 1.</p>
+<p>Here's an overview of the math expressions that are supported for vectors:</p>
+<div class="table-wrapper"><table><thead><tr><th>Mathematical expression</th><th>Result</th><th>Short description</th></tr></thead><tbody>
+<tr><td>vector + vector</td><td>vector</td><td>Adds the elements of the vectors together, like this: (x1 + x2, y1 + y2, z1 + z2)</td></tr>
+<tr><td>vector - vector</td><td>vector</td><td>Subtracts the elements of the vectors. If you do this with two position vectors, you get the difference in position.</td></tr>
+<tr><td>vector * vector</td><td>vector</td><td>Multiplies the elements of the vectors. This is element-wise multiplication (I mention that because there's a bunch of different ways to multiply vectors).</td></tr>
+<tr><td>vector / vector</td><td>vector</td><td>Divides the elements of the vectors. Element-wise division.</td></tr>
+<tr><td>vector + number</td><td>vector</td><td>Adds the number to each element of the vector.</td></tr>
+<tr><td>vector - number</td><td>vector</td><td>Subtracts the number from each element of the vector.</td></tr>
+<tr><td>vector * number</td><td>vector</td><td>Multiplies each element of the vector by the number.</td></tr>
+<tr><td>vector / number</td><td>vector</td><td>Divides each element of the vector by the number.</td></tr>
+</tbody></table>
+</div>
+<p>The scripting language also supports vector swizzling.
+Vector swizzling lets you reorder the elements of vectors very conveniently,
+though if you haven't already heard of vector swizzling,
+you probably won't need it while using AutoTrimmer.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

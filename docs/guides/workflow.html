@@ -1,0 +1,583 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Workflow - AutoTrimmer Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AutoTrimmer Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="workflow"><a class="header" href="#workflow">Workflow</a></h1>
+<p>At the time of writing, AutoTrimmer is still very new.
+I don't have a huge amount of experience with it myself yet.
+However, since I've got more experience than anyone else,
+I figure it's best to write down my thoughts on how to make environments
+with it.</p>
+<p>Below, you can see my main creative project with AutoTrimmer so far.
+What you see took around three or four days of work.
+I am not a very fast artist and textures take me a long time, so
+a more experienced artist could probably do more in less time.</p>
+<video autoplay muted loop>
+    <source src="workflow/church_project.webm" type="video/webm">
+</video>
+<h2 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h2>
+<p>To get started, you're going to need some textures for your surfaces and trims.
+For my church project, I used a mockup drawing to
+both establish the initial idea and get my first textures.</p>
+<h3 id="mock-up-drawing"><a class="header" href="#mock-up-drawing">Mock-up drawing</a></h3>
+<p>Below is the original mockup drawing that I made for the project. It isn't
+much (just a house), and I ended up taking things in another direction,
+but it was enough to help me get started.
+I drew this from a videogamey perspective where everything is seen from the
+front and everything takes up a full
+square. This let me copy-paste a lot of the textures from the mockup.
+This way of working saved me from doing a lot of work twice: I could establish
+the idea and draw textures at the same time.</p>
+<p><img src="workflow/mockup.png" alt="" /></p>
+<h3 id="extracting-the-textures"><a class="header" href="#extracting-the-textures">Extracting the textures</a></h3>
+<p>Figuring out the textures for surfaces is not that difficult.
+It's pretty obvious what the surface texture should be.
+On the other hand, for the trims,
+you need to pay special attention to all the changes
+that you make to the mockup to make the edges look nice.</p>
+<p>In the drawing above, these are the trims that made it into the final project:</p>
+<ul>
+<li><a href="../recipes/molding.html">Molding</a> around the windows and doors. In the final
+project, the dark edges of the molding are on the inside, instead of on the
+outside.</li>
+<li>A roof ridge that's subtly different from the other rooftiles.</li>
+<li>The roof's eave, with a shadow casting onto the wall below it.</li>
+<li>A bit of grime at the bottoms of the walls.</li>
+</ul>
+<p>There's also a couple of things that didn't make it in:</p>
+<ul>
+<li>
+<p>The stone lower half of the wall didn't make it in
+because I wasn't quite happy with
+the texture. If I had liked the texture better, I would have turned it into
+a surface that I could apply on the bottom parts of walls.</p>
+</li>
+<li>
+<p>The wooden shed didn't get all the way to the final project.
+If you look very closely, you might be able to see that the lines inbetween
+the planks are darkened a little at the top and the bottom.
+Replicating that coloring was a little too complex.
+A simple trim with a dark line every so often would only work for the bottom
+edge of the shed, because the top edge beneath the roof is slanted.</p>
+<p>With some shader work (vertex color tricks)
+this could be possible, but it felt like too much effort.</p>
+</li>
+</ul>
+<h3 id="tiling-textures"><a class="header" href="#tiling-textures">Tiling textures</a></h3>
+<p>Tiling textures should usually be about four or five meters large in the
+world. If the texture is meant to have a regular pattern (like floorboards
+or tiles) you might be able to get away with a smaller texture.
+On the other hand, if you have a huge 20 by 20 meter brick wall with nothing
+to break up the texture, you might want a larger texture so that you can
+make it less obvious that the texture is repeating.</p>
+<p>There's also a tech art trick to make repeating textures less
+obvious. It's called “stochastic texture sampling”. However, the typical
+implementations of this trick won't work with pixel art, so unless you're
+an expert at shaders you may have a hard time getting it to work well.</p>
+<h3 id="trimsheet"><a class="header" href="#trimsheet">Trimsheet</a></h3>
+<p>For your trimsheet, you need to take all of your trims, rotate them to be
+horizontal, and put them in an image.
+Below is an example. I made the background green so you can see it better —
+it used to be transparent.</p>
+<p><img src="workflow/trim.png" alt="" /></p>
+<p>Here's the trims from top to bottom:</p>
+<ul>
+<li>Four roof trims: The two up top are for the eave (which is the bottom end of
+the roof)
+The first one is for the wall side
+of the eave edge, the other is for the roof side of the eave edge.
+Then two different variants of roof ridges.</li>
+<li>Three trims for the <a href="../recipes/molding.html">molding</a>: Side, top and bottom. The
+top trim is upside-down here. That's why it's shadow edge is up top.</li>
+<li>One trim for the <a href="../recipes/coping.html">coping</a>.</li>
+<li>Another trim for the roof: This one is used for the rake, which is the slanted
+side of the roof.</li>
+</ul>
+<p>There's also two <a href="../rulebook/trim_corner_config.html">corner textures</a> in the
+bottom-left. Those are both used in the molding.
+The one on the left connects the top molding trim to the side trim, and the
+other one connects the bottom trim to the side trim.</p>
+<h4 id="sidenote-weird-resolution"><a class="header" href="#sidenote-weird-resolution">Sidenote: weird resolution</a></h4>
+<p>This trimsheet is 48 by 64 pixels, which is a rather weird size
+for a texture. The width and height of a texture are
+usually a power of two, like 32, 64, 128 or 256.</p>
+<p>I made the texture this wide because for the church project
+I made world units 24 pixels
+wide. I did that because the number
+24 has some nice properties (you can divide it by a lot of numbers,
+such as 3).</p>
+<p>In theory you should always make sure that your texture sizes are
+a power of two, or you'll have graphics engineers frowning at you.
+Fortunately there weren't any graphics engineers involved in the project,
+so there was nobody to frown at me,
+and I haven't had any problems with the unusual texture size.
+Weird texture sizes are probably kind-of fine for pixelart,
+because low-poly pixelart environments don't demand
+the utmost performance from the computer.</p>
+<h2 id="making-a-rulebook"><a class="header" href="#making-a-rulebook">Making a rulebook</a></h2>
+<p>Once you have your textures, it's time to start making a
+<a href="../rulebook.html">rulebook</a>.</p>
+<p>Check <a href="tutorial2.html">tutorial 2</a>
+if you need an overview of the steps involved in making a rulebook.
+I do it in roughly this order:</p>
+<ol>
+<li>Add the <a href="../rulebook/surface_config.html">surfaces</a>.</li>
+<li>Add the <a href="../rulebook/trim_config.html">trims</a>
+(and <a href="../rulebook/trim_group_config.html">trim groups</a> when necessary).</li>
+<li>Add the <a href="../rulebook/trim_corner_config.html">trim corners</a> if you have any.</li>
+<li>Add the <a href="../rulebook/edge_rules.html">edge rules</a>.</li>
+</ol>
+<p>I made a 3D model with a few houses to test my rulebook
+while I was working on it.</p>
+<p><img src="workflow/test_model.png" alt="" /></p>
+<p>Some things to note about these houses above:</p>
+<ul>
+<li>
+<p>The topology is pretty messy, with a bunch of n-gons on the building on the
+left.
+Fortunately, N-gons are usually fine in AutoTrimmer.
+It all gets turned into triangles by
+the game engine anyways.</p>
+<p>However, with quads and n-gons, you can get
+<a href="../troubleshooting.html#missing-trims">missing trims</a>
+if one of the corners of the face is a 180° corner.
+This is more of a Blender export issue than an AutoTrimmer issue.
+See “<a href="../troubleshooting.html#missing-trims">missing trims</a>”
+for more information.</p>
+<p>I personally leave the n-gons in, and only split them up if I can see that
+it leads to an issue.</p>
+</li>
+<li>
+<p>The rooftiles are unwrapped better in the test project than in the final
+project.
+That's because I was editing object origins to try to
+reduce the amount of UV seams for the test.
+For the final project I didn't think it was worthwhile. A few weird
+texture coordinates don't
+ruin an environment as long as the big picture is good.</p>
+<p>In the future, I want to make a much fancier version of the UV unwrapping
+code (although it's still
+uncertain, because it's quite a research project).
+For now, I'm just living with it.
+You can manually unwrap it fairly easily if you need to — although you can't
+use both manual unwrapping and automatic unwrapping for the same surface.
+What you can do, is make another surface that ends up getting turned into
+the same Godot material.</p>
+</li>
+</ul>
+<h2 id="modelling"><a class="header" href="#modelling">Modelling</a></h2>
+<p>Once you have a couple of surfaces and trims, you can start 3D modelling.</p>
+<p>Working with AutoTrimmer is a pretty short process compared to a normal
+3D modelling workflow, so this is also the last step of the process.
+You basically only need to make a block-in of the 3D model,
+perhaps UV unwrap some of the faces,
+and you can let AutoTrimmer handle the rest.</p>
+<h3 id="the-church-project"><a class="header" href="#the-church-project">The church project</a></h3>
+<p>Here's a screenshot of the church project in Blender:</p>
+<p><img src="workflow/wireframe.png" alt="" /></p>
+<p>There's a couple of things I want you to notice here:</p>
+<h4 id="both-automatic-and-manual-uv-unwrapping"><a class="header" href="#both-automatic-and-manual-uv-unwrapping">Both automatic and manual UV unwrapping</a></h4>
+<p>Although the walls and floors are unwrapped by AutoTrimmer,
+the windows and doors are manually UV unwrapped.
+I made a few windows and doors and copy-pasted them
+onto most of the buildings.
+AutoTrimmer can automatically unwrap tiling textures like bricks and tiles,
+but it's no good with windows and doors. You have to UV unwrap those manually.</p>
+<p>Another thing to note here: When you're using AutoTrimmer, you can use
+AutoTrimmer's functionality as much or as little as you like.
+AutoTrimmer won't mess with UVs or add trims when you don't ask it to, so you
+can use it for only the parts where it's helpful.</p>
+<h4 id="unrefined-topology"><a class="header" href="#unrefined-topology">Unrefined topology</a></h4>
+<p>Frankly, the topology is rather messy.
+I basically made a block-in with the right
+shape and then tossed that into AutoTrimmer.</p>
+<p>When you're doing a full 3D workflow, with UV unwrapping involved, I think
+there's a good reason to go for a clean topology:
+A clean topology makes UV unwrapping a lot easier.</p>
+<p>With AutoTrimmer you can afford to be a lot lazier.
+You don't necessarily gain anything from a clean topology here,
+because the computer doesn't care — it's just drawing triangles
+— and AutoTrimmer doesn't care unless the triangles are ill-defined.
+The concept of a clean topology is something that mostly exists among 3D
+artists.</p>
+<p>Now, triangles are usually not ill-defined, but there's a circumstance
+where Blender can output triangles that have zero surface area —
+meaning that the three corners form a line or a point instead of a proper
+triangle.
+This can only happen with quads and n-gons
+where one of the corners of the face is a 180° corner.
+For more information on when this happens and how to fix it, check the section
+on <a href="../troubleshooting.html#missing-trims">missing trims</a>
+in troubleshooting &amp; workarounds.</p>
+<p>There's one last thing to note: Blender's loop cut tool only works well
+with quadrilaterals. Not triangles or n-gons.
+That's a valid reason to prefer quads over n-gons.</p>
+<h3 id="blender-advice"><a class="header" href="#blender-advice">Blender advice</a></h3>
+<p>AutoTrimmer works with any 3D editing software, but I personally use Blender.
+Here's some advice for fellow Blender users.</p>
+<h4 id="hotkeys"><a class="header" href="#hotkeys">Hotkeys</a></h4>
+<p>In <a href="tutorial1.html">tutorial 1</a>,
+I taught you to use Blender with gizmos (the arrows that
+you can click and drag to move things).
+I actually never use gizmos myself and instead use hotkeys for all of the common
+operations.
+Hotkeys let you edit things <em>super fast</em>. You will be <em>a man of speed</em>
+(or <em>woman of speed</em>).</p>
+<p>It takes a lot of getting used to, though.</p>
+<p>Here's the hotkeys you should know:</p>
+<ul>
+<li>Undoing your screw-ups
+<ul>
+<li><code>ctrl + z</code> to undo your latest screw-up. Whenever you screw up, press this.</li>
+<li><code>ctrl + shift + z</code> to redo</li>
+</ul>
+</li>
+<li>Basics
+<ul>
+<li><code>g</code> is used to move the selection (“g” stands for “grab”).
+By default it probably doesn't do what you
+want it to do. While moving, press <code>x</code>, <code>y</code> or <code>z</code> to restrict it
+to just one axis. Then it should be a lot more useful.
+Also hold down <code>ctrl</code> to make it snap.</li>
+<li><code>s</code> to scale. You can once again use <code>x</code>, <code>y</code> and <code>z</code> to restrict the axis.</li>
+<li><code>r</code> to rotate. This time <code>x</code>, <code>y</code> and <code>z</code> determine the rotation axis.</li>
+<li><code>e</code> to extrude.</li>
+<li><code>ctrl + r</code> to loop cut. Useful when you need to split a face.</li>
+<li><code>k</code> for the knife tool. This lets you cut new edges into a mesh.
+If you want to make the new edges more exact, the “snap to grid” option
+in the <code>shift + s</code> menu can be useful (along with my later advice on
+changing the grid size).</li>
+<li><code>x</code> to delete.</li>
+<li><code>a</code> to select everything, or twice to deselect everything.</li>
+<li><code>tab</code> to switch between edit mode and (usually) object mode.</li>
+</ul>
+</li>
+<li>Hiding
+<ul>
+<li><code>h</code> to hide the selection.</li>
+<li><code>shift + h</code> to hide everything except the selection.</li>
+<li><code>alt + h</code> to unhide everything.</li>
+</ul>
+</li>
+<li>Fixing a mesh
+<ul>
+<li><code>x</code> to delete. “Faces” is usually the most useful option
+and will delete only what you had selected. The “vertices” option
+is the nuclear option that deletes everything connected to the selection.
+The other options are rarely useful.</li>
+<li><code>f</code> can be used to make new faces.
+Select the edges of the new face and tap <code>f</code>.</li>
+<li><code>m</code> to merge vertices together.
+Especially “merge by distance” is very useful for when you have two vertices
+that look like they're in the exact same position, but
+which don't count as the same vertex.</li>
+<li><code>shift + x</code> to remove an unnecessary vertex or edge.</li>
+</ul>
+</li>
+<li>Sometimes useful
+<ul>
+<li><code>l</code> to select everything that's connected to a face
+(useful for more complex meshes where some parts are disconnected)</li>
+<li>Tap <code>g</code> twice to glide a vertex along an edge that it's connected to.
+Press <code>c</code> once it's on the right edge if you want to go the other way.</li>
+</ul>
+</li>
+</ul>
+<h4 id="advice-for-making-buildings"><a class="header" href="#advice-for-making-buildings">Advice for making buildings</a></h4>
+<p>Here's some general advice for making buildings in Blender:</p>
+<ul>
+<li>
+<p><em><strong>Vertex snapping</strong></em> is super useful.
+It lets you move the selection to the
+exact x, y, or z-coordinate of another vertex.
+If you want to snap (for example) the y and z coordinates at the same time,
+you can use <code>shift + x</code>.</p>
+<p>You can find the snapping settings in the menu with the magnet icon at the
+top of the 3D viewport. While moving some vertices, you can enable snapping
+by holding down <code>ctrl</code>. I also recommend turning on snapping for rotation
+(in the same menu).</p>
+<p>If you want to use increment snapping and vertex snapping at the same time,
+you can <code>shift + click</code> on snapping modes to enable multiple snapping modes.
+I almost always have both increment snapping and vertex snapping enabled.</p>
+<p>Edge and face snapping are also sometimes useful, but I usually keep them off
+unless I need them.</p>
+</li>
+<li>
+<p>If you're working with faces that aren't aligned with the grid,
+you should know about the “<em><strong>transform orientations</strong></em>” menu.
+This one is only useful in certain situations, so you can skip this if you
+feel like you've already learned enough for today.</p>
+<p><em>Short description for mathematics people:
+The transform orientations menu lets you pick a
+custom set of basis vectors. Very useful for axis constraints.</em></p>
+<p>In Blender, you'll probably very often use the <code>x</code>, <code>y</code> and <code>z</code> keys
+to restrict in which directions you can move the selection.
+By default, these keys restrict you to moving things on
+the scene's right, forward and up directions.</p>
+<p>If you want to restrict movement to different directions, you can use
+the “transformation orientation” menu to pick out which directions you want to
+restrict it to.
+The “transformation orientations” menu is to the left of the snapping menu.
+It has an icon of three arrows and says “Global” by default.</p>
+<p>Sometimes you're working with faces that are rotated so that they aren't
+aligned to the grid anymore.
+For those situations, a very useful feature is the ability to add
+a custom set of directions with the “transformation orientations” menu's
+plus button.
+Select a face and press the button, and you'll get a set of directions based
+upon the face you had selected, with the x-axis and y-axis being
+parallel to the face and the z-axis being perpendicular to the
+face.</p>
+<p>It's difficult to explain in words, but it will likely be much more clear if
+you try it out!</p>
+</li>
+</ul>
+<h4 id="advice-for-working-with-pixel-art-in-blender"><a class="header" href="#advice-for-working-with-pixel-art-in-blender">Advice for working with pixel art in Blender</a></h4>
+<p>Here are some tips for working with pixel art in Blender:</p>
+<ul>
+<li>
+<p>In Blender, you can <em><strong>change the size of the grid</strong></em> to match the pixel size
+that you're using. It's useful for increment snapping,
+and you can also use <code>snap to grid</code> in the <code>shift + S</code> menu to align all
+your vertices to the pixel grid.</p>
+<p>To change the size of the grid, search “unit” in the properties panel and
+set “Unit System” to “none” instead of “metric”.
+After you've done that, you can go to the “viewport overlays” menu
+(in the top-right of the 3D viewport, icon has two circles),
+and it will now let you change “scale” and “subdivisions”.</p>
+<p>If you're using 16 pixels per world unit, type in “1/16” for scale
+and “16” for subdivisions. Otherwise, substitute “16” with the right amount of
+pixels per world unit. Now the grid should be the size of a pixel.
+You can change it back to normal by using “1” for scale and “10” for
+subdivisions.</p>
+</li>
+<li>
+<p>When you're unwrapping UVs for pixel art textures, it's nice if the <em><strong>UVs
+snap to pixels</strong></em>.
+In Blender's UV editor, open the <code>UV</code> menu, then the submenu <code>Round to Pixels</code>
+and then set it to <code>Corners</code>.
+The next time you edit UVs, it will snap your selection to the texture's
+pixels.</p>
+</li>
+<li>
+<p>This add-on can help to make <em><strong>UV unwrapping pixel art</strong></em> a lot less work:
+<a href="https://github.com/noio/Pixel-Unwrapper">Noio's Pixel Unwrapper</a>.</p>
+</li>
+</ul>
+<p>That's all the advice I've got</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../guides/install.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../recipes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../guides/install.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../recipes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Tutorial 1: Let&#x27;s try out AutoTrimmer by extending the sample project - AutoTrimmer Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AutoTrimmer Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="tutorial-1-lets-try-out-autotrimmer-by-extending-the-sample-project"><a class="header" href="#tutorial-1-lets-try-out-autotrimmer-by-extending-the-sample-project">Tutorial 1: Let's Try Out AutoTrimmer by Extending the Sample Project</a></h1>
+<p>This tutorial will show you the basics of editing AutoTrimmer levels with
+Blender.
+We're starting out by editing the sample project.
+It's an unusual way to start, but AutoTrimmer
+can take a bit of work to set it up.
+This way, we can get going right away.</p>
+<p>If you're not experienced with Blender, you're in luck, because it's written
+for Blender beginners.</p>
+<h2 id="blender"><a class="header" href="#blender">Blender</a></h2>
+<p>I wrote this tutorial for Blender and you won't be
+able to follow these instructions without Blender.
+You don't need to have in-depth knowledge on how to use Blender — I'll explain
+the things you need to know as we go along.</p>
+<p>It's worth noting that AutoTrimmer does not depend on Blender. It only relies
+on Godot and is completely independent of the 3D editing software you are using.
+However, Godot has some very nice integration for Blender.
+You can put <code>.blend</code> files directly into the project, which
+is very convenient and saves a lot of hassle exporting 3D files.
+The sample project uses a <code>.blend</code> file for its 3D model,
+so you won't be able to do this
+tutorial without Blender (<code>.blend</code> files can only be opened
+with Blender — no other 3D software supports it).</p>
+<p>If you haven't used Blender with Godot before, you will have to
+change the Godot editor settings so that Godot can find Blender.
+Godot needs Blender because, as I said before, no 3D software can work
+with <code>.blend</code> files except Blender
+(<code>.blend</code> files are too weird to work with).
+In the editor settings, search for “Blender” and set “Blender Path” in
+<code>FileSystem → Import</code> to where Blender is installed.
+On Windows, you need to set it to the <code>.exe</code> file.</p>
+<h2 id="opening-the-sample-scene-in-godot"><a class="header" href="#opening-the-sample-scene-in-godot">Opening the sample scene in Godot</a></h2>
+<ol>
+<li>Make sure that you have the Mono version of Godot 4.4 (or a more recent
+version of Godot 4). AutoTrimmer requires Mono because it is written in C#.
+It will not work without the Mono version.
+<em>(I'm planning to remove the Mono dependency before the beta is over, though)</em></li>
+<li>Make sure that you have downloaded AutoTrimmer,
+and that you put the <code>AutoTrimmer</code> folder in a place where you can find it.</li>
+<li>In Godot, import and open the Godot project file that you find in the
+<code>AutoTrimmer</code> folder.
+4In the Godot editor, open the scene <code>sample.tscn</code> in the <code>sample</code> folder.</li>
+</ol>
+<p>You should now see the same scene as in the screenshot below.
+Press the “run current scene” button in the top right corner to try out the
+sample project.</p>
+<p><img src="tutorial1/opening_the_scene.png" alt="" /></p>
+<h2 id="editing-the-level"><a class="header" href="#editing-the-level">Editing the level</a></h2>
+<p>Now that we have the Godot project running,
+let's try editing the level.</p>
+<h3 id="your-first-edit"><a class="header" href="#your-first-edit">Your first edit</a></h3>
+<ol>
+<li>
+<p>First, open up Blender. The sample project comes with a <code>level.blend</code> file
+which was made in Blender 4.4.0. If you have an older version of Blender it
+may not always work.</p>
+</li>
+<li>
+<p>In Blender, load the <code>.blend</code> file. Here's the detailed instructions:</p>
+<ul>
+<li>In the top left corner, open the “File” menu, then click “Open...”
+to open a file.</li>
+<li>Navigate to the AutoTrimmer folder.</li>
+<li>Open <code>level.blend</code>. You can find it in the folder
+<code>AutoTrimmer/sample/level</code>.
+If you have multiple copies of the AutoTrimmer folder, make sure that
+you open the <code>level.blend</code> from the Godot project that you have open right
+now.</li>
+</ul>
+</li>
+<li>
+<p>You should now have the level open in Blender. It should look like the
+screenshot below.</p>
+<ul>
+<li>Moving the view around in Blender takes some getting used to. By default,
+you can hold down the middle mouse button to rotate the camera, and
+move the camera by holding down shift and the middle mouse button at the
+same time.</li>
+<li>If you ever press the wrong button or click the wrong thing,
+remember that you can hold down the <code>ctrl</code> key and press <code>z</code> to undo
+anything you didn't mean to do. If you went a little too far undoing
+things, you can hold down <code>ctrl</code> and <code>shift</code> and press <code>z</code> to redo the
+last thing you undid.</li>
+<li>In Blender, if you somehow get the camera into a bad position or if the
+view starts moving really slowly, you can center the view on an object
+by clicking on it and then pressing the period <code>.</code> key on the
+number pad. That should put your view back in a good position.</li>
+<li>If you don't have a number pad on your keyboard, you can click on the
+object and then, near the top-left corner of the screen,
+in the second row of menus, open the <code>View</code> menu and click
+<code>Frame selected</code> (it's a little tedious this way)</li>
+</ul>
+<p><img src="tutorial1/open_in_blender.png" alt="" /></p>
+</li>
+<li>
+<p>Let's make our first edit.</p>
+<ul>
+<li>
+<p>When you first open the model, Blender starts in “object mode” (check the
+second row in the top-left to see which mode you're in).
+In object mode you can select objects and move them around in the scene.</p>
+</li>
+<li>
+<p>Click on the main part of the level to select it. It should get an orange
+outline around it.</p>
+</li>
+<li>
+<p>Now open up edit mode.
+To do this, in the top-left corner,
+click on the “object mode” dropdown menu and select “edit mode”.
+In edit mode, you can change the shape of a 3D model.</p>
+</li>
+<li>
+<p>Blender should now look like in the screenshot below.</p>
+<p><img src="tutorial1/blender_edit_mode.png" alt="" /></p>
+</li>
+<li>
+<p>Select a part of the 3D model by clicking on it.</p>
+</li>
+<li>
+<p>Select the move tool in the tools menu on the left.</p>
+</li>
+<li>
+<p>Three arrows will appear around the thing you selected.
+Click and drag the blue arrow to move it up or down.
+There's your first change!</p>
+<p><img src="tutorial1/blender_first_edit.png" alt="" /></p>
+</li>
+<li>
+<p>Now we're going to look at what AutoTrimmer will do with your change
+in Godot. Save the file by opening the <code>File</code> menu in
+the top left and clicking <code>Save</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Back in Godot, let's see what's changed.
+After saving the <code>.blend</code> file and opening the Godot window,
+you can see the results of your change. As you can (hopefully) see,
+your edited part of the level is now decorated just the same way as the
+rest of the level.</p>
+<p><img src="tutorial1/blender_first_result.png" alt="" /></p>
+</li>
+</ol>
+<h3 id="adding-some-platforms"><a class="header" href="#adding-some-platforms">Adding some platforms</a></h3>
+<p>Now, let's add some platforms for the character to jump on.</p>
+<ol>
+<li>
+<p>First we'll make a single platform.</p>
+<ul>
+<li>In Blender and still in edit mode,
+click the <code>Add</code> menu (to the right of <code>Edit Mode</code>)
+and click <code>Cube</code>. You should now see your new cube, but if you don't,
+press <code>.</code> on the number pad to focus on it.
+This cube is going to become our new platform.</li>
+<li>Move the cube wherever you like using the move tool.</li>
+<li>You can use the scale tool to change the cube's shape into something
+that looks a little more like a normal platform in a normal platformer game.
+You can find the scale tool a little bit below the move tool
+(it's the icon with a growing square).</li>
+</ul>
+</li>
+<li>
+<p>If you save it and go back to Godot, you'll see something like the screenshot
+below. It will already work as a platform and you can already make the
+character jump on it. It's just not very nicely decorated yet.</p>
+<p><img src="tutorial1/platform1.png" alt="" /></p>
+</li>
+<li>
+<p>Let's add some brick textures to the sides of the platform.</p>
+<ul>
+<li>
+<p>Back in Blender and still in edit mode, click one of the sides of the
+platform to select
+it. Then select the other sides by holding down <code>shift</code> and clicking on
+them. Also select the bottom, but don't select the top,
+because we want the top to stay as dirt.</p>
+</li>
+<li>
+<p>Now change their material to “brick” by clicking the buttons in the
+screenshot below. The sides should become grey, like all the other brick
+surfaces.</p>
+<p><img src="tutorial1/blender_set_material.png" alt="" /></p>
+</li>
+<li>
+<p>Save the Blender file and let's look at it again in Godot.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Going back to Godot, your platform should now look like the screenshot below.
+Looks a lot better!</p>
+<p><img src="tutorial1/platform2.png" alt="" /></p>
+</li>
+</ol>
+<p>If you want, you can add a couple more platforms, and maybe make some other
+shapes instead of just rectangles.
+Here are some hints on how to do that:</p>
+<ul>
+<li>Remember that you can click to select something and <code>shift + click</code> to add to
+your selection.</li>
+<li>Hovering your mouse over the platform, press <code>L</code> to select the whole platform.</li>
+<li>You can make a copy of your platform with <code>shift + D</code>. Move it around
+with the move tool.</li>
+<li>Next to the “edit mode” dropdown, you can see three buttons.
+These allow you to edit vertices (corners), edges or faces.
+Move around some edges or vertices to make your shape a little less square.</li>
+<li>If you hover the mouse over a tool for a second, Blender will tell you
+that tool's name.</li>
+<li>Try to find the extrude tool — it's a very important tool.
+It's a little difficult to clearly describe what it does in words,
+The extrude tool lets you pull new geometry out of your selection.</li>
+</ul>
+<p>I'm not going to give a full Blender tutorial (as you can probably see yourself,
+it's too much for one tutorial).
+I do give a few tips in the
+<a href="workflow.html">workflow article</a>.</p>
+<p>AutoTrimmer is made to work with any weird shape you can think of,
+so go wild.
+If it somehow doesn't work in AutoTrimmer, that's probably an AutoTrimmer
+problem, not a you problem!</p>
+<p><img src="tutorial1/platform3.png" alt="" /></p>
+<p>That's the end of this tutorial. If you're ready to move on,
+you can go on to
+<a href="tutorial2.html">tutorial 2</a>, where we'll add a new grass
+surface to the sample level.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../troubleshooting.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../guides/tutorial2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../troubleshooting.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../guides/tutorial2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

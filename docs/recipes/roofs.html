@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Roofs - AutoTrimmer Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AutoTrimmer Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="roofs-rooftiles-ridges-and-eaves"><a class="header" href="#roofs-rooftiles-ridges-and-eaves">Roofs: rooftiles, ridges and eaves</a></h1>
+<p>Every building needs a roof of some kind. In this recipe, we'll be
+creating a roof surface that we'll decorate with two trims:
+One for the ridges (the sharp edges at the top of the roof) and one for the
+eaves (the outer sides of the roof).</p>
+<p>This roof recipe lets you make normal straight roofs as well as roofs that
+are curved, like at the ends of the big roof in the screenshot below.</p>
+<p><img src="images/basic_roof.png" alt="" /></p>
+<p>Here's how you can make a roof like this:</p>
+<ol>
+<li>Start by blocking in a house in your 3D model. For the roof, create a new
+material. I will simply be calling this material “roof”, but you can use
+whatever name suits you.</li>
+<li>Reimport the 3D model in Godot. You should see your changes appear.
+You should also see a warning in the “output” window
+about AutoTrimmer not recognizing your roof material. Let's fix that.</li>
+<li>First we'll need a rooftile texture. Because rooftiles are supposed to tile,
+it won't look unnatural if you make a small texture of just a single
+rooftile. That said, a big texture gives you the opportunity to add some
+color variation to your rooftiles, if that's what you're looking for,
+although it's also more work.
+(Note that AutoTrimmer lets you overwrite small images with bigger images
+as long as you use the “texture size source” option for your surface
+instead of the “texture size pixels” option. That means that you can start
+with a small texture and replace it with a bigger texture later)</li>
+<li>Turn the rooftile texture into a Godot material.
+How you do this is up to you. You can either use a StandardMaterial3D or
+a ShaderMaterial.</li>
+<li>Now, let's add the roof surface to your rulebook.
+<ul>
+<li>Add a new surface to your rulebook.</li>
+<li>Change its name to match the name of the material in
+your 3D model exactly. Capitalization also has to match!</li>
+<li>Put your Godot material into the “replace with material” option.</li>
+<li>Set “UV unwrap mode” to “unwrap”.</li>
+<li>Put your rooftile texture into “texture size source”.</li>
+<li>Enable the option “may mirror texture to line up”
+(otherwise it won't line up with the roof on the other side of the ridge)</li>
+<li>Reimport your 3D model.
+If the rooftiles are looking like they should, we can move on to the trims.</li>
+</ul>
+</li>
+<li>Let's start on the trims! We're going to make two trims:
+One trim is going to be the ridge (the sharp top edge of the roof),
+the other two trim is going to be used for the eave
+(the lower edge of the roof).
+<ul>
+<li>Add a texture for the ridge trim to your trimsheet.</li>
+<li>Add a texture for the eave trim to your trimsheet.
+I will be using a very simple two pixel wide black line for this.
+A nice idea is to add some half-transparent black lines
+underneath for fake shadows. I did that for the church demo.</li>
+</ul>
+</li>
+<li>We'll need to add the trims to the rulebook next.
+<ul>
+<li>Create two new trims. I will be calling them “ridge” and “eave”.</li>
+<li>Configure both trims to use the right texture.</li>
+<li>For the ridge trim, add the roof surface to the whitelist. This prevents
+the ends of its trim from extending a little bit onto walls when
+the angle difference is very shallow.</li>
+<li>For the ridge trim, enable the option “may mirror texture to line up”
+(otherwise it won't line up with the ridge on the other side of the
+edge)</li>
+</ul>
+</li>
+<li>We'll need to add some edge rules so that the trims will show up on
+the 3D model.
+We'll start with an edge rule for the ridges.
+<ul>
+<li>Create a new edge rule.</li>
+<li>Set both “add trim here” and “add trim at neighbor” to your ridge trim.</li>
+<li>Paste the following code into the condition, replacing “ROOF” with the
+<a href="../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE</a>
+name of your roof surface.
+<pre><code class="language-python">self.surface == ROOF
+and neighbor.surface == ROOF
+and self.uv_dir !~= -neighbor.uv_dir
+and angle &gt; 10 
+</code></pre>
+(This condition uses changes in texture direction to see where we need to
+add ridges. Check the documentation on
+<a href="../rulebook/edge_rules.html#uv_dir">uv_dir</a> if you'd like to
+know more.
+Furthermore, the <code>!~=</code> operator is the
+“<a href="../rulebook/edge_rules.html#approximately-equals">not approximately equal</a>”
+operator)</li>
+<li>Reimport the mesh. Your ridges should show up now!</li>
+</ul>
+</li>
+<li>Lastly we'll add the eaves.
+<ul>
+<li>Create a new edge rule.</li>
+<li>Set “add trim at neighbor” to your eave trim.</li>
+<li>Paste the following code into the condition, again replacing “ROOF” with
+the right name for your roof surface.
+<pre><code class="language-python">self.surface == ROOF
+and neighbor.surface != ROOF
+and angle &gt; 10
+</code></pre>
+</li>
+<li>Reimport your 3D model. You should now have a pretty decent looking roof!</li>
+</ul>
+</li>
+</ol>
+<p>I've made a roof of black rooftiles here, but you can use the same steps for
+lots of different types of roofs.
+You can also add multiple variations of roofs to your project for some
+extra variety.</p>
+<h2 id="optional-a-trim-for-the-concave-corners"><a class="header" href="#optional-a-trim-for-the-concave-corners">Optional: A trim for the concave corners</a></h2>
+<p>For me, the roof is already looking pretty good as it is,
+but in the screenshot up top you can see a UV seam where the small roof
+on the side meets the bigger roof.
+It doesn't really bother me, but if you want,
+we can cover it up with a thin line.</p>
+<p>Notice the little black line in the concave corner of the roof.</p>
+<p><img src="images/basic_roof_concave.png" alt="" /></p>
+<p>It's a small difference, but if you think it's worth your time,
+here's how you do it:</p>
+<ol>
+<li>Add a black line to your trim sheet (if you also did the eave as a black
+line, you can also reuse a one-pixel-tall part of that texture instead of
+making a new one).</li>
+<li>Add a trim for your black line.
+<ul>
+<li>Give it a name. I called mine “roof_concave”.</li>
+<li>Configure the texture.</li>
+<li>Optionally give it a whitelist. I personally didn't find this necessary.</li>
+</ul>
+</li>
+<li>Now let's add the edge rule.
+<ul>
+<li>Set “add trim here” to your new trim.</li>
+<li>Paste in the following condition, again adjusting “ROOF” as needed:
+<pre><code class="language-python">self.surface == ROOF
+and neighbor.surface == ROOF
+and self.uv_dir !~= -neighbor.uv_dir
+and angle &lt; -10
+</code></pre>
+</li>
+<li>Reimport your 3D model. You should now see a little trim on the concave
+corners of the roof.</li>
+</ul>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../recipes/molding.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../rulebook.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../recipes/molding.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../rulebook.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
