@@ -1492,7 +1492,7 @@ one of these trims is going to replace the green trim and another one can
 replace the blue trim. They can be however wide you want them to be
 (although when a trim is wider than the face that it's on, it can lead
 to subtle graphics glitches).</li>
-<li>Let's add the trims to your rulebook. For each of your trims, do the following:
+<li>Add the trims to your rulebook. For each of your trims, do the following:
 <ul>
 <li>In your rulebook, create a new trim.</li>
 <li>Give them a name.
@@ -1509,7 +1509,7 @@ see how you can find the right numbers for these settings in Aseprite.</li>
 Oftentimes this isn't really necessary.</li>
 </ul>
 </li>
-<li>Now let's make an edge rule, which will add our trim to the 3D model:
+<li>Now we need to make an edge rule, which will add the trim to the 3D model:
 <ul>
 <li>Create a new edge rule.</li>
 <li>Fill in the names of your trims into the options
@@ -1582,13 +1582,13 @@ although you'll get a warning about AutoTrimmer not recognizing your
 “coping” material (yet!)</li>
 </ul>
 </li>
-<li>We'll need a tiling texture for the top of the coping.
+<li>Make a tiling texture for the top surface of the coping.
 If you want the coping to have lines like in the screenshot, create a
 texture with a vertical line every so many pixels (in the screenshot it's
 every 24 pixels, although that can only really work if your texture is a
 multiple of 24 pixels wide).</li>
 <li>Create a Godot material that uses your new texture.</li>
-<li>Let's add the coping surface.
+<li>Add the coping surface.
 <ul>
 <li>In your rulebook, create a new surface for the coping.</li>
 <li>Set its name to the same name as you used for the material in the 3D model.
@@ -1610,7 +1610,7 @@ This will help align the surface with its trims.</li>
 <li>Draw a trim for the side of the coping on your trimsheet.
 If you gave the coping
 a line, don't forget to add lines to the trim at the same distance.</li>
-<li>Now let's configure the trim.
+<li>Configure the trim.
 <ul>
 <li>Create a new trim.</li>
 <li>Give it a name. I called it “coping_side”.</li>
@@ -1658,11 +1658,12 @@ I've added a windowsill to the bottom trim and add a little hint of shadow to
 the top trim.</p>
 <p>Here's how you do it:</p>
 <ol>
-<li>Let's start in your 3D model:
+<li>Start by making a 3D model that uses the molding material.
 <ul>
-<li>Create a hole for a window.</li>
-<li>Create a new material for the molding and assign it to the
-sides of the window's hole. I called the material “molding”.</li>
+<li>Assuming you already have a 3D model, create a hole for a window or door,
+which will be decorated with the molding trim.</li>
+<li>In the 3D model, create a new material for the molding and assign it to the
+sides of the window's hole. You can call the material “molding”.</li>
 </ul>
 </li>
 <li>Create a surface for the molding. This surface is going to be used for the
@@ -1670,11 +1671,10 @@ sides of the hole that the door or window sits in.
 <ul>
 <li>Give the surface the same name as the name of the molding material in your
 3D model.
-If you don't give it exactly the same name, AutoTrimmer won't recognize it!
-Capitalization also has to match.</li>
-<li>Give the molding surface a texture. If you want to give it lines
-(like for the coping recipe),
-follow the same steps for the surface as in the coping recipe.</li>
+If you don't give it exactly the same name, AutoTrimmer won't recognize it.
+The capitalization must match exactly.</li>
+<li>Create a texture for the inner surface of the molding and
+apply it to the surface.</li>
 <li>Set the “<a href="recipes/../rulebook/surface_config.html#uv-unwrap-mode">UV unwrap mode</a>”
 to either “Unwrap” or “Unwrap along length”.</li>
 <li>Set the texture size by putting an image into “texture size source”
@@ -1701,7 +1701,8 @@ Otherwise they would ignore each other!
 <li>Create a new trim group, and add the three trims you just made.</li>
 </ul>
 </li>
-<li>Depending on how your trims look, it may make things look a lot better if we
+<li><em>(Optional but recommended)</em>
+Depending on how your trims look, it may make things look a lot better if we
 add some special textures for the trim corners.
 <ul>
 <li>In the trimsheet, add a corner texture that connects
@@ -1713,7 +1714,7 @@ because you'd need to have some really crazy window shapes for
 sawn-off corners to show up.</li>
 </ul>
 </li>
-<li>Now that we have our surface, trims, and trim corners, we can add the edge
+<li>Now that we have our surface, trims and trim corners, we can add the edge
 rules. We'll add three edge rules. For the first edge rule, we'll
 add the “molding_top” trim.
 <ul>
@@ -1730,7 +1731,7 @@ and angle &gt; 10
 </li>
 </ul>
 </li>
-<li>Now let's add the “molding_bottom” trim.
+<li>Add the “molding_bottom” trim.
 <ul>
 <li>Create a new edge rule.</li>
 <li>Set “add trim at neighbor” to your “molding_bottom” trim.</li>
@@ -1783,16 +1784,16 @@ about AutoTrimmer not recognizing your roof material. Let's fix that.</li>
 <li>First we'll need a rooftile texture. Because rooftiles are supposed to tile,
 it won't look unnatural if you make a small texture of just a single
 rooftile. That said, a big texture gives you the opportunity to add some
-color variation to your rooftiles, if that's what you're looking for,
+color variation to your rooftiles if that's what you're looking for,
 although it's also more work.
 (Note that AutoTrimmer lets you overwrite small images with bigger images
-as long as you use the “texture size source” option for your surface
-instead of the “texture size pixels” option. That means that you can start
+as long as you use “texture size source” for your surface
+instead of “texture size pixels”. That means that you can start
 with a small texture and replace it with a bigger texture later)</li>
 <li>Turn the rooftile texture into a Godot material.
 How you do this is up to you. You can either use a StandardMaterial3D or
 a ShaderMaterial.</li>
-<li>Now, let's add the roof surface to your rulebook.
+<li>Add the roof surface to your rulebook.
 <ul>
 <li>Add a new surface to your rulebook.</li>
 <li>Change its name to match the name of the material in
@@ -1806,9 +1807,9 @@ your 3D model exactly. Capitalization also has to match!</li>
 If the rooftiles are looking like they should, we can move on to the trims.</li>
 </ul>
 </li>
-<li>Let's start on the trims! We're going to make two trims:
+<li>Let's start on the trims. We're going to make two trims:
 One trim is going to be the ridge (the sharp top edge of the roof),
-the other two trim is going to be used for the eave
+the other trim is going to be used for the eave
 (the lower edge of the roof).
 <ul>
 <li>Add a texture for the ridge trim to your trimsheet.</li>
@@ -1836,7 +1837,8 @@ We'll start with an edge rule for the ridges.
 <ul>
 <li>Create a new edge rule.</li>
 <li>Set both “add trim here” and “add trim at neighbor” to your ridge trim.</li>
-<li>Paste the following code into the condition, replacing “ROOF” with the
+<li>Paste the following code into the condition.
+Make sure to replace “ROOF” with the
 <a href="recipes/../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE</a>
 name of your roof surface.
 <pre><code class="language-python">self.surface == ROOF
@@ -1874,7 +1876,7 @@ lots of different types of roofs.
 You can also add multiple variations of roofs to your project for some
 extra variety.</p>
 <h2 id="optional-a-trim-for-the-concave-corners"><a class="header" href="#optional-a-trim-for-the-concave-corners">Optional: A trim for the concave corners</a></h2>
-<p>For me, the roof is already looking pretty good as it is,
+<p>To me, the roof is already looking pretty good as it is,
 but in the screenshot up top you can see a UV seam where the small roof
 on the side meets the bigger roof.
 It doesn't really bother me, but if you want,

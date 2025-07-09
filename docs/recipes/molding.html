@@ -186,11 +186,12 @@ I've added a windowsill to the bottom trim and add a little hint of shadow to
 the top trim.</p>
 <p>Here's how you do it:</p>
 <ol>
-<li>Let's start in your 3D model:
+<li>Start by making a 3D model that uses the molding material.
 <ul>
-<li>Create a hole for a window.</li>
-<li>Create a new material for the molding and assign it to the
-sides of the window's hole. I called the material “molding”.</li>
+<li>Assuming you already have a 3D model, create a hole for a window or door,
+which will be decorated with the molding trim.</li>
+<li>In the 3D model, create a new material for the molding and assign it to the
+sides of the window's hole. You can call the material “molding”.</li>
 </ul>
 </li>
 <li>Create a surface for the molding. This surface is going to be used for the
@@ -198,11 +199,10 @@ sides of the hole that the door or window sits in.
 <ul>
 <li>Give the surface the same name as the name of the molding material in your
 3D model.
-If you don't give it exactly the same name, AutoTrimmer won't recognize it!
-Capitalization also has to match.</li>
-<li>Give the molding surface a texture. If you want to give it lines
-(like for the coping recipe),
-follow the same steps for the surface as in the coping recipe.</li>
+If you don't give it exactly the same name, AutoTrimmer won't recognize it.
+The capitalization must match exactly.</li>
+<li>Create a texture for the inner surface of the molding and
+apply it to the surface.</li>
 <li>Set the “<a href="../rulebook/surface_config.html#uv-unwrap-mode">UV unwrap mode</a>”
 to either “Unwrap” or “Unwrap along length”.</li>
 <li>Set the texture size by putting an image into “texture size source”
@@ -229,7 +229,8 @@ Otherwise they would ignore each other!
 <li>Create a new trim group, and add the three trims you just made.</li>
 </ul>
 </li>
-<li>Depending on how your trims look, it may make things look a lot better if we
+<li><em>(Optional but recommended)</em>
+Depending on how your trims look, it may make things look a lot better if we
 add some special textures for the trim corners.
 <ul>
 <li>In the trimsheet, add a corner texture that connects
@@ -241,7 +242,7 @@ because you'd need to have some really crazy window shapes for
 sawn-off corners to show up.</li>
 </ul>
 </li>
-<li>Now that we have our surface, trims, and trim corners, we can add the edge
+<li>Now that we have our surface, trims and trim corners, we can add the edge
 rules. We'll add three edge rules. For the first edge rule, we'll
 add the “molding_top” trim.
 <ul>
@@ -258,7 +259,7 @@ and angle &gt; 10
 </li>
 </ul>
 </li>
-<li>Now let's add the “molding_bottom” trim.
+<li>Add the “molding_bottom” trim.
 <ul>
 <li>Create a new edge rule.</li>
 <li>Set “add trim at neighbor” to your “molding_bottom” trim.</li>

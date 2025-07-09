@@ -185,16 +185,16 @@ about AutoTrimmer not recognizing your roof material. Let's fix that.</li>
 <li>First we'll need a rooftile texture. Because rooftiles are supposed to tile,
 it won't look unnatural if you make a small texture of just a single
 rooftile. That said, a big texture gives you the opportunity to add some
-color variation to your rooftiles, if that's what you're looking for,
+color variation to your rooftiles if that's what you're looking for,
 although it's also more work.
 (Note that AutoTrimmer lets you overwrite small images with bigger images
-as long as you use the “texture size source” option for your surface
-instead of the “texture size pixels” option. That means that you can start
+as long as you use “texture size source” for your surface
+instead of “texture size pixels”. That means that you can start
 with a small texture and replace it with a bigger texture later)</li>
 <li>Turn the rooftile texture into a Godot material.
 How you do this is up to you. You can either use a StandardMaterial3D or
 a ShaderMaterial.</li>
-<li>Now, let's add the roof surface to your rulebook.
+<li>Add the roof surface to your rulebook.
 <ul>
 <li>Add a new surface to your rulebook.</li>
 <li>Change its name to match the name of the material in
@@ -208,9 +208,9 @@ your 3D model exactly. Capitalization also has to match!</li>
 If the rooftiles are looking like they should, we can move on to the trims.</li>
 </ul>
 </li>
-<li>Let's start on the trims! We're going to make two trims:
+<li>Let's start on the trims. We're going to make two trims:
 One trim is going to be the ridge (the sharp top edge of the roof),
-the other two trim is going to be used for the eave
+the other trim is going to be used for the eave
 (the lower edge of the roof).
 <ul>
 <li>Add a texture for the ridge trim to your trimsheet.</li>
@@ -238,7 +238,8 @@ We'll start with an edge rule for the ridges.
 <ul>
 <li>Create a new edge rule.</li>
 <li>Set both “add trim here” and “add trim at neighbor” to your ridge trim.</li>
-<li>Paste the following code into the condition, replacing “ROOF” with the
+<li>Paste the following code into the condition.
+Make sure to replace “ROOF” with the
 <a href="../rulebook/edge_rules.html#surface-constants">UPPER_SNAKE_CASE</a>
 name of your roof surface.
 <pre><code class="language-python">self.surface == ROOF
@@ -276,7 +277,7 @@ lots of different types of roofs.
 You can also add multiple variations of roofs to your project for some
 extra variety.</p>
 <h2 id="optional-a-trim-for-the-concave-corners"><a class="header" href="#optional-a-trim-for-the-concave-corners">Optional: A trim for the concave corners</a></h2>
-<p>For me, the roof is already looking pretty good as it is,
+<p>To me, the roof is already looking pretty good as it is,
 but in the screenshot up top you can see a UV seam where the small roof
 on the side meets the bigger roof.
 It doesn't really bother me, but if you want,
